@@ -15,8 +15,9 @@ import { ComponentShowcase } from '@/pages/ComponentShowcase';
 import { UsersPage }         from '@/pages/UsersPage';
 import { LibraryPage }       from '@/pages/LibraryPage';
 import { AnalyticsPage }     from '@/pages/AnalyticsPage';
+import { PathwayScreen }    from '@/pages/PathwayScreen';
 
-type Page = 'settings' | 'showcase' | 'users' | 'library' | 'analytics';
+type Page = 'settings' | 'showcase' | 'users' | 'library' | 'analytics' | 'pathway';
 
 function ColorSchemeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -98,6 +99,7 @@ export function App() {
             <Tab value="users"     label="Users" />
             <Tab value="library"   label="Library" />
             <Tab value="analytics" label="Analytics" />
+            <Tab value="pathway"   label="Pathway Builder" />
           </Tabs>
 
           <ColorSchemeToggle />
@@ -135,6 +137,10 @@ export function App() {
           </Box>
         ) : page === 'showcase' ? (
           <ComponentShowcase />
+        ) : page === 'pathway' ? (
+          <Box id="main-content" sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <PathwayScreen />
+          </Box>
         ) : (
           <Box
             id="main-content"
