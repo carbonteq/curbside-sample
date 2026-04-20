@@ -19,7 +19,7 @@ A React + TypeScript component showcase built with Material UI (MUI), demonstrat
 
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/carbonteq/curbside-sample.git
 cd curbside-sample
 
 # Install dependencies
