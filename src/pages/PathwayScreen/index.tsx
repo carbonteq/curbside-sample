@@ -1,4 +1,15 @@
 import { useState } from 'react';
+import {
+  ReactFlow,
+  ReactFlowProvider,
+  Background,
+  BackgroundVariant,
+  useNodesState,
+  useEdgesState,
+  useReactFlow,
+  useStore,
+} from '@xyflow/react';
+import type { Node, Edge } from '@xyflow/react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
@@ -19,198 +30,128 @@ import {
   BookOpen, MessageSquare, Share2, MoreHorizontal,
   ChevronRight, ExternalLink, ChevronDown, Send,
 } from 'lucide-react';
+import { NODE_TYPES } from './pathwayNodes';
+import type { PathwayNodeData } from './pathwayNodes';
 
-// ─── Pathway canvas constants ─────────────────────────────────────────────────
+// ─── Flow data ────────────────────────────────────────────────────────────────
 
-const CANVAS_W = 940;
-const CANVAS_H = 800;
-const CX = 450; // center x for main column
+const edgeStyle: React.CSSProperties = {
+  stroke: 'var(--mui-palette-grey-400)',
+  strokeWidth: 1.5,
+};
 
-type NodeType = 'start' | 'action' | 'decision' | 'end' | 'side';
+const labelStyle: React.CSSProperties = {
+  fill: 'var(--mui-palette-text-secondary)',
+  fontFamily: 'Inter, sans-serif',
+  fontSize: 11,
+  fontWeight: 600,
+};
 
-interface PathwayNode {
-  id: string;
-  type: NodeType;
-  label: string;
-  sublabel?: string;
-  x: number; y: number; w: number; h: number;
-}
+const labelBgStyle: React.CSSProperties = {
+  fill: 'var(--mui-palette-background-default)',
+  fillOpacity: 0.9,
+};
 
-const NODES: PathwayNode[] = [
-  { id: 'start',    type: 'start',    label: 'Patient Presents with Possible Sepsis',  x: 320, y:  40, w: 260, h: 44 },
-  { id: 'assess',   type: 'action',   label: 'Initial Assessment & Vital Signs',        sublabel: 'HR, BP, Temp, RR, SpO₂', x: 310, y: 142, w: 280, h: 60 },
-  { id: 'decision', type: 'decision', label: '≥ 2 SIRS Criteria Met?',                  sublabel: 'Temp, HR, RR, WBC', x: 295, y: 264, w: 310, h: 60 },
-  { id: 'culture',  type: 'action',   label: 'Obtain Blood Cultures × 2',               sublabel: 'Before antibiotic administration', x: 310, y: 392, w: 280, h: 60 },
-  { id: 'abx',      type: 'action',   label: 'Administer Broad-Spectrum Antibiotics',   sublabel: 'Within 1 hour of recognition',     x: 310, y: 504, w: 280, h: 60 },
-  { id: 'fluids',   type: 'action',   label: '30 mL/kg IV Crystalloid Bolus',           sublabel: 'Complete within 3 hours',          x: 310, y: 616, w: 280, h: 60 },
-  { id: 'end',      type: 'end',      label: 'Disposition Decision', x: 340, y: 736, w: 220, h: 44 },
-  { id: 'monitor',  type: 'side',     label: 'Routine Monitoring', sublabel: 'q4h reassessment', x: 676, y: 264, w: 196, h: 60 },
+const initialNodes: Node<PathwayNodeData>[] = [
+  { id: 'start',    type: 'startNode',    position: { x: 320, y:  40 }, style: { width: 260, height:  44 }, data: { label: 'Patient Presents with Possible Sepsis' } },
+  { id: 'assess',   type: 'actionNode',   position: { x: 310, y: 142 }, style: { width: 280, height:  60 }, data: { label: 'Initial Assessment & Vital Signs', sublabel: 'HR, BP, Temp, RR, SpO₂' } },
+  { id: 'decision', type: 'decisionNode', position: { x: 295, y: 264 }, style: { width: 310, height:  60 }, data: { label: '≥ 2 SIRS Criteria Met?', sublabel: 'Temp, HR, RR, WBC' } },
+  { id: 'culture',  type: 'actionNode',   position: { x: 310, y: 392 }, style: { width: 280, height:  60 }, data: { label: 'Obtain Blood Cultures × 2', sublabel: 'Before antibiotic administration' } },
+  { id: 'abx',      type: 'actionNode',   position: { x: 310, y: 504 }, style: { width: 280, height:  60 }, data: { label: 'Administer Broad-Spectrum Antibiotics', sublabel: 'Within 1 hour of recognition' } },
+  { id: 'fluids',   type: 'actionNode',   position: { x: 310, y: 616 }, style: { width: 280, height:  60 }, data: { label: '30 mL/kg IV Crystalloid Bolus', sublabel: 'Complete within 3 hours' } },
+  { id: 'end',      type: 'endNode',      position: { x: 340, y: 736 }, style: { width: 220, height:  44 }, data: { label: 'Disposition Decision' } },
+  { id: 'monitor',  type: 'sideNode',     position: { x: 676, y: 264 }, style: { width: 196, height:  60 }, data: { label: 'Routine Monitoring', sublabel: 'q4h reassessment' } },
 ];
 
-interface Arrow {
-  d: string;
-  label?: string;
-  labelX?: number;
-  labelY?: number;
-}
-
-const ARROWS: Arrow[] = [
-  { d: `M${CX},84 L${CX},142` },
-  { d: `M${CX},202 L${CX},264` },
-  { d: `M${CX},324 L${CX},392`,  label: 'YES', labelX: CX + 8, labelY: 360 },
-  { d: `M605,294 L676,294`,       label: 'NO',  labelX: 632,    labelY: 284 },
-  { d: `M${CX},452 L${CX},504` },
-  { d: `M${CX},564 L${CX},616` },
-  { d: `M${CX},676 L${CX},736` },
-  { d: `M774,324 L774,758 L560,758`, label: 'Reassess', labelX: 700, labelY: 748 },
+const initialEdges: Edge[] = [
+  { id: 'e-start-assess',      source: 'start',    target: 'assess',   type: 'smoothstep', style: edgeStyle },
+  { id: 'e-assess-decision',   source: 'assess',   target: 'decision', type: 'smoothstep', style: edgeStyle },
+  { id: 'e-decision-culture',  source: 'decision', sourceHandle: 'bottom', target: 'culture',  type: 'smoothstep', style: edgeStyle, label: 'YES', labelStyle, labelBgStyle, labelBgPadding: [4, 2], labelBgBorderRadius: 4 },
+  { id: 'e-decision-monitor',  source: 'decision', sourceHandle: 'right',  target: 'monitor',  targetHandle: 'left',  type: 'smoothstep', style: edgeStyle, label: 'NO',  labelStyle, labelBgStyle, labelBgPadding: [4, 2], labelBgBorderRadius: 4 },
+  { id: 'e-culture-abx',       source: 'culture',  target: 'abx',      type: 'smoothstep', style: edgeStyle },
+  { id: 'e-abx-fluids',        source: 'abx',      target: 'fluids',   type: 'smoothstep', style: edgeStyle },
+  { id: 'e-fluids-end',        source: 'fluids',   target: 'end',      targetHandle: 'top',   type: 'smoothstep', style: edgeStyle },
+  { id: 'e-monitor-end',       source: 'monitor',  sourceHandle: 'bottom', target: 'end', targetHandle: 'right', type: 'smoothstep', animated: true, style: { ...edgeStyle, stroke: 'var(--mui-palette-primary-light)' }, label: 'Reassess', labelStyle, labelBgStyle, labelBgPadding: [4, 2], labelBgBorderRadius: 4 },
 ];
 
-// ─── Node renderer ────────────────────────────────────────────────────────────
+// ─── Flow canvas ──────────────────────────────────────────────────────────────
 
-function PathwayNode({ node }: { node: PathwayNode }) {
-  const baseStyle = {
-    position: 'absolute' as const,
-    left: node.x,
-    top: node.y,
-    width: node.w,
-    height: node.h,
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    justifyContent: 'center',
-    px: 2,
-    textAlign: 'center' as const,
-    userSelect: 'none' as const,
-    cursor: 'pointer',
-    transition: 'box-shadow 150ms ease',
-  };
-
-  if (node.type === 'start') {
-    return (
-      <Box
-        sx={(theme) => ({
-          ...baseStyle,
-          bgcolor: theme.palette.success.main,
-          color: theme.palette.success.contrastText,
-          borderRadius: `${theme.radius.pill}px`,
-          '&:hover': { boxShadow: theme.shadows[4] },
-        })}
-      >
-        <Typography variant="body2" fontWeight="fontWeightSemibold">{node.label}</Typography>
-      </Box>
-    );
-  }
-
-  if (node.type === 'end') {
-    return (
-      <Box
-        sx={(theme) => ({
-          ...baseStyle,
-          bgcolor: theme.palette.secondary.main,
-          color: theme.palette.secondary.contrastText,
-          borderRadius: `${theme.radius.pill}px`,
-          '&:hover': { boxShadow: theme.shadows[4] },
-        })}
-      >
-        <Typography variant="body2" fontWeight="fontWeightSemibold">{node.label}</Typography>
-      </Box>
-    );
-  }
-
-  if (node.type === 'decision') {
-    return (
-      <Box
-        sx={(theme) => ({
-          ...baseStyle,
-          bgcolor: theme.palette.warning.light,
-          border: `2px solid ${theme.palette.warning.main}`,
-          borderRadius: `${theme.radius.md}px`,
-          '&:hover': { boxShadow: theme.shadows[3] },
-        })}
-      >
-        <Typography variant="body2" fontWeight="fontWeightSemibold" color="warning.dark">{node.label}</Typography>
-        {node.sublabel && (
-          <Typography variant="caption" color="warning.dark" sx={{ opacity: 0.75 }}>{node.sublabel}</Typography>
-        )}
-      </Box>
-    );
-  }
-
-  if (node.type === 'side') {
-    return (
-      <Box
-        sx={(theme) => ({
-          ...baseStyle,
-          bgcolor: theme.surface.raised,
-          border: `1px solid ${theme.border.default}`,
-          borderRadius: `${theme.radius.md}px`,
-          '&:hover': { boxShadow: theme.shadows[2] },
-        })}
-      >
-        <Typography variant="body2" fontWeight="fontWeightMedium" color="text.secondary">{node.label}</Typography>
-        {node.sublabel && (
-          <Typography variant="caption" color="text.disabled">{node.sublabel}</Typography>
-        )}
-      </Box>
-    );
-  }
+function FlowCanvas() {
+  const [nodes, , onNodesChange] = useNodesState(initialNodes);
+  const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
   return (
-    <Box
-      sx={(theme) => ({
-        ...baseStyle,
-        bgcolor: theme.surface.overlay,
-        border: `1px solid ${theme.border.default}`,
-        borderLeft: `3px solid ${theme.palette.primary.main}`,
-        borderRadius: `${theme.radius.md}px`,
-        boxShadow: theme.shadows[1],
-        '&:hover': { boxShadow: theme.shadows[3] },
-      })}
-    >
-      <Typography variant="body2" fontWeight="fontWeightSemibold">{node.label}</Typography>
-      {node.sublabel && (
-        <Typography variant="caption" color="text.secondary">{node.sublabel}</Typography>
-      )}
+    <Box sx={(theme) => ({ flex: 1, bgcolor: theme.surface.subtle })}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        nodeTypes={NODE_TYPES}
+        fitView
+        fitViewOptions={{ padding: 0.15, maxZoom: 1 }}
+        nodesDraggable={false}
+        nodesConnectable={false}
+        elementsSelectable
+        style={{ width: '100%', height: '100%' }}
+      >
+        <Background
+          variant={BackgroundVariant.Dots}
+          gap={24}
+          size={1}
+          color="var(--mui-palette-grey-300)"
+        />
+      </ReactFlow>
     </Box>
   );
 }
 
-// ─── Canvas SVG arrows ────────────────────────────────────────────────────────
+// ─── Zoom controls (must live inside ReactFlowProvider) ───────────────────────
 
-function CanvasArrows() {
+function ZoomControls() {
+  const { zoomIn, zoomOut, fitView } = useReactFlow();
   return (
-    <svg
-      style={{ position: 'absolute', top: 0, left: 0, width: CANVAS_W, height: CANVAS_H, pointerEvents: 'none' }}
-    >
-      <defs>
-        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-          <polygon points="0 0, 8 3, 0 6" fill="#94a3b8" />
-        </marker>
-      </defs>
-      {ARROWS.map((a, i) => (
-        <g key={i}>
-          <path
-            d={a.d}
-            fill="none"
-            stroke="#94a3b8"
-            strokeWidth={2}
-            markerEnd="url(#arrow)"
-          />
-          {a.label && (
-            <text
-              x={a.labelX}
-              y={a.labelY}
-              fontSize={10}
-              fill="#64748b"
-              fontFamily="Inter, sans-serif"
-              fontWeight="600"
-            >
-              {a.label}
-            </text>
-          )}
-        </g>
-      ))}
-    </svg>
+    <>
+      <Tooltip title="Zoom in" placement="left">
+        <IconButton size="small" variant="ghost" onClick={() => zoomIn()} aria-label="Zoom in">
+          <ZoomIn size={16} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Zoom out" placement="left">
+        <IconButton size="small" variant="ghost" onClick={() => zoomOut()} aria-label="Zoom out">
+          <ZoomOut size={16} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="Fit to screen" placement="left">
+        <IconButton size="small" variant="ghost" onClick={() => fitView({ padding: 0.15 })} aria-label="Fit to screen">
+          <Maximize2 size={16} />
+        </IconButton>
+      </Tooltip>
+    </>
+  );
+}
+
+function ZoomLevel() {
+  const zoom = useStore((s) => s.transform[2]);
+  return (
+    <Typography variant="caption" color="text.secondary" sx={{ minWidth: 36, textAlign: 'center' }}>
+      {Math.round(zoom * 100)}%
+    </Typography>
+  );
+}
+
+function ZoomBar() {
+  const { zoomIn, zoomOut } = useReactFlow();
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+      <IconButton size="small" sx={{ p: '2px' }} onClick={() => zoomOut()}>
+        <ZoomOut size={12} />
+      </IconButton>
+      <ZoomLevel />
+      <IconButton size="small" sx={{ p: '2px' }} onClick={() => zoomIn()}>
+        <ZoomIn size={12} />
+      </IconButton>
+    </Box>
   );
 }
 
@@ -294,8 +235,8 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
 // ─── Feedback drawer content ──────────────────────────────────────────────────
 
 const EDITORS = [
-  { name: 'Dr. Sarah Chen', role: 'Infectious Disease', initials: 'SC', color: 'primary' as const },
-  { name: 'Dr. Michael Torres', role: 'Critical Care', initials: 'MT', color: 'secondary' as const },
+  { name: 'Dr. Sarah Chen',    role: 'Infectious Disease', initials: 'SC', color: 'primary'   as const },
+  { name: 'Dr. Michael Torres', role: 'Critical Care',      initials: 'MT', color: 'secondary' as const },
 ];
 
 function FeedbackTab({ onClose }: { onClose: () => void }) {
@@ -383,7 +324,6 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
 export function PathwayScreen() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'resources' | 'feedback'>('resources');
-  const [zoom, setZoom] = useState(100);
 
   const openDrawer = (tab: 'resources' | 'feedback') => {
     setActiveTab(tab);
@@ -391,188 +331,136 @@ export function PathwayScreen() {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <ReactFlowProvider>
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
 
-      {/* ── Top bar ─────────────────────────────────────────────────────────── */}
-      <Box sx={(theme) => ({
-        display: 'flex', alignItems: 'center', gap: theme.space.md,
-        px: theme.space['2xl'], height: 52, flexShrink: 0,
-        bgcolor: theme.surface.canvas,
-        borderBottom: `1px solid ${theme.border.default}`,
-      })}>
-        {/* Breadcrumb */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flex: 1, minWidth: 0 }}>
-          <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-            Pathways
-          </Typography>
-          <ChevronRight size={14} color="var(--mui-palette-text-disabled)" />
-          <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
-            Infectious Disease
-          </Typography>
-          <ChevronRight size={14} color="var(--mui-palette-text-disabled)" />
-          <Typography variant="body2" fontWeight="fontWeightSemibold" noWrap>
-            Sepsis Management Protocol
-          </Typography>
-          <Chip
-            label="Published"
-            size="small"
-            variant="soft"
-            color="success"
-            sx={(theme) => ({ ml: theme.space.xs, height: 20, fontSize: 11 })}
-          />
-          <Typography variant="caption" color="text.disabled" sx={(theme) => ({ ml: theme.space.xs })}>
-            v2.4
-          </Typography>
-        </Box>
-
-        {/* Actions */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Button
-            variant="ghost"
-            size="small"
-            startIcon={<BookOpen size={14} />}
-            onClick={() => openDrawer('resources')}
-          >
-            Resources
-          </Button>
-          <Button
-            variant="ghost"
-            size="small"
-            startIcon={<MessageSquare size={14} />}
-            onClick={() => openDrawer('feedback')}
-          >
-            Feedback
-          </Button>
-          <Divider orientation="vertical" flexItem sx={{ mx: 0.5, my: 1 }} />
-          <Tooltip title="Share pathway">
-            <IconButton size="small" variant="ghost">
-              <Share2 size={16} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="More options">
-            <IconButton size="small" variant="ghost">
-              <MoreHorizontal size={16} />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      </Box>
-
-      {/* ── Work area ───────────────────────────────────────────────────────── */}
-      <Box sx={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-
-        {/* Canvas */}
+        {/* ── Top bar ─────────────────────────────────────────────────────────── */}
         <Box sx={(theme) => ({
-          flex: 1,
-          position: 'relative',
-          overflow: 'auto',
-          bgcolor: theme.surface.subtle,
-          backgroundImage: `radial-gradient(circle, ${theme.border.default} 1px, transparent 1px)`,
-          backgroundSize: '24px 24px',
+          display: 'flex', alignItems: 'center', gap: theme.space.md,
+          px: theme.space['2xl'], height: 52, flexShrink: 0,
+          bgcolor: theme.surface.canvas,
+          borderBottom: `1px solid ${theme.border.default}`,
         })}>
-          <Box sx={{ minWidth: CANVAS_W, minHeight: CANVAS_H, position: 'relative' }}>
-            <CanvasArrows />
-            {NODES.map((node) => (
-              <PathwayNode key={node.id} node={node} />
-            ))}
+          {/* Breadcrumb */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flex: 1, minWidth: 0 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
+              Pathways
+            </Typography>
+            <ChevronRight size={14} color="var(--mui-palette-text-disabled)" />
+            <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
+              Infectious Disease
+            </Typography>
+            <ChevronRight size={14} color="var(--mui-palette-text-disabled)" />
+            <Typography variant="body2" fontWeight="fontWeightSemibold" noWrap>
+              Sepsis Management Protocol
+            </Typography>
+            <Chip
+              label="Published"
+              size="small"
+              variant="soft"
+              color="success"
+              sx={(theme) => ({ ml: theme.space.xs, height: 20, fontSize: 11 })}
+            />
+            <Typography variant="caption" color="text.disabled" sx={(theme) => ({ ml: theme.space.xs })}>
+              v2.4
+            </Typography>
+          </Box>
+
+          {/* Actions */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Button variant="ghost" size="small" startIcon={<BookOpen size={14} />} onClick={() => openDrawer('resources')}>
+              Resources
+            </Button>
+            <Button variant="ghost" size="small" startIcon={<MessageSquare size={14} />} onClick={() => openDrawer('feedback')}>
+              Feedback
+            </Button>
+            <Divider orientation="vertical" flexItem sx={{ mx: 0.5, my: 1 }} />
+            <Tooltip title="Share pathway">
+              <IconButton size="small" variant="ghost"><Share2 size={16} /></IconButton>
+            </Tooltip>
+            <Tooltip title="More options">
+              <IconButton size="small" variant="ghost"><MoreHorizontal size={16} /></IconButton>
+            </Tooltip>
           </Box>
         </Box>
 
-        {/* Right toolbar */}
+        {/* ── Work area ───────────────────────────────────────────────────────── */}
+        <Box sx={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+
+          {/* ReactFlow canvas */}
+          <FlowCanvas />
+
+          {/* Right toolbar */}
+          <Box sx={(theme) => ({
+            width: 44,
+            display: 'flex', flexDirection: 'column', alignItems: 'center',
+            gap: theme.space.xs, pt: theme.space.md,
+            bgcolor: theme.surface.canvas,
+            borderLeft: `1px solid ${theme.border.default}`,
+            flexShrink: 0,
+          })}>
+            <Tooltip title="Select" placement="left">
+              <IconButton size="small" variant="soft" color="primary" aria-label="Select tool">
+                <MousePointer2 size={16} />
+              </IconButton>
+            </Tooltip>
+            <Divider flexItem sx={{ my: 0.5 }} />
+            <ZoomControls />
+          </Box>
+        </Box>
+
+        {/* ── Bottom bar ──────────────────────────────────────────────────────── */}
         <Box sx={(theme) => ({
-          width: 44,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: theme.space.xs,
-          pt: theme.space.md,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          px: theme.space['2xl'], height: 36, flexShrink: 0,
           bgcolor: theme.surface.canvas,
-          borderLeft: `1px solid ${theme.border.default}`,
-          flexShrink: 0,
+          borderTop: `1px solid ${theme.border.default}`,
         })}>
-          <Tooltip title="Select" placement="left">
-            <IconButton size="small" variant="soft" color="primary" aria-label="Select tool">
-              <MousePointer2 size={16} />
-            </IconButton>
-          </Tooltip>
-          <Divider flexItem sx={{ my: 0.5 }} />
-          <Tooltip title="Zoom in" placement="left">
-            <IconButton size="small" variant="ghost" onClick={() => setZoom(z => Math.min(z + 25, 200))} aria-label="Zoom in">
-              <ZoomIn size={16} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Zoom out" placement="left">
-            <IconButton size="small" variant="ghost" onClick={() => setZoom(z => Math.max(z - 25, 25))} aria-label="Zoom out">
-              <ZoomOut size={16} />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Fit to screen" placement="left">
-            <IconButton size="small" variant="ghost" onClick={() => setZoom(100)} aria-label="Fit to screen">
-              <Maximize2 size={16} />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      </Box>
-
-      {/* ── Bottom bar ──────────────────────────────────────────────────────── */}
-      <Box sx={(theme) => ({
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        px: theme.space['2xl'], height: 36, flexShrink: 0,
-        bgcolor: theme.surface.canvas,
-        borderTop: `1px solid ${theme.border.default}`,
-      })}>
-        <Typography variant="caption" color="text.secondary">
-          Sepsis Management Protocol · Updated Apr 14, 2026 · Dr. Sarah Chen
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <IconButton size="small" sx={{ p: '2px' }} onClick={() => setZoom(z => Math.max(z - 25, 25))}>
-            <ZoomOut size={12} />
-          </IconButton>
-          <Typography variant="caption" color="text.secondary" sx={{ minWidth: 36, textAlign: 'center' }}>
-            {zoom}%
+          <Typography variant="caption" color="text.secondary">
+            Sepsis Management Protocol · Updated Apr 14, 2026 · Dr. Sarah Chen
           </Typography>
-          <IconButton size="small" sx={{ p: '2px' }} onClick={() => setZoom(z => Math.min(z + 25, 200))}>
-            <ZoomIn size={12} />
-          </IconButton>
+          <ZoomBar />
         </Box>
+
+        {/* ── Resources / Feedback drawer ─────────────────────────────────────── */}
+        <Drawer
+          anchor="right"
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          variant="persistent"
+          sx={{
+            '& .MuiDrawer-paper': {
+              width: 360,
+              position: 'absolute',
+              height: '100%',
+              boxSizing: 'border-box',
+            },
+          }}
+          ModalProps={{ keepMounted: true }}
+        >
+          <Box sx={(theme) => ({
+            borderBottom: `1px solid ${theme.border.subtle}`,
+            flexShrink: 0,
+          })}>
+            <Tabs
+              value={activeTab}
+              onChange={(_, v) => setActiveTab(v)}
+              sx={{ minHeight: 40, px: 1 }}
+            >
+              <Tab value="resources" label="Resources" sx={{ minHeight: 40, py: 0, fontSize: 13 }} />
+              <Tab value="feedback"  label="Feedback"  sx={{ minHeight: 40, py: 0, fontSize: 13 }} />
+            </Tabs>
+          </Box>
+
+          <Box sx={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            {activeTab === 'resources'
+              ? <ResourcesTab onClose={() => setDrawerOpen(false)} />
+              : <FeedbackTab  onClose={() => setDrawerOpen(false)} />
+            }
+          </Box>
+        </Drawer>
+
       </Box>
-
-      {/* ── Resources / Feedback drawer ─────────────────────────────────────── */}
-      <Drawer
-        anchor="right"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        variant="persistent"
-        sx={{
-          '& .MuiDrawer-paper': {
-            width: 360,
-            position: 'absolute',
-            height: '100%',
-            boxSizing: 'border-box',
-          },
-        }}
-        ModalProps={{ keepMounted: true }}
-      >
-        <Box sx={(theme) => ({
-          borderBottom: `1px solid ${theme.border.subtle}`,
-          flexShrink: 0,
-        })}>
-          <Tabs
-            value={activeTab}
-            onChange={(_, v) => setActiveTab(v)}
-            sx={{ minHeight: 40, px: 1 }}
-          >
-            <Tab value="resources" label="Resources" sx={{ minHeight: 40, py: 0, fontSize: 13 }} />
-            <Tab value="feedback"  label="Feedback"  sx={{ minHeight: 40, py: 0, fontSize: 13 }} />
-          </Tabs>
-        </Box>
-
-        <Box sx={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-          {activeTab === 'resources'
-            ? <ResourcesTab onClose={() => setDrawerOpen(false)} />
-            : <FeedbackTab  onClose={() => setDrawerOpen(false)} />
-          }
-        </Box>
-      </Drawer>
-    </Box>
+    </ReactFlowProvider>
   );
 }
