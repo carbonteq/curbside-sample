@@ -22,6 +22,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Divider from "@mui/material/Divider";
 import { Search, X, UserPlus, Pencil, Trash2, FileClock } from "lucide-react";
+import { CsEmptyState } from "../../components/CsEmptyState";
 
 type Status = "active" | "inactive" | "pending";
 type DraftStatus = "none" | "editing" | "submitted";
@@ -221,10 +222,12 @@ export function UsersPage() {
             <TableBody>
               {paginated.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} align="center" sx={(theme) => ({ py: theme.space["4xl"] })}>
-                    <Typography variant="body2" color="text.muted">
-                      No users match your search.
-                    </Typography>
+                  <TableCell colSpan={6} sx={{ border: "none" }}>
+                    <CsEmptyState
+                      variant="inline"
+                      title="No users found"
+                      description="No users match your search. Try adjusting your filters."
+                    />
                   </TableCell>
                 </TableRow>
               ) : paginated.map(user => (
