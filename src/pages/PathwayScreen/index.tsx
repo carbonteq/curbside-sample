@@ -81,7 +81,10 @@ function FlowCanvas() {
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
   return (
-    <Box sx={(theme) => ({ flex: 1, bgcolor: theme.surface.subtle })}>
+    <Box sx={(theme) => ({
+      flex: 1, bgcolor: theme.surface.subtle,
+      ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[900] }),
+    })}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -186,6 +189,7 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
         px: theme.space.lg, py: theme.space.md,
         borderBottom: `1px solid ${theme.border.subtle}`,
         flexShrink: 0,
+        ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
       })}>
         <Typography variant="subtitle1" fontWeight="fontWeightSemibold">Resources</Typography>
         <IconButton size="small" onClick={onClose} aria-label="Close resources panel">
@@ -194,7 +198,10 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
       </Box>
       <Box sx={{ flex: 1, overflowY: 'auto' }}>
         {EVIDENCES.map((ev, i) => (
-          <Accordion key={i} disableGutters elevation={0} sx={(theme) => ({ borderBottom: `1px solid ${theme.border.subtle}` })}>
+          <Accordion key={i} disableGutters elevation={0} sx={(theme) => ({
+            borderBottom: `1px solid ${theme.border.subtle}`,
+            ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
+          })}>
             <AccordionSummary
               expandIcon={<ChevronDown size={16} />}
               sx={(theme) => ({ px: theme.space.lg, py: theme.space.sm, minHeight: 0 })}
@@ -213,6 +220,7 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
                   borderRadius: `${theme.radius.sm}px`,
                   p: theme.space.sm,
                   mb: j < ev.refs.length - 1 ? theme.space.xs : 0,
+                  ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800] }),
                 })}>
                   <Typography variant="caption" color="text.secondary" display="block">{ref.authors}</Typography>
                   <Typography variant="caption" display="block" sx={{ mt: '2px' }}>{ref.title}</Typography>
@@ -254,6 +262,7 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
         px: theme.space.lg, py: theme.space.md,
         borderBottom: `1px solid ${theme.border.subtle}`,
         flexShrink: 0,
+        ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
       })}>
         <Typography variant="subtitle1" fontWeight="fontWeightSemibold">Feedback</Typography>
         <IconButton size="small" onClick={onClose} aria-label="Close feedback panel">
@@ -340,6 +349,10 @@ export function PathwayScreen() {
           px: theme.space['2xl'], height: 52, flexShrink: 0,
           bgcolor: theme.surface.canvas,
           borderBottom: `1px solid ${theme.border.default}`,
+          ...theme.applyStyles('dark', {
+            bgcolor: theme.palette.grey[900],
+            borderColor: theme.palette.grey[700],
+          }),
         })}>
           {/* Breadcrumb */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flex: 1, minWidth: 0 }}>
@@ -398,6 +411,10 @@ export function PathwayScreen() {
             bgcolor: theme.surface.canvas,
             borderLeft: `1px solid ${theme.border.default}`,
             flexShrink: 0,
+            ...theme.applyStyles('dark', {
+              bgcolor: theme.palette.grey[900],
+              borderColor: theme.palette.grey[700],
+            }),
           })}>
             <Tooltip title="Select" placement="left">
               <IconButton size="small" variant="soft" color="primary" aria-label="Select tool">
@@ -415,6 +432,10 @@ export function PathwayScreen() {
           px: theme.space['2xl'], height: 36, flexShrink: 0,
           bgcolor: theme.surface.canvas,
           borderTop: `1px solid ${theme.border.default}`,
+          ...theme.applyStyles('dark', {
+            bgcolor: theme.palette.grey[900],
+            borderColor: theme.palette.grey[700],
+          }),
         })}>
           <Typography variant="caption" color="text.secondary">
             Sepsis Management Protocol · Updated Apr 14, 2026 · Dr. Sarah Chen

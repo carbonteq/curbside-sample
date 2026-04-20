@@ -10,14 +10,22 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useColorScheme } from '@mui/material/styles';
 import { Sun, Moon, Monitor } from 'lucide-react';
-import { AccountSettings }   from '@/pages/AccountSettings';
-import { ComponentShowcase } from '@/pages/ComponentShowcase';
-import { UsersPage }         from '@/pages/UsersPage';
-import { LibraryPage }       from '@/pages/LibraryPage';
-import { AnalyticsPage }     from '@/pages/AnalyticsPage';
-import { PathwayScreen }    from '@/pages/PathwayScreen';
+import { AccountSettings }    from '@/pages/AccountSettings';
+import { ComponentShowcase }  from '@/pages/ComponentShowcase';
+import { UsersPage }          from '@/pages/UsersPage';
+import { LibraryPage }        from '@/pages/LibraryPage';
+import { AnalyticsPage }      from '@/pages/AnalyticsPage';
+import { PathwayScreen }      from '@/pages/PathwayScreen';
+import { BrowsePage }         from '@/pages/BrowsePage';
+import { ProtocolViewerPage } from '@/pages/ProtocolViewerPage';
+import { WorkflowPage }       from '@/pages/WorkflowPage';
 
-type Page = 'settings' | 'showcase' | 'users' | 'library' | 'analytics' | 'pathway';
+type Page =
+  | 'settings' | 'showcase' | 'users' | 'library' | 'analytics' | 'pathway'
+  | 'browse' | 'protocol' | 'workflow';
+
+// Pages that need full-height layout (no padding wrapper)
+const FULL_HEIGHT_PAGES: Page[] = ['pathway', 'browse', 'protocol', 'workflow'];
 
 function ColorSchemeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -38,14 +46,16 @@ function ColorSchemeToggle() {
 }
 
 export function App() {
-  const [page, setPage] = useState<Page>('settings');
+  const [page, setPage] = useState<Page>('browse');
+
+  const isFullHeight = FULL_HEIGHT_PAGES.includes(page);
 
   return (
     <Box
       sx={(theme) => ({
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '100dvh',
+        height: '100dvh',
         bgcolor: theme.surface.canvas,
         ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[900] }),
       })}
@@ -94,12 +104,17 @@ export function App() {
             sx={{ flex: 1 }}
             aria-label="Top-level pages"
           >
+            {/* ── Original pages ── */}
             <Tab value="settings"  label="Account Settings" />
-            <Tab value="showcase"  label="Component Showcase" />
+            <Tab value="showcase"  label="Components" />
             <Tab value="users"     label="Users" />
             <Tab value="library"   label="Library" />
             <Tab value="analytics" label="Analytics" />
             <Tab value="pathway"   label="Pathway Builder" />
+            {/* ── New pages ── */}
+            <Tab value="browse"   label="Browse" />
+            <Tab value="protocol" label="Protocol Viewer" />
+            <Tab value="workflow" label="Workflow" />
           </Tabs>
 
           <ColorSchemeToggle />
@@ -121,31 +136,38 @@ export function App() {
       </AppBar>
 
       {/* Toolbar offset */}
-      <Box sx={(theme) => ({ ...theme.mixins.toolbar })} />
+      <Box sx={(theme) => ({ ...theme.mixins.toolbar, flexShrink: 0 })} />
 
       {/* Page content */}
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {page === 'settings' ? (
+      <Box id="main-content" sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* Full-height pages */}
+        {isFullHeight ? (
+          <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            {page === 'pathway'  && <PathwayScreen />}
+            {page === 'browse'   && <BrowsePage />}
+            {page === 'protocol' && <ProtocolViewerPage />}
+            {page === 'workflow' && <WorkflowPage />}
+          </Box>
+        ) : page === 'settings' ? (
           <Box
             sx={(theme) => ({
               flex: 1,
               display: 'flex',
+              overflow: 'auto',
               [theme.breakpoints.up('md')]: { maxWidth: 1200, width: '100%', mx: 'auto' },
             })}
           >
             <AccountSettings />
           </Box>
         ) : page === 'showcase' ? (
-          <ComponentShowcase />
-        ) : page === 'pathway' ? (
-          <Box id="main-content" sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <PathwayScreen />
+          <Box sx={{ flex: 1, overflow: 'auto' }}>
+            <ComponentShowcase />
           </Box>
         ) : (
           <Box
-            id="main-content"
             sx={(theme) => ({
               flex: 1,
+              overflow: 'auto',
               p: { xs: 3, md: 5 },
               [theme.breakpoints.up('lg')]: { maxWidth: 1400, width: '100%', mx: 'auto' },
             })}
