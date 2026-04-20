@@ -245,7 +245,7 @@ export function UsersPage() {
                       <Avatar
                         variant="soft"
                         color="primary"
-                        sx={{ width: 32, height: 32, fontSize: "0.75rem" }}
+                        sx={(theme) => ({ width: 32, height: 32, fontSize: theme.typography.caption.fontSize })}
                       >
                         {initials(user.name)}
                       </Avatar>

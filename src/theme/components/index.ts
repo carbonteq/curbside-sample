@@ -19,6 +19,7 @@ import { MuiCsStatCard }      from './MuiCsStatCard';
 import { MuiCsStatusDot }     from './MuiCsStatusDot';
 import { MuiCsEmptyState }    from './MuiCsEmptyState';
 import { MuiCsSectionHeader } from './MuiCsSectionHeader';
+import { MuiCsSidebarItem }   from './MuiCsSidebarItem';
 
 export const components: Components<Theme> = {
   // ── MUI built-in overrides ─────────────────────────────────────────────────
@@ -44,4 +45,5 @@ export const components: Components<Theme> = {
   MuiCsStatusDot,
   MuiCsEmptyState,
   MuiCsSectionHeader,
+  MuiCsSidebarItem,
 };

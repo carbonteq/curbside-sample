@@ -13,6 +13,8 @@ import {
   BookOpen, Download, ExternalLink, Clock, User,
   AlertTriangle, CheckCircle, Info,
 } from "lucide-react";
+import { CsSidebarItem } from "../../components/CsSidebarItem";
+import { CsSectionHeader } from "../../components/CsSectionHeader";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -152,41 +154,46 @@ export function ProtocolViewerPage() {
         ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
       })}>
         {/* Breadcrumb */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: "4px", mb: 1 }}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, mb: 1 })}>
           <Typography variant="caption" color="text.secondary"
             sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
             Library
           </Typography>
-          <ChevronRight size={12} style={{ opacity: 0.4 }} />
+          <Box component="span" sx={{ opacity: 0.4, display: "flex" }}>
+            <ChevronRight size={12} aria-hidden="true" />
+          </Box>
           <Typography variant="caption" color="text.secondary"
             sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
             Protocols
           </Typography>
-          <ChevronRight size={12} style={{ opacity: 0.4 }} />
+          <Box component="span" sx={{ opacity: 0.4, display: "flex" }}>
+            <ChevronRight size={12} aria-hidden="true" />
+          </Box>
           <Typography variant="caption" color="primary">Sepsis Management Protocol</Typography>
         </Box>
 
         {/* Title row */}
-        <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.5 }}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "flex-start", gap: theme.space.lg })}>
           {/* Type icon bubble — alpha() called inside sx so theme is resolved */}
           <Box sx={(theme) => ({
             width: 40, height: 40, borderRadius: `${theme.radius.lg}px`,
             bgcolor: alpha(theme.palette[typeColorKey].main, 0.1),
             color: theme.palette[typeColorKey].main,
             display: "flex", alignItems: "center", justifyContent: "center",
-            flexShrink: 0, mt: "2px",
+            flexShrink: 0, mt: 0.5,
           })}>
-            <BookOpen size={18} />
+            <BookOpen size={18} aria-hidden="true" />
           </Box>
 
           <Box sx={{ flex: 1 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Typography variant="h5" sx={{ fontWeight: 700, lineHeight: 1.3 }}>
+            <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+              <Typography variant="h5" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, lineHeight: 1.3 })}>
                 {PROTOCOL.title}
               </Typography>
               <Tooltip title={starred ? "Remove from starred" : "Add to starred"}>
                 <IconButton
                   size="small"
+                  aria-label={starred ? "Remove from starred" : "Add to starred"}
                   onClick={() => setStarred((s) => !s)}
                   sx={(theme) => ({
                     color: starred ? theme.palette.warning.main : theme.palette.text.disabled,
@@ -194,28 +201,32 @@ export function ProtocolViewerPage() {
                     transition: theme.motion.short,
                   })}
                 >
-                  <Star size={16} fill={starred ? "currentColor" : "none"} />
+                  <Star size={16} fill={starred ? "currentColor" : "none"} aria-hidden="true" />
                 </IconButton>
               </Tooltip>
             </Box>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5, flexWrap: "wrap" }}>
+            <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, mt: 0.5, flexWrap: "wrap" })}>
               {/* Chip color prop handles dark mode automatically */}
               <Chip label={PROTOCOL.category}  size="small" color={typeColorKey}  variant="soft" />
               <Chip label={PROTOCOL.specialty}  size="small" color="primary"       variant="soft" />
-              <Chip label={PROTOCOL.version}    size="small" variant="outlined"    sx={{ fontSize: "0.7rem" }} />
-              <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                <Clock size={12} style={{ opacity: 0.5 }} />
+              <Chip label={PROTOCOL.version}    size="small" variant="outlined" />
+              <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+                <Box component="span" sx={{ opacity: 0.5, display: "flex" }}>
+                  <Clock size={12} aria-hidden="true" />
+                </Box>
                 <Typography variant="caption" color="text.secondary">Updated {PROTOCOL.lastUpdated}</Typography>
               </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                <User size={12} style={{ opacity: 0.5 }} />
+              <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+                <Box component="span" sx={{ opacity: 0.5, display: "flex" }}>
+                  <User size={12} aria-hidden="true" />
+                </Box>
                 <Typography variant="caption" color="text.secondary">{PROTOCOL.author}</Typography>
               </Box>
             </Box>
           </Box>
 
-          <Button variant="outlined" size="small" startIcon={<Download size={13} />} sx={{ flexShrink: 0 }}>
+          <Button variant="outlined" size="small" startIcon={<Download size={13} aria-hidden="true" />} sx={{ flexShrink: 0 }}>
             Export
           </Button>
         </Box>
@@ -238,11 +249,11 @@ export function ProtocolViewerPage() {
               return (
                 <Box key={section.id} sx={(theme) => ({ mb: theme.space["3xl"] })}>
                   {/* Section heading */}
-                  <Box sx={{ display: "flex", alignItems: "center", gap: "8px", mb: 1.5 }}>
+                  <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.sm, mb: 1.5 })}>
                     <Box sx={(theme) => ({ color: theme.palette[secCfg.colorKey].main, display: "flex", alignItems: "center" })}>
-                      <SectionIcon size={14} />
+                      <SectionIcon size={14} aria-hidden="true" />
                     </Box>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                    <Typography variant="subtitle1" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold })}>
                       {section.heading}
                     </Typography>
                   </Box>
@@ -286,11 +297,11 @@ export function ProtocolViewerPage() {
                 borderColor: theme.palette.grey[700],
               }),
             })}>
-              <Avatar variant="soft" color="primary" sx={{ width: 36, height: 36, fontSize: "0.8rem" }}>
+              <Avatar variant="soft" color="primary" sx={{ width: 36, height: 36 }}>
                 {PROTOCOL.authorInitials}
               </Avatar>
               <Box>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>{PROTOCOL.author}</Typography>
+                <Typography variant="body2" sx={(theme) => ({ fontWeight: theme.typography.fontWeightSemibold })}>{PROTOCOL.author}</Typography>
                 <Typography variant="caption" color="text.secondary">
                   {PROTOCOL.institution} · Critical Care Medicine
                 </Typography>
@@ -313,43 +324,32 @@ export function ProtocolViewerPage() {
         })}>
           {/* Attachments */}
           <Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "6px", mb: 1.5 }}>
-              <Paperclip size={13} />
-              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                Attachments ({ATTACHMENTS.length})
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <CsSectionHeader
+              variant="eyebrow"
+              icon={<Paperclip size={13} />}
+              title={`Attachments (${ATTACHMENTS.length})`}
+            />
+            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
               {ATTACHMENTS.map((att) => (
-                <Box key={att.id} sx={(theme) => ({
-                  display: "flex", alignItems: "center", gap: theme.space.sm,
-                  p: theme.space.sm, borderRadius: `${theme.radius.md}px`,
-                  border: `1px solid ${theme.border.default}`,
-                  bgcolor: theme.surface.canvas,
-                  cursor: "pointer", transition: theme.motion.short,
-                  "&:hover": { bgcolor: theme.surface.raised },
-                  ...theme.applyStyles("dark", {
-                    bgcolor: theme.palette.grey[900],
-                    borderColor: theme.palette.grey[700],
-                    "&:hover": { bgcolor: theme.palette.grey[700] },
-                  }),
-                })}>
+                <CsSidebarItem key={att.id}>
                   <Box sx={(theme) => ({ color: theme.palette.error.main, flexShrink: 0 })}>
-                    <FileText size={14} />
+                    <FileText size={14} aria-hidden="true" />
                   </Box>
                   <Box sx={{ flex: 1, overflow: "hidden" }}>
-                    <Typography variant="caption" sx={{
-                      display: "block", fontWeight: 500,
+                    <Typography variant="caption" sx={(theme) => ({
+                      display: "block", fontWeight: theme.typography.fontWeightMedium,
                       overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                    }}>
+                    })}>
                       {att.name}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.65rem" }}>
+                    <Typography variant="caption" color="text.secondary">
                       {att.size}
                     </Typography>
                   </Box>
-                  <Download size={12} style={{ opacity: 0.4, flexShrink: 0 }} />
-                </Box>
+                  <Box component="span" sx={{ opacity: 0.4, display: "flex", flexShrink: 0 }}>
+                    <Download size={12} aria-hidden="true" />
+                  </Box>
+                </CsSidebarItem>
               ))}
             </Box>
           </Box>
@@ -361,29 +361,16 @@ export function ProtocolViewerPage() {
 
           {/* Related content */}
           <Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "6px", mb: 1.5 }}>
-              <ExternalLink size={13} />
-              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                Related Content
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <CsSectionHeader
+              variant="eyebrow"
+              icon={<ExternalLink size={13} />}
+              title="Related Content"
+            />
+            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
               {RELATED.map((rel) => {
                 const relColorKey = TYPE_COLOR[rel.type] ?? "primary";
                 return (
-                  <Box key={rel.id} sx={(theme) => ({
-                    display: "flex", alignItems: "center", gap: theme.space.sm,
-                    p: theme.space.sm, borderRadius: `${theme.radius.md}px`,
-                    border: `1px solid ${theme.border.default}`,
-                    bgcolor: theme.surface.canvas,
-                    cursor: "pointer", transition: theme.motion.short,
-                    "&:hover": { bgcolor: theme.surface.raised },
-                    ...theme.applyStyles("dark", {
-                      bgcolor: theme.palette.grey[900],
-                      borderColor: theme.palette.grey[700],
-                      "&:hover": { bgcolor: theme.palette.grey[700] },
-                    }),
-                  })}>
+                  <CsSidebarItem key={rel.id}>
                     {/* Color dot uses palette intent — auto-adapts */}
                     <Box sx={(theme) => ({
                       width: 7, height: 7, borderRadius: "50%",
@@ -391,17 +378,17 @@ export function ProtocolViewerPage() {
                       flexShrink: 0,
                     })} />
                     <Box sx={{ flex: 1, overflow: "hidden" }}>
-                      <Typography variant="caption" sx={{
-                        display: "block", fontWeight: 500,
+                      <Typography variant="caption" sx={(theme) => ({
+                        display: "block", fontWeight: theme.typography.fontWeightMedium,
                         overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                      }}>
+                      })}>
                         {rel.title}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.65rem" }}>
+                      <Typography variant="caption" color="text.secondary">
                         {rel.type}
                       </Typography>
                     </Box>
-                  </Box>
+                  </CsSidebarItem>
                 );
               })}
             </Box>

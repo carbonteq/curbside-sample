@@ -21,6 +21,8 @@ import {
   Search, ChevronDown, Star, MoreVertical,
   GitBranch, FileText, Workflow, ClipboardList, Bell, Sparkles,
 } from "lucide-react";
+import { CsSidebarItem } from "../../components/CsSidebarItem";
+import { CsSectionHeader } from "../../components/CsSectionHeader";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -84,6 +86,10 @@ const ANNOUNCEMENTS = [
   { id: "a3", title: "Pharmacy formulary changes Q2 2026",              date: "Apr 12" },
 ];
 
+// ─── Chip label override — uses theme typography scale, not raw rem ───────────
+// Height + label padding are intentional density overrides for this compact list.
+const chipSx = { height: 17, "& .MuiChip-label": { px: 0.75 } };
+
 // ─── Content list item ────────────────────────────────────────────────────────
 
 function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: string) => void }) {
@@ -96,7 +102,7 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
       onMouseLeave={() => setHover(false)}
       sx={(theme) => ({
         display: "flex", alignItems: "center", gap: theme.space.sm,
-        px: theme.space.md, py: "8px",
+        px: theme.space.md, py: theme.space.xs,
         borderRadius: `${theme.radius.md}px`,
         border: `1px solid ${theme.border.subtle}`,
         bgcolor: theme.surface.canvas,
@@ -119,7 +125,7 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
           size="small"
           onClick={(e) => { e.stopPropagation(); onStar(item.id); }}
           sx={(theme) => ({
-            p: "2px", flexShrink: 0,
+            p: theme.space["2xs"], flexShrink: 0,
             color: item.starred ? theme.palette.warning.main : theme.palette.text.disabled,
             "&:hover": { color: theme.palette.warning.main },
             transition: theme.motion.short,
@@ -143,20 +149,22 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
       {/* Title */}
       <Typography
         variant="body2"
-        sx={{ flex: 1, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+        sx={(theme) => ({
+          flex: 1,
+          fontWeight: theme.typography.fontWeightMedium,
+          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+        })}
       >
         {item.title}
       </Typography>
 
       {/* Badges — MUI Chip color prop handles dark mode automatically */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "4px", flexShrink: 0 }}>
+      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, flexShrink: 0 })}>
         {item.isNew && (
-          <Chip label="New" size="small" color="success" variant="soft"
-            sx={{ height: 17, "& .MuiChip-label": { px: "5px", fontSize: "0.62rem" } }} />
+          <Chip label="New" size="small" color="success" variant="soft" sx={chipSx} />
         )}
         {item.isUpdated && (
-          <Chip label="Updated" size="small" color="info" variant="soft"
-            sx={{ height: 17, "& .MuiChip-label": { px: "5px", fontSize: "0.62rem" } }} />
+          <Chip label="Updated" size="small" color="info" variant="soft" sx={chipSx} />
         )}
         {item.labels.slice(0, 2).map((lbl) => (
           <Chip
@@ -165,7 +173,7 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
             size="small"
             color={lbl.colorKey}
             variant="soft"
-            sx={{ height: 17, "& .MuiChip-label": { px: "5px", fontSize: "0.62rem" } }}
+            sx={chipSx}
           />
         ))}
       </Box>
@@ -174,14 +182,15 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
       <IconButton
         size="small"
         onClick={(e) => e.stopPropagation()}
+        aria-label="More options"
         sx={(theme) => ({
-          p: "2px", flexShrink: 0,
+          p: theme.space["2xs"], flexShrink: 0,
           color: theme.palette.text.secondary,
           opacity: hover ? 1 : 0,
           transition: theme.motion.short,
         })}
       >
-        <MoreVertical size={13} />
+        <MoreVertical size={13} aria-hidden="true" />
       </IconButton>
     </Box>
   );
@@ -225,7 +234,7 @@ export function BrowsePage() {
       {/* ── Search bar ─────────────────────────────────────────────────────── */}
       <Box sx={(theme) => ({
         bgcolor: theme.palette.primary.main,
-        px: 3, py: "14px",
+        px: 3, py: theme.space.md,
         display: "flex", justifyContent: "center",
         flexShrink: 0,
       })}>
@@ -237,19 +246,22 @@ export function BrowsePage() {
           notched={false}
           startAdornment={
             <InputAdornment position="start">
-              <Search size={15} style={{ color: "rgba(255,255,255,0.6)" }} />
+              {/* Icon on primary bg — contrastText is the correct semantic token */}
+              <Box component="span" sx={(theme) => ({ opacity: 0.6, display: "flex", color: theme.palette.primary.contrastText })}>
+                <Search size={15} aria-hidden="true" />
+              </Box>
             </InputAdornment>
           }
           sx={(theme) => ({
             width: "min(560px, 100%)",
-            bgcolor: alpha("#fff", 0.12),
+            bgcolor: alpha(theme.palette.primary.contrastText, 0.12),
             borderRadius: `${theme.radius.pill}px`,
-            color: "#fff",
+            color: theme.palette.primary.contrastText,
             "& fieldset": { border: "none" },
-            "& input": { color: "#fff", py: "8px" },
-            "& input::placeholder": { color: alpha("#fff", 0.55), opacity: 1 },
-            boxShadow: `0 0 0 2px ${alpha("#fff", 0.15)}`,
-            "&:hover, &.Mui-focused": { boxShadow: `0 0 0 2px ${alpha("#fff", 0.35)}` },
+            "& input": { color: theme.palette.primary.contrastText, py: theme.space.xs },
+            "& input::placeholder": { color: alpha(theme.palette.primary.contrastText, 0.55), opacity: 1 },
+            boxShadow: `0 0 0 2px ${alpha(theme.palette.primary.contrastText, 0.15)}`,
+            "&:hover, &.Mui-focused": { boxShadow: `0 0 0 2px ${alpha(theme.palette.primary.contrastText, 0.35)}` },
           })}
         />
       </Box>
@@ -263,7 +275,7 @@ export function BrowsePage() {
           borderRight: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.subtle,
           px: theme.space.md, py: theme.space.lg,
-          display: "flex", flexDirection: "column", gap: "2px",
+          display: "flex", flexDirection: "column", gap: theme.space["2xs"],
           ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
             borderColor: theme.palette.grey[700],
@@ -273,7 +285,7 @@ export function BrowsePage() {
           <Accordion defaultExpanded disableGutters elevation={0}
             sx={{ bgcolor: "transparent", "&::before": { display: "none" } }}>
             <AccordionSummary expandIcon={<ChevronDown size={13} />} sx={{ minHeight: 36, py: 0 }}>
-              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+              <Typography variant="caption" sx={(theme) => ({ fontWeight: theme.typography.fontWeightSemibold, textTransform: "uppercase", letterSpacing: "0.08em" })}>
                 Types
               </Typography>
             </AccordionSummary>
@@ -286,7 +298,7 @@ export function BrowsePage() {
                     control={<Checkbox size="small" checked={typeFilters.has(t)} onChange={() => toggleType(t)} />}
                     label={
                       <Box sx={(theme) => ({
-                        display: "flex", alignItems: "center", gap: "5px",
+                        display: "flex", alignItems: "center", gap: theme.space.xs,
                         color: theme.palette[cfg.colorKey].main,
                       })}>
                         {cfg.icon}
@@ -312,7 +324,7 @@ export function BrowsePage() {
           <Accordion defaultExpanded disableGutters elevation={0}
             sx={{ bgcolor: "transparent", "&::before": { display: "none" } }}>
             <AccordionSummary expandIcon={<ChevronDown size={13} />} sx={{ minHeight: 36, py: 0 }}>
-              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+              <Typography variant="caption" sx={(theme) => ({ fontWeight: theme.typography.fontWeightSemibold, textTransform: "uppercase", letterSpacing: "0.08em" })}>
                 Specialty
               </Typography>
             </AccordionSummary>
@@ -338,7 +350,7 @@ export function BrowsePage() {
           <Accordion disableGutters elevation={0}
             sx={{ bgcolor: "transparent", "&::before": { display: "none" } }}>
             <AccordionSummary expandIcon={<ChevronDown size={13} />} sx={{ minHeight: 36, py: 0 }}>
-              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+              <Typography variant="caption" sx={(theme) => ({ fontWeight: theme.typography.fontWeightSemibold, textTransform: "uppercase", letterSpacing: "0.08em" })}>
                 Department
               </Typography>
             </AccordionSummary>
@@ -372,20 +384,20 @@ export function BrowsePage() {
             <Tabs
               value={tab}
               onChange={(_, v: FilterTab) => setTab(v)}
-              sx={{ "& .MuiTab-root": { minHeight: 44, fontSize: "0.78rem", py: 0 } }}
+              sx={(theme) => ({ "& .MuiTab-root": { minHeight: 44, fontSize: theme.typography.caption.fontSize, py: 0 } })}
             >
               {(["All", "Suggested", "Starred", "Recent", "New", "Updated"] as FilterTab[]).map((t) => (
                 <Tab key={t} value={t} label={t} />
               ))}
             </Tabs>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 }}>
+            <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, flexShrink: 0 })}>
               <Typography variant="caption" color="text.secondary">{filtered.length} results</Typography>
               <Select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortBy)}
                 size="small"
                 sx={(theme) => ({
-                  fontSize: "0.75rem", height: 28,
+                  fontSize: theme.typography.caption.fontSize, height: 28,
                   "& fieldset": { borderColor: theme.border.default },
                   ...theme.applyStyles("dark", { "& fieldset": { borderColor: theme.palette.grey[700] } }),
                 })}
@@ -429,33 +441,21 @@ export function BrowsePage() {
         })}>
           {/* Announcements */}
           <Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "6px", mb: 1.5 }}>
-              <Bell size={13} />
-              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                Announcements
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <CsSectionHeader
+              variant="eyebrow"
+              icon={<Bell size={13} />}
+              title="Announcements"
+            />
+            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
               {ANNOUNCEMENTS.map((a) => (
-                <Box key={a.id} sx={(theme) => ({
-                  p: theme.space.sm, borderRadius: `${theme.radius.md}px`,
-                  border: `1px solid ${theme.border.default}`,
-                  bgcolor: theme.surface.canvas,
-                  cursor: "pointer", transition: theme.motion.short,
-                  "&:hover": { bgcolor: theme.surface.raised },
-                  ...theme.applyStyles("dark", {
-                    bgcolor: theme.palette.grey[900],
-                    borderColor: theme.palette.grey[700],
-                    "&:hover": { bgcolor: theme.palette.grey[700] },
-                  }),
-                })}>
-                  <Typography variant="caption" sx={{ display: "block", fontWeight: 500, lineHeight: 1.45 }}>
+                <CsSidebarItem key={a.id} alignItems="flex-start" style={{ flexDirection: "column" }}>
+                  <Typography variant="caption" sx={(theme) => ({ display: "block", fontWeight: theme.typography.fontWeightMedium, lineHeight: 1.45 })}>
                     {a.title}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.65rem" }}>
+                  <Typography variant="caption" color="text.secondary" sx={(theme) => ({ fontSize: theme.typography.caption.fontSize })}>
                     {a.date}
                   </Typography>
-                </Box>
+                </CsSidebarItem>
               ))}
             </Box>
           </Box>
@@ -467,36 +467,23 @@ export function BrowsePage() {
 
           {/* New content */}
           <Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "6px", mb: 1.5 }}>
-              <Sparkles size={13} />
-              <Typography variant="caption" sx={{ fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                New Content
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <CsSectionHeader
+              variant="eyebrow"
+              icon={<Sparkles size={13} />}
+              title="New Content"
+            />
+            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
               {MOCK_ITEMS.filter((i) => i.isNew).map((item) => {
                 const cfg = TYPE_CONFIG[item.type];
                 return (
-                  <Box key={item.id} sx={(theme) => ({
-                    display: "flex", alignItems: "flex-start", gap: theme.space.xs,
-                    p: theme.space.sm, borderRadius: `${theme.radius.md}px`,
-                    border: `1px solid ${theme.border.default}`,
-                    bgcolor: theme.surface.canvas,
-                    cursor: "pointer", transition: theme.motion.short,
-                    "&:hover": { bgcolor: theme.surface.raised },
-                    ...theme.applyStyles("dark", {
-                      bgcolor: theme.palette.grey[900],
-                      borderColor: theme.palette.grey[700],
-                      "&:hover": { bgcolor: theme.palette.grey[700] },
-                    }),
-                  })}>
-                    <Box sx={(theme) => ({ color: theme.palette[cfg.colorKey].main, mt: "2px", flexShrink: 0 })}>
+                  <CsSidebarItem key={item.id} alignItems="flex-start">
+                    <Box sx={(theme) => ({ color: theme.palette[cfg.colorKey].main, mt: 0.5, flexShrink: 0 })}>
                       {cfg.icon}
                     </Box>
-                    <Typography variant="caption" sx={{ fontWeight: 500, lineHeight: 1.45 }}>
+                    <Typography variant="caption" sx={(theme) => ({ fontWeight: theme.typography.fontWeightMedium, lineHeight: 1.45 })}>
                       {item.title}
                     </Typography>
-                  </Box>
+                  </CsSidebarItem>
                 );
               })}
             </Box>

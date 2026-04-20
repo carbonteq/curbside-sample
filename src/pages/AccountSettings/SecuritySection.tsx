@@ -154,7 +154,7 @@ export function SecuritySection() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Typography variant="body2" fontWeight="fontWeightMedium">{s.label}</Typography>
                 {s.current && (
-                  <Chip label="This device" size="small" color="success" sx={{ height: 20, fontSize: '0.6875rem' }} />
+                  <Chip label="This device" size="small" color="success" />
                 )}
               </Box>
               <Typography variant="caption" color="text.secondary">{s.time}</Typography>

@@ -1206,7 +1206,7 @@ export function ComponentShowcase() {
                   position: "absolute",
                   bottom: 0,
                   right: 0,
-                  p: "2px",
+                  p: 0.5,
                   borderRadius: "50%",
                   backgroundColor: "background.paper",
                 }}
