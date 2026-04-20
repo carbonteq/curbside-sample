@@ -50,6 +50,10 @@ export function ActionNode({ data }: NodeProps) {
           cursor: 'default',
           transition: theme.motion.short,
           '&:hover': { boxShadow: theme.shadows[3] },
+          ...theme.applyStyles('dark', {
+            bgcolor: theme.palette.grey[800],
+            borderColor: theme.palette.grey[600],
+          }),
         })}
       >
         <Typography variant="body2" fontWeight="fontWeightSemibold" textAlign="center">
@@ -141,6 +145,10 @@ export function SideNode({ data }: NodeProps) {
           cursor: 'default',
           transition: theme.motion.short,
           '&:hover': { boxShadow: theme.shadows[2] },
+          ...theme.applyStyles('dark', {
+            bgcolor: theme.palette.grey[700],
+            borderColor: theme.palette.grey[600],
+          }),
         })}
       >
         <Typography variant="body2" fontWeight="fontWeightMedium" color="text.secondary" textAlign="center">
