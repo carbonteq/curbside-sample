@@ -17,8 +17,8 @@ const CsSidebarItemRoot = styled('div', {
   shouldForwardProp: (prop) => prop !== 'alignItems',
 })<{ alignItems?: CsSidebarItemAlignItems }>(({ theme }) => ({
   display: 'flex',
-  gap: theme.space.sm,
-  padding: theme.space.sm,
+  gap: theme.spacing(2),
+  padding: theme.spacing(2),
   borderRadius: `${theme.radius.md}px`,
   border: `1px solid ${theme.border.default}`,
   backgroundColor: theme.surface.canvas,

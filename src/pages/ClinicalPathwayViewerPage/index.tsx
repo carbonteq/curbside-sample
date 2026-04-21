@@ -84,13 +84,13 @@ function FnRef({ n, onFootnote }: { n: number; onFootnote: (n: number, e: React.
       aria-label={`View footnote ${n}`}
       sx={(theme) => ({
         display: "inline-flex", alignItems: "center", justifyContent: "center",
-        minWidth: 18, height: 18, px: "5px",
+        minWidth: 18, height: 18, px: 1,
         border: `1px solid ${theme.border.default}`,
         bgcolor: theme.surface.canvas,
         color: "text.secondary",
         borderRadius: `${theme.radius.pill}px`,
         fontSize: 11, fontWeight: theme.typography.fontWeightBold,
-        cursor: "pointer", verticalAlign: "middle", ml: "2px",
+        cursor: "pointer", verticalAlign: "middle", ml: 1,
         fontFamily: "inherit",
         transition: theme.motion.short,
         "&:hover": {
@@ -131,9 +131,9 @@ function Pill({
       sx={(theme) => ({
         display: "inline-flex",
         alignItems: "center",
-        gap: theme.space.sm,
-        px: theme.space.md,
-        py: theme.space.xs,
+        gap: 2,
+        px: 3,
+        py: 1,
         border: `1px solid ${theme.border.default}`,
         borderRadius: `${theme.radius.pill}px`,
         fontSize: 14,
@@ -197,10 +197,10 @@ function CardNode({
     >
       {/* Header strip */}
       <Box sx={(theme) => ({
-        px: theme.space.lg, py: "12px",
+        px: 4, py: 3,
         bgcolor: alpha(theme.palette.primary.main, 0.10),
         borderBottom: `1px solid ${theme.border.default}`,
-        display: "flex", alignItems: "center", gap: theme.space.sm,
+        display: "flex", alignItems: "center", gap: 2,
         ...theme.applyStyles("dark", {
           bgcolor: alpha(theme.palette.primary.main, 0.18),
           borderColor: theme.palette.grey[700],
@@ -214,7 +214,7 @@ function CardNode({
         ))}
       </Box>
       {/* Body */}
-      <Box sx={(theme) => ({ p: theme.space.lg })}>
+      <Box sx={(theme) => ({ p: 4 })}>
         {children}
       </Box>
     </Box>
@@ -262,7 +262,7 @@ function BranchLabel({ x, y, children }: { x: number; y: number; children: React
   return (
     <Box sx={(theme) => ({
       position: "absolute", left: x, top: y,
-      px: "10px", py: "4px",
+      px: 2, py: 1,
       bgcolor: theme.surface.canvas,
       border: `1px solid ${theme.border.default}`,
       borderRadius: `${theme.radius.md}px`,
@@ -383,9 +383,9 @@ function PathwayCanvas({
 
       {/* ── Clinical Criteria card ─────────────────────────────────────────── */}
       <CardNode x={cx - bigCardW / 2} y={130} w={bigCardW} title="Clinical Criteria" footnoteIds={[1, 2]} onFootnote={onFootnote}>
-        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+        <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 5 }}>
           <div>
-            <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: theme.space.sm })}>
+            <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: 2 })}>
               Minor criteria
             </Box>
             <ul style={listBase}>
@@ -398,19 +398,19 @@ function PathwayCanvas({
             </ul>
           </div>
           <div>
-            <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: theme.space.sm })}>
+            <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: 2 })}>
               Major criteria
             </Box>
             <ul style={listBase}>
               <li>Septic shock requiring vasopressors</li>
               <li>Respiratory failure requiring mechanical ventilation</li>
             </ul>
-            <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: theme.space.lg, mb: "2px" })}>
+            <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: 4, mb: 1 })}>
               Assess within
             </Box>
             <Box sx={(theme) => ({
-              display: "inline-flex", alignItems: "center", gap: theme.space.xs,
-              mt: "2px", px: theme.space.md, py: "6px",
+              display: "inline-flex", alignItems: "center", gap: 1,
+              mt: 1, px: 3, py: 1,
               border: `1px solid ${theme.border.default}`,
               borderRadius: `${theme.radius.pill}px`,
               fontSize: 13, color: "text.secondary",
@@ -466,10 +466,10 @@ function PathwayCanvas({
 
       {/* ── Standard empiric therapy card ─────────────────────────────────── */}
       <CardNode x={leftCX - smallCardW / 2} y={1210} w={smallCardW} title="Standard empiric therapy" onFootnote={onFootnote}>
-        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: theme.space.sm })}>
+        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: 2 })}>
           Combination therapy
         </Box>
-        <Box component="p" sx={(theme) => ({ ...helperText, color: theme.palette.text.secondary, m: 0, mb: theme.space.xs })}>
+        <Box component="p" sx={(theme) => ({ ...helperText, color: theme.palette.text.secondary, m: 0, mb: 1 })}>
           One of the following beta-lactams (IV):
         </Box>
         <ul style={listBase}>
@@ -478,17 +478,17 @@ function PathwayCanvas({
           <li>Ceftriaxone 1–2 g daily</li>
           <li>Ceftaroline 600 mg every 12 hours</li>
         </ul>
-        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: theme.space.lg, mb: theme.space.xs })}>
+        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: 4, mb: 1 })}>
           Plus a macrolide
         </Box>
-        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.sm, alignItems: "flex-start" })}>
+        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" })}>
           <Pill>Azithromycin 500 mg orally or IV daily</Pill>
           <Pill wide>Clarithromycin 500 mg orally twice daily</Pill>
         </Box>
-        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: theme.space.lg, mb: theme.space.xs })}>
+        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: 4, mb: 1 })}>
           Or monotherapy
         </Box>
-        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.sm, alignItems: "flex-start" })}>
+        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" })}>
           <Pill>Ceftazidime 2 g every 8 hours</Pill>
           <Pill wide>Piperacillin-tazobactam 4.5 g every 6 hours</Pill>
         </Box>
@@ -496,17 +496,17 @@ function PathwayCanvas({
 
       {/* ── Escalated empiric therapy card ────────────────────────────────── */}
       <CardNode x={rightCX - smallCardW / 2} y={1210} w={smallCardW} title="Escalated empiric therapy" footnoteIds={[4]} onFootnote={onFootnote}>
-        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: theme.space.xs })}>
+        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: 1 })}>
           If previous MRSA, add one
         </Box>
-        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.sm, alignItems: "flex-start" })}>
+        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" })}>
           <Pill wide>Vancomycin 15 mg/kg IV every 12 hours (adjust by level)</Pill>
           <Pill wide>Linezolid 600 mg IV every 12 hours</Pill>
         </Box>
-        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: theme.space.lg, mb: theme.space.xs })}>
+        <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: 4, mb: 1 })}>
           If previous Pseudomonas, use one
         </Box>
-        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.sm, alignItems: "flex-start" })}>
+        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" })}>
           <Pill>Imipenem 500 mg IV every 6 hours</Pill>
           <Pill>Meropenem 1 g IV every 8 hours</Pill>
           <Pill>Aztreonam 2 g IV every 8 hours</Pill>
@@ -533,9 +533,9 @@ function ZoomPanel({
 }) {
   return (
     <Box sx={(theme) => ({
-      position: "absolute", right: theme.space.xl, top: theme.space.xl,
-      display: "flex", flexDirection: "column", gap: "2px",
-      p: "6px",
+      position: "absolute", right: theme.spacing(5), top: theme.spacing(5),
+      display: "flex", flexDirection: "column", gap: 1,
+      p: 2,
       bgcolor: theme.surface.canvas,
       border: `1px solid ${theme.border.default}`,
       borderRadius: `${theme.radius.pill}px`,
@@ -552,8 +552,8 @@ function ZoomPanel({
       </Tooltip>
       <Typography sx={(theme) => ({
         fontSize: 11, textAlign: "center", color: "text.secondary",
-        py: "4px", fontVariantNumeric: "tabular-nums",
-        minWidth: theme.space["3xl"],
+        py: 1, fontVariantNumeric: "tabular-nums",
+        minWidth: theme.spacing(7),
       })}>
         {Math.round(zoom * 100)}%
       </Typography>
@@ -562,7 +562,7 @@ function ZoomPanel({
           <Minus size={16} aria-hidden="true" />
         </IconButton>
       </Tooltip>
-      <Divider sx={(theme) => ({ my: "4px", borderColor: theme.border.subtle })} />
+      <Divider sx={(theme) => ({ my: 1, borderColor: theme.border.subtle })} />
       <Tooltip title="Fit to screen" placement="left">
         <IconButton size="small" onClick={onFit} aria-label="Fit to screen">
           <Maximize2 size={16} aria-hidden="true" />
@@ -577,13 +577,13 @@ function ZoomPanel({
 function Legend() {
   return (
     <Box sx={(theme) => ({
-      position: "absolute", right: theme.space.xl, bottom: theme.space.xl,
+      position: "absolute", right: theme.spacing(5), bottom: theme.spacing(5),
       bgcolor: alpha(theme.palette.primary.main, 0.08),
       border: `1px solid ${theme.border.default}`,
       borderRadius: `${theme.radius.lg}px`,
-      p: theme.space.md,
+      p: 3,
       boxShadow: theme.shadows[2],
-      display: "flex", flexDirection: "column", gap: "6px",
+      display: "flex", flexDirection: "column", gap: 2,
       minWidth: 148,
       ...theme.applyStyles("dark", {
         bgcolor: theme.palette.grey[800],
@@ -593,19 +593,19 @@ function Legend() {
       <Typography sx={(theme) => ({
         fontSize: 11, fontWeight: theme.typography.fontWeightBold,
         textTransform: "uppercase", letterSpacing: "0.08em",
-        mb: "2px",
+        mb: 1,
       })}>
         Legend
       </Typography>
       {/* Decision */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <svg width={22} height={14} aria-hidden="true">
           <polygon points="11,1 21,7 11,13 1,7" fill="var(--cpv-diamond-fill)" stroke="var(--cpv-diamond-stroke)" />
         </svg>
         <Typography variant="caption" color="text.secondary">Decision</Typography>
       </Box>
       {/* Action */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <Box sx={(theme) => ({
           width: 22, height: 12, borderRadius: `${theme.radius.pill}px`,
           bgcolor: theme.palette.success.main, flexShrink: 0,
@@ -613,7 +613,7 @@ function Legend() {
         <Typography variant="caption" color="text.secondary">Action</Typography>
       </Box>
       {/* Outcome */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <Box sx={(theme) => ({
           width: 22, height: 12, borderRadius: `${theme.radius.pill}px`,
           bgcolor: theme.palette.error.main, flexShrink: 0,
@@ -621,7 +621,7 @@ function Legend() {
         <Typography variant="caption" color="text.secondary">Outcome</Typography>
       </Box>
       {/* Reference */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <Box sx={(theme) => ({
           width: 22, height: 12, borderRadius: `${theme.radius.pill}px`,
           bgcolor: theme.palette.primary.main, flexShrink: 0,
@@ -629,7 +629,7 @@ function Legend() {
         <Typography variant="caption" color="text.secondary">Reference</Typography>
       </Box>
       {/* Card */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <Box sx={(theme) => ({
           width: 22, height: 12, flexShrink: 0,
           bgcolor: theme.surface.canvas,
@@ -674,8 +674,8 @@ function CpToolbar({
         variant="text"
         size="small"
         sx={(theme) => ({
-          display: "flex", flexDirection: "column", alignItems: "center", gap: "2px",
-          px: theme.space.md, py: theme.space.xs,
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 1,
+          px: 3, py: 1,
           minWidth: 64, color: "text.secondary",
           fontSize: 11,
           "&:hover": { bgcolor: theme.fill.default },
@@ -691,10 +691,10 @@ function CpToolbar({
 
   return (
     <Box sx={(theme) => ({
-      position: "absolute", bottom: theme.space.xl,
+      position: "absolute", bottom: theme.spacing(5),
       left: "50%", transform: "translateX(-50%)",
-      display: "flex", alignItems: "center", gap: theme.space.xs,
-      p: theme.space.sm,
+      display: "flex", alignItems: "center", gap: 1,
+      p: 2,
       bgcolor: theme.surface.canvas,
       border: `1px solid ${theme.border.default}`,
       borderRadius: `${theme.radius.lg}px`,
@@ -734,11 +734,11 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
         borderColor: theme.palette.grey[700],
       }),
     })}>
-      <Box sx={(theme) => ({ width: 320, p: theme.space.lg, overflowY: "auto", height: "100%" })}>
+      <Box sx={(theme) => ({ width: 320, p: 4, overflowY: "auto", height: "100%" })}>
         {/* Header */}
         <Box sx={(theme) => ({
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          mb: theme.space.xs,
+          mb: 1,
         })}>
           <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold })}>
             Abbreviations
@@ -749,7 +749,7 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
             </IconButton>
           </Tooltip>
         </Box>
-        <Typography variant="caption" color="text.secondary" sx={(theme) => ({ display: "block", mb: theme.space.lg })}>
+        <Typography variant="caption" color="text.secondary" sx={(theme) => ({ display: "block", mb: 4 })}>
           Persistent — always available while you read.
         </Typography>
 
@@ -766,8 +766,8 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
         })}>
           {ABBREVIATIONS.map((a, i) => (
             <Box key={a.k} sx={(theme) => ({
-              display: "grid", gridTemplateColumns: "72px 1fr", gap: theme.space.sm,
-              px: theme.space.md, py: theme.space.sm,
+              display: "grid", gridTemplateColumns: "72px 1fr", gap: 2,
+              px: 3, py: 2,
               borderTop: i === 0 ? "none" : `1px solid ${theme.border.subtle}`,
               fontSize: 13,
               ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
@@ -781,17 +781,17 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
         </Box>
 
         {/* Organisms */}
-        <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, mt: theme.space["3xl"], mb: theme.space.sm })}>
+        <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, mt: 7, mb: 2 })}>
           Likely organisms
         </Typography>
-        <Typography variant="caption" color="text.secondary" sx={(theme) => ({ display: "block", mb: theme.space.md })}>
+        <Typography variant="caption" color="text.secondary" sx={(theme) => ({ display: "block", mb: 3 })}>
           Organisms responsible for CAP include:
         </Typography>
         <Box sx={(theme) => ({
           border: `1px solid ${theme.border.default}`,
           borderRadius: `${theme.radius.lg}px`,
           bgcolor: theme.surface.canvas,
-          px: theme.space.lg, py: theme.space.md,
+          px: 4, py: 3,
           ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
             borderColor: theme.palette.grey[700],
@@ -803,7 +803,7 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
         </Box>
 
         {/* Source */}
-        <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, mt: theme.space["3xl"], mb: theme.space.sm })}>
+        <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, mt: 7, mb: 2 })}>
           Source
         </Typography>
         <Box sx={(theme) => ({
@@ -811,13 +811,13 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
           bgcolor: theme.surface.canvas,
           border: `1px solid ${theme.border.default}`,
           borderRadius: `${theme.radius.lg}px`,
-          p: theme.space.md,
+          p: 3,
           ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
             borderColor: theme.palette.grey[700],
           }),
         })}>
-          <Typography variant="caption" sx={(theme) => ({ display: "block", fontWeight: theme.typography.fontWeightBold, color: "text.primary", mb: "4px" })}>
+          <Typography variant="caption" sx={(theme) => ({ display: "block", fontWeight: theme.typography.fontWeightBold, color: "text.primary", mb: 1 })}>
             {PATHWAY.source}
           </Typography>
           <Typography variant="caption" color="text.secondary">
@@ -836,16 +836,16 @@ function CpHeader({ onFeedback }: { onFeedback: () => void }) {
     <Box sx={(theme) => ({
       bgcolor: alpha(theme.palette.primary.main, 0.08),
       borderBottom: `1px solid ${theme.border.default}`,
-      px: theme.space["2xl"], py: "14px",
+      px: 6, py: 3,
       display: "flex", alignItems: "center", justifyContent: "space-between",
-      gap: theme.space.lg, flexShrink: 0,
+      gap: 4, flexShrink: 0,
       ...theme.applyStyles("dark", {
         bgcolor: alpha(theme.palette.primary.main, 0.14),
         borderColor: theme.palette.grey[700],
       }),
     })}>
       {/* Left: logo + title */}
-      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: "14px", minWidth: 0 })}>
+      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 3, minWidth: 0 })}>
         <Box sx={(theme) => ({
           width: 32, height: 32,
           borderRadius: `${theme.radius.lg}px`,
@@ -881,27 +881,27 @@ function CpHeader({ onFeedback }: { onFeedback: () => void }) {
 
       {/* Right: metadata + feedback */}
       <Box sx={(theme) => ({
-        display: "flex", alignItems: "center", gap: theme.space["2xl"],
+        display: "flex", alignItems: "center", gap: 6,
         color: "text.secondary", fontSize: 12,
         fontVariantNumeric: "tabular-nums", flexShrink: 0,
       })}>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
           <Tag size={13} aria-hidden="true" />
           <Typography variant="caption">
             <strong>{PATHWAY.version}</strong>
           </Typography>
         </Box>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
           <Clock size={13} aria-hidden="true" />
           <Typography variant="caption">
             Reviewed <strong>{PATHWAY.reviewed}</strong>
           </Typography>
         </Box>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
           <User size={13} aria-hidden="true" />
           <Typography variant="caption">{PATHWAY.author}</Typography>
         </Box>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
           <BookOpen size={13} aria-hidden="true" />
           <Typography variant="caption">Source: {PATHWAY.source}</Typography>
         </Box>
@@ -957,7 +957,7 @@ function FootnoteTooltip({
         <Box sx={(theme) => ({
           bgcolor: alpha(theme.palette.primary.main, 0.10),
           borderBottom: `1px solid ${theme.border.default}`,
-          px: theme.space.md, py: theme.space.sm,
+          px: 3, py: 2,
           display: "flex", alignItems: "center", justifyContent: "space-between",
           ...theme.applyStyles("dark", {
             bgcolor: alpha(theme.palette.primary.main, 0.18),
@@ -974,7 +974,7 @@ function FootnoteTooltip({
           </Tooltip>
         </Box>
         {/* Body */}
-        <Box sx={(theme) => ({ p: theme.space.md })}>
+        <Box sx={(theme) => ({ p: 3 })}>
           <Typography variant="caption" sx={{ lineHeight: 1.55 }}>
             {body}
           </Typography>
@@ -1112,7 +1112,7 @@ export function ClinicalPathwayViewerPage() {
               position: "absolute", bottom: 100, left: "50%", transform: "translateX(-50%)",
               bgcolor: theme.palette.grey[900],
               color: theme.palette.common.white,
-              px: "14px", py: theme.space.sm,
+              px: 3, py: 2,
               borderRadius: `${theme.radius.pill}px`,
               fontSize: 13, boxShadow: theme.shadows[6],
               whiteSpace: "nowrap",

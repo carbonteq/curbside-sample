@@ -61,7 +61,7 @@ const CsSectionHeaderIcon = styled('div', { name: 'MuiCsSectionHeader', slot: 'i
     display: 'flex',
     alignItems: 'center',
     flexShrink: 0,
-    marginRight: theme.space.xs,
+    marginRight: theme.spacing(1),
     color: theme.vars.palette.text.secondary,
   }),
 );

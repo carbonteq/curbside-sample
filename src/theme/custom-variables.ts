@@ -5,21 +5,6 @@ export const customVariables = (theme: Theme) => ({
   radius:    { sm: 4, md: 6, lg: 8, pill: 9999 },
   elevation: { none: 0 as const, low: 2, high: 4 },
 
-  // Named spacing tokens — stored as px strings so sx callbacks pass raw values,
-  // not array indices. Mirrors the spacing scale: [0,4,8,12,16,20,24,32,40,48,56,64].
-  space: {
-    '2xs': '2px',   // tightest — icon clusters, stacked action buttons
-    xs:    '4px',   // tight     — within-component micro gaps
-    sm:    '8px',   // compact   — list items, internal padding
-    md:    '12px',  // default   — standard gaps between related elements
-    lg:    '16px',  // comfortable — gaps between distinct elements
-    xl:    '20px',  // generous  — section content spacing
-    '2xl': '24px',  // large     — section padding
-    '3xl': '32px',  // xlarge    — major section separations
-    '4xl': '40px',  // page      — page-level padding
-    '5xl': '48px',  // hero      — large page sections
-  },
-
   surface: {
     canvas:  '#FFFFFF',
     subtle:  grey[50],

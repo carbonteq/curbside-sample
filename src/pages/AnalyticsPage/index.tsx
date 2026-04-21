@@ -28,7 +28,7 @@ interface SparkBarProps { data: number[]; color: string }
 function SparkBar({ data, color }: SparkBarProps) {
   const max = Math.max(...data);
   return (
-    <Box sx={(theme) => ({ display: "flex", alignItems: "flex-end", gap: theme.space["2xs"], height: 60, mt: theme.space.xs })}>
+    <Box sx={(theme) => ({ display: "flex", alignItems: "flex-end", gap: 1, height: 60, mt: 1 })}>
       {data.map((v, i) => (
         <Box
           key={i}
@@ -61,7 +61,7 @@ function SparkLine({ data, color }: SparkLineProps) {
     return `${x},${y}`;
   }).join(" ");
   return (
-    <Box sx={(theme) => ({ mt: theme.space.xs })}>
+    <Box sx={(theme) => ({ mt: 1 })}>
       <svg viewBox={`0 0 ${w} ${h}`} width="100%" height={60} style={{ overflow: "visible" }}>
         <polyline fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" points={pts} />
         <polyline fill="url(#grad)" stroke="none" points={`0,${h} ${pts} ${w},${h}`} opacity={0.15} />
@@ -167,13 +167,13 @@ function ChartCard({ title, description, chart, hidden, onHide, width, onExpand,
         "&:hover": { borderColor: theme.border.default },
       })}
     >
-      <CardContent sx={(theme) => ({ p: theme.space["2xl"], "&:last-child": { pb: theme.space["2xl"] } })}>
+      <CardContent sx={(theme) => ({ p: 6, "&:last-child": { pb: 6 } })}>
         <Box
           sx={(theme) => ({
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "space-between",
-            mb: theme.space["2xs"],
+            mb: 1,
           })}
         >
           <Box>
@@ -183,7 +183,7 @@ function ChartCard({ title, description, chart, hidden, onHide, width, onExpand,
           <Box
             sx={(theme) => ({
               display: "flex",
-              gap: theme.space["2xs"],
+              gap: 1,
               opacity: 0,
               ".MuiCard-root:hover &": { opacity: 1 },
               transition: theme.motion.short,
@@ -233,9 +233,9 @@ export function AnalyticsPage() {
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "space-between",
-          mb: theme.space.lg,
+          mb: 4,
           flexWrap: "wrap",
-          gap: theme.space.sm,
+          gap: 2,
         })}
       >
         <Box>
@@ -245,14 +245,14 @@ export function AnalyticsPage() {
           </Typography>
         </Box>
 
-        <Box sx={(theme) => ({ display: "flex", gap: theme.space.sm, flexWrap: "wrap", alignItems: "center" })}>
+        <Box sx={(theme) => ({ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" })}>
           <ToggleButtonGroup value={source} exclusive onChange={(_, v) => v && setSource(v)} size="small" aria-label="Data source">
             <ToggleButton value="PLATFORM" aria-label="Platform data">
-              <Box component="span" sx={(theme) => ({ display: "flex", mr: theme.space.xs })}><Monitor size={14} aria-hidden="true" /></Box>
+              <Box component="span" sx={(theme) => ({ display: "flex", mr: 1 })}><Monitor size={14} aria-hidden="true" /></Box>
               Platform
             </ToggleButton>
             <ToggleButton value="EHR" aria-label="EHR data">
-              <Box component="span" sx={(theme) => ({ display: "flex", mr: theme.space.xs })}><Cloud size={14} aria-hidden="true" /></Box>
+              <Box component="span" sx={(theme) => ({ display: "flex", mr: 1 })}><Cloud size={14} aria-hidden="true" /></Box>
               EHR
             </ToggleButton>
           </ToggleButtonGroup>
@@ -269,15 +269,15 @@ export function AnalyticsPage() {
       {hiddenCards.length > 0 && (
         <Box
           sx={(theme) => ({
-            mb: theme.space.sm,
-            px: theme.space.sm,
-            py: theme.space.xs,
+            mb: 2,
+            px: 2,
+            py: 1,
             borderRadius: `${theme.radius.md}px`,
             bgcolor: theme.surface.subtle,
             border: `1px solid ${theme.border.subtle}`,
             display: "flex",
             alignItems: "center",
-            gap: theme.space.xs,
+            gap: 1,
             flexWrap: "wrap",
           })}
         >
@@ -289,7 +289,7 @@ export function AnalyticsPage() {
       )}
 
       {/* Stat cards */}
-      <Grid container spacing={2} sx={(theme) => ({ mb: theme.space.md })}>
+      <Grid container spacing={2} sx={(theme) => ({ mb: 3 })}>
         {!hidden["users"] && (
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <Box sx={{ position: "relative", "&:hover .cs-hide-btn": { opacity: 1 } }}>
@@ -353,7 +353,7 @@ export function AnalyticsPage() {
       </Grid>
 
       {/* Chart cards */}
-      <Grid container spacing={2} sx={(theme) => ({ mb: theme.space.md })}>
+      <Grid container spacing={2} sx={(theme) => ({ mb: 3 })}>
         <Grid size={{ xs: 12, md: widths["views"] === 2 ? 8 : 6 }}>
           <ChartCard title="Content Views" description={`Trend over ${range}`}
             chart={<SparkLine data={d.viewsLine} color={theme.palette.info.main} />}
@@ -386,7 +386,7 @@ export function AnalyticsPage() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Card variant="outlined" sx={(theme) => ({ transition: theme.motion.standard })}>
             <CardContent sx={{ p: 0, "&:last-child": { pb: 0 } }}>
-              <Box sx={(theme) => ({ px: theme.space["2xl"], py: theme.space.sm })}>
+              <Box sx={(theme) => ({ px: 6, py: 2 })}>
                 <Typography variant="h6">Top Content</Typography>
                 <Typography variant="caption" color="text.muted">Most viewed this period</Typography>
               </Box>
@@ -422,7 +422,7 @@ export function AnalyticsPage() {
                         <Typography variant="body2">{item.views.toLocaleString()}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space["2xs"] })}>
+                        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
                           {item.change === 0
                             ? <Minus size={12} aria-hidden="true" />
                             : item.change > 0
@@ -449,7 +449,7 @@ export function AnalyticsPage() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Card variant="outlined" sx={(theme) => ({ transition: theme.motion.standard })}>
             <CardContent sx={{ p: 0, "&:last-child": { pb: 0 } }}>
-              <Box sx={(theme) => ({ px: theme.space["2xl"], py: theme.space.sm })}>
+              <Box sx={(theme) => ({ px: 6, py: 2 })}>
                 <Typography variant="h6">Most Active Users</Typography>
                 <Typography variant="caption" color="text.muted">By session count this period</Typography>
               </Box>
@@ -479,7 +479,7 @@ export function AnalyticsPage() {
                   {TOP_USERS.map((user, i) => (
                     <TableRow key={i} hover sx={(theme) => ({ transition: theme.motion.short, "&:last-child td": { borderBottom: "none" } })}>
                       <TableCell>
-                        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+                        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
                           <Avatar variant="soft" color="primary" sx={(theme) => ({ width: 28, height: 28, fontSize: theme.typography.caption.fontSize })}>
                             {user.initials}
                           </Avatar>

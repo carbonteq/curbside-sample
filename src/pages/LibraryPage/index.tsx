@@ -113,7 +113,7 @@ export function LibraryPage() {
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "space-between",
-          mb: theme.space.lg,
+          mb: 4,
         })}
       >
         <Box>
@@ -135,7 +135,7 @@ export function LibraryPage() {
           borderBottom: "none",
         })}
       >
-        <Box sx={(theme) => ({ px: theme.space.sm, pt: theme.space.sm, pb: 0 })}>
+        <Box sx={(theme) => ({ px: 2, pt: 2, pb: 0 })}>
           <TextField
             placeholder="Search by title or author…"
             value={query}
@@ -156,7 +156,7 @@ export function LibraryPage() {
         <Tabs
           value={activeTab}
           onChange={(_, v) => { setActiveTab(v); setPage(0); }}
-          sx={(theme) => ({ px: theme.space.sm })}
+          sx={(theme) => ({ px: 2 })}
           aria-label="Filter by content type"
         >
           {TABS.map(tab => (
@@ -164,7 +164,7 @@ export function LibraryPage() {
               key={tab}
               value={tab}
               label={
-                <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+                <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
                   {tab}
                   <Chip
                     label={counts[tab]}
@@ -255,7 +255,7 @@ export function LibraryPage() {
 
                   {/* Author */}
                   <TableCell>
-                    <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+                    <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
                       <Avatar variant="soft" sx={(theme) => ({ width: 24, height: 24, fontSize: theme.typography.caption.fontSize })}>
                         {item.authorInitials}
                       </Avatar>
@@ -279,7 +279,7 @@ export function LibraryPage() {
 
                   {/* Actions */}
                   <TableCell>
-                    <Box sx={(theme) => ({ display: "flex", gap: theme.space["2xs"] })}>
+                    <Box sx={(theme) => ({ display: "flex", gap: 1 })}>
                       <Tooltip title="Preview">
                         <IconButton size="small" aria-label={`Preview ${item.title}`}>
                           <Eye size={14} aria-hidden="true" />

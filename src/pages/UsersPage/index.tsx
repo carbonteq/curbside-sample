@@ -116,7 +116,7 @@ export function UsersPage() {
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "space-between",
-          mb: theme.space.lg,
+          mb: 4,
         })}
       >
         <Box>
@@ -140,9 +140,9 @@ export function UsersPage() {
       >
         <Box
           sx={(theme) => ({
-            p: theme.space.sm,
+            p: 2,
             display: "flex",
-            gap: theme.space.sm,
+            gap: 2,
             alignItems: "center",
             flexWrap: "wrap",
           })}
@@ -248,7 +248,7 @@ export function UsersPage() {
                 >
                   {/* User */}
                   <TableCell>
-                    <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.sm })}>
+                    <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 2 })}>
                       <Avatar
                         variant="soft"
                         color="primary"
@@ -292,7 +292,7 @@ export function UsersPage() {
                   {/* Draft */}
                   <TableCell>
                     {DRAFT_LABEL[user.draft] ? (
-                      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+                      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
                         <FileClock size={14} aria-hidden="true" style={{ opacity: 0.6 }} />
                         <Typography variant="caption" color="text.secondary">
                           {DRAFT_LABEL[user.draft]}
@@ -305,7 +305,7 @@ export function UsersPage() {
 
                   {/* Actions */}
                   <TableCell>
-                    <Box sx={(theme) => ({ display: "flex", gap: theme.space["2xs"] })}>
+                    <Box sx={(theme) => ({ display: "flex", gap: 1 })}>
                       <Tooltip title="Edit user">
                         <IconButton size="small" aria-label={`Edit ${user.name}`}>
                           <Pencil size={14} aria-hidden="true" />
