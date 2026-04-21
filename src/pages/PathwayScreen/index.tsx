@@ -346,7 +346,7 @@ export function PathwayScreen() {
         {/* ── Top bar ─────────────────────────────────────────────────────────── */}
         <Box sx={(theme) => ({
           display: 'flex', alignItems: 'center', gap: 3,
-          px: theme.space['2xl'], height: 52, flexShrink: 0,
+          px: 6, height: 52, flexShrink: 0,
           bgcolor: theme.surface.canvas,
           borderBottom: `1px solid ${theme.border.default}`,
           ...theme.applyStyles('dark', {
@@ -429,7 +429,7 @@ export function PathwayScreen() {
         {/* ── Bottom bar ──────────────────────────────────────────────────────── */}
         <Box sx={(theme) => ({
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          px: theme.space['2xl'], height: 36, flexShrink: 0,
+          px: 6, height: 36, flexShrink: 0,
           bgcolor: theme.surface.canvas,
           borderTop: `1px solid ${theme.border.default}`,
           ...theme.applyStyles('dark', {
