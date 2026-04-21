@@ -28,7 +28,7 @@ function SwitchRow({ id, label, description, checked, onChange }: SwitchRowProps
   return (
     <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 3, py: 2 }}>
       <Box>
-        <Typography variant="body1" fontWeight="fontWeightMedium" component="label" htmlFor={id}>
+        <Typography variant="body1" component="label" htmlFor={id} sx={{ fontWeight: 'fontWeightMedium' }}>
           {label}
         </Typography>
         <Typography variant="body2" color="text.secondary">{description}</Typography>
@@ -37,7 +37,7 @@ function SwitchRow({ id, label, description, checked, onChange }: SwitchRowProps
         id={id}
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        inputProps={{ 'aria-label': label }}
+        slotProps={{ input: { 'aria-label': label } }}
       />
     </Box>
   );

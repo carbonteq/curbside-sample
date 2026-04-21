@@ -152,7 +152,7 @@ export function SecuritySection() {
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography variant="body2" fontWeight="fontWeightMedium">{s.label}</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 'fontWeightMedium' }}>{s.label}</Typography>
                 {s.current && (
                   <Chip label="This device" size="small" color="success" />
                 )}

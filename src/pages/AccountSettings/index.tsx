@@ -65,7 +65,7 @@ export function AccountSettings() {
               </ListItemIcon>
               <ListItemText
                 primary={item.label}
-                primaryTypographyProps={{ variant: 'body1' }}
+                slotProps={{ primary: { variant: 'body1' } }}
               />
             </ListItemButton>
           ))}

@@ -162,10 +162,10 @@ export function ProtocolViewerPage() {
         ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
       })}>
         {/* Breadcrumb */}
-        <Box component="nav" aria-label="Breadcrumb" sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1, mb: 1 })}>
+        <Box component="nav" aria-label="Breadcrumb" sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
           <Typography variant="caption" color="text.secondary"
             role="link" tabIndex={0}
-            onKeyDown={(e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
+            onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
             sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" }, "&:focus-visible": { outline: "2px solid", outlineOffset: 2 } }}>
             Library
           </Typography>
@@ -174,7 +174,7 @@ export function ProtocolViewerPage() {
           </Box>
           <Typography variant="caption" color="text.secondary"
             role="link" tabIndex={0}
-            onKeyDown={(e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
+            onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
             sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" }, "&:focus-visible": { outline: "2px solid", outlineOffset: 2 } }}>
             Protocols
           </Typography>
@@ -185,7 +185,7 @@ export function ProtocolViewerPage() {
         </Box>
 
         {/* Title row */}
-        <Box sx={(theme) => ({ display: "flex", alignItems: "flex-start", gap: 4 })}>
+        <Box sx={{ display: "flex", alignItems: "flex-start", gap: 4 }}>
           {/* Type icon bubble — alpha() called inside sx so theme is resolved */}
           <Box sx={(theme) => ({
             width: 40, height: 40, borderRadius: `${theme.radius.lg}px`,
@@ -198,7 +198,7 @@ export function ProtocolViewerPage() {
           </Box>
 
           <Box sx={{ flex: 1 }}>
-            <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Typography variant="h5" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, lineHeight: 1.3 })}>
                 {PROTOCOL.title}
               </Typography>
@@ -218,18 +218,18 @@ export function ProtocolViewerPage() {
               </Tooltip>
             </Box>
 
-            <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1, mt: 1, flexWrap: "wrap" })}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1, flexWrap: "wrap" }}>
               {/* Chip color prop handles dark mode automatically */}
               <Chip label={PROTOCOL.category}  size="small" color={typeColorKey}  variant="soft" />
               <Chip label={PROTOCOL.specialty}  size="small" color="primary"       variant="soft" />
               <Chip label={PROTOCOL.version}    size="small" variant="outlined" />
-              <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Box component="span" sx={{ opacity: 0.5, display: "flex" }}>
                   <Clock size={12} aria-hidden="true" />
                 </Box>
                 <Typography variant="caption" color="text.secondary">Updated {PROTOCOL.lastUpdated}</Typography>
               </Box>
-              <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Box component="span" sx={{ opacity: 0.5, display: "flex" }}>
                   <User size={12} aria-hidden="true" />
                 </Box>
@@ -248,20 +248,20 @@ export function ProtocolViewerPage() {
       <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
 
         {/* Main content area */}
-        <Box sx={(theme) => ({
+        <Box sx={{
           flex: 1, overflow: "auto",
           px: { xs: 6, md: 8 },
           py: 6,
-        })}>
+        }}>
           <Box sx={{ maxWidth: 780 }}>
             {PROTOCOL.sections.map((section, idx) => {
               const secCfg = SECTION_CONFIG[section.icon] ?? SECTION_CONFIG.info;
               const { Icon: SectionIcon } = secCfg;
 
               return (
-                <Box key={section.id} sx={(theme) => ({ mb: 7 })}>
+                <Box key={section.id} sx={{ mb: 7 }}>
                   {/* Section heading */}
-                  <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 2, mb: 2 })}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
                     <Box sx={(theme) => ({ color: theme.palette[secCfg.colorKey].main, display: "flex", alignItems: "center" })}>
                       <SectionIcon size={14} aria-hidden="true" />
                     </Box>
@@ -341,14 +341,14 @@ export function ProtocolViewerPage() {
               icon={<Paperclip size={13} />}
               title={`Attachments (${ATTACHMENTS.length})`}
             />
-            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
               {ATTACHMENTS.map((att) => (
                 <CsSidebarItem
                   key={att.id}
                   role="button"
                   tabIndex={0}
                   aria-label={`Download ${att.name}`}
-                  onKeyDown={(e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
+                  onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
                 >
                   <Box sx={(theme) => ({ color: theme.palette.primary.main, flexShrink: 0 })}>
                     <FileText size={14} aria-hidden="true" />
@@ -384,7 +384,7 @@ export function ProtocolViewerPage() {
               icon={<ExternalLink size={13} />}
               title="Related Content"
             />
-            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
               {RELATED.map((rel) => {
                 const relColorKey = TYPE_COLOR[rel.type] ?? "primary";
                 const RelIcon = TYPE_ICON[rel.type] ?? FileText;

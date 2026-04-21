@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import { Camera } from 'lucide-react';
 
 interface FormState {
@@ -153,7 +153,7 @@ export function ProfileSection() {
             error={Boolean(errors.firstName)}
             helperText={errors.firstName ?? ' '}
             autoComplete="given-name"
-            inputProps={{ 'aria-describedby': errors.firstName ? 'firstName-error' : undefined }}
+            slotProps={{ htmlInput: { 'aria-describedby': errors.firstName ? 'firstName-error' : undefined } }}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
