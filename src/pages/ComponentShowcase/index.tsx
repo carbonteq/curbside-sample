@@ -304,7 +304,7 @@ export function ComponentShowcase() {
                 <Typography
                   variant="caption"
                   color="text.muted"
-                  sx={(theme) => ({ display: "block", mb: theme.space["2xs"] })}
+                  sx={{ display: "block", mb: 1 }}
                 >
                   variant="{v}"
                 </Typography>
@@ -805,12 +805,12 @@ export function ComponentShowcase() {
           ).map((color) => (
             <Box
               key={color}
-              sx={(theme) => ({
+              sx={{
                 display: "flex",
                 flexDirection: "column",
-                gap: theme.space["2xs"],
+                gap: 1,
                 alignItems: "center",
-              })}
+              }}
             >
               <Box
                 sx={(t) => ({

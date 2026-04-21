@@ -150,7 +150,7 @@ export function SecuritySection() {
               }),
             })}
           >
-            <Box sx={(theme) => ({ display: 'flex', flexDirection: 'column', gap: theme.space['2xs'] })}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Typography variant="body2" fontWeight="fontWeightMedium">{s.label}</Typography>
                 {s.current && (
