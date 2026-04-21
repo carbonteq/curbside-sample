@@ -15,6 +15,7 @@ import {
   AlertTriangle, CheckCircle2, Info,
   StickyNote, FlaskConical,
 } from "lucide-react";
+import { CsSidebarItem } from "../../components/CsSidebarItem";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -143,7 +144,7 @@ function QuestionStep({
 }) {
   return (
     <Box>
-      <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.75, lineHeight: 1.4 }}>
+      <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightSemibold, mb: 0.75, lineHeight: 1.4 })}>
         {step.question}
       </Typography>
       {step.hint && (
@@ -193,13 +194,13 @@ function QuestionStep({
                   <Box sx={(theme) => ({
                     width: 8, height: 8,
                     borderRadius: step.type === "multi" ? `${theme.radius.sm / 2}px` : "50%",
-                    // Use contrastText instead of hardcoded #fff
+                    // Use contrastText instead of hardcoded white
                     bgcolor: theme.palette.primary.contrastText,
                   })} />
                 )}
               </Box>
 
-              <Typography variant="body2" sx={{ flex: 1, fontWeight: isSelected ? 600 : 400 }}>
+              <Typography variant="body2" sx={(theme) => ({ flex: 1, fontWeight: isSelected ? theme.typography.fontWeightSemibold : theme.typography.fontWeightRegular })}>
                 {ans.label}
               </Typography>
 
@@ -232,24 +233,24 @@ function ResultView({ result }: { result: Result }) {
     <Box>
       {/* Result banner — alpha() inside sx so theme is resolved correctly */}
       <Box sx={(theme) => ({
-        display: "flex", alignItems: "flex-start", gap: 1.5, mb: 2.5,
+        display: "flex", alignItems: "flex-start", gap: theme.space.lg, mb: 2.5,
         p: 2, borderRadius: `${theme.radius.lg}px`,
         bgcolor: alpha(theme.palette[severityKey].main, 0.08),
         border: `1.5px solid ${alpha(theme.palette[severityKey].main, 0.25)}`,
       })}>
-        <Box sx={(theme) => ({ color: theme.palette[severityKey].main, flexShrink: 0, mt: "2px" })}>
-          <SeverityIcon size={20} />
+        <Box sx={(theme) => ({ color: theme.palette[severityKey].main, flexShrink: 0, mt: 0.5 })}>
+          <SeverityIcon size={20} aria-hidden="true" />
         </Box>
         <Box>
-          <Typography variant="subtitle1" sx={(theme) => ({ fontWeight: 700, color: theme.palette[severityKey].main })}>
+          <Typography variant="subtitle1" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, color: theme.palette[severityKey].main })}>
             {result.heading}
           </Typography>
           <Typography variant="body2" sx={{ mt: 0.5, lineHeight: 1.7 }}>{result.summary}</Typography>
         </Box>
       </Box>
 
-      <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 700 }}>Recommended Orders</Typography>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+      <Typography variant="subtitle2" sx={(theme) => ({ mb: 1.5, fontWeight: theme.typography.fontWeightBold })}>Recommended Orders</Typography>
+      <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
         {result.orders.map((order, idx) => (
           <Box key={idx} sx={(theme) => ({
             display: "flex", alignItems: "flex-start", gap: theme.space.sm,
@@ -262,7 +263,9 @@ function ResultView({ result }: { result: Result }) {
               borderColor: theme.palette.grey[700],
             }),
           })}>
-            <ClipboardList size={13} style={{ flexShrink: 0, marginTop: 2, opacity: 0.55 }} />
+            <Box component="span" sx={{ display: "flex", flexShrink: 0, mt: 0.5, opacity: 0.55 }}>
+              <ClipboardList size={13} aria-hidden="true" />
+            </Box>
             <Typography variant="body2">{order}</Typography>
           </Box>
         ))}
@@ -348,7 +351,7 @@ export function WorkflowPage() {
         flexShrink: 0,
         ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
       })}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 1 }}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.lg, mb: 1 })}>
           {/* Workflow icon — uses palette intent, not hardcoded hex */}
           <Box sx={(theme) => ({
             width: 32, height: 32, borderRadius: `${theme.radius.md}px`,
@@ -356,24 +359,24 @@ export function WorkflowPage() {
             color: theme.palette.warning.main,
             display: "flex", alignItems: "center", justifyContent: "center",
           })}>
-            <Workflow size={16} />
+            <Workflow size={16} aria-hidden="true" />
           </Box>
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+          <Typography variant="subtitle1" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold })}>
             Chest Pain Assessment Workflow
           </Typography>
           {/* Chip color prop auto-adapts to dark mode */}
           <Chip label="Cardiology" size="small" color="primary"  variant="soft" />
-          <Chip label="ED"         size="small" variant="outlined" sx={{ fontSize: "0.7rem" }} />
+          <Chip label="ED"         size="small" variant="outlined" />
           <Box sx={{ flex: 1 }} />
           <Tooltip title="Restart workflow">
-            <IconButton size="small" onClick={handleReset}>
-              <RotateCcw size={14} />
+            <IconButton size="small" onClick={handleReset} aria-label="Restart workflow">
+              <RotateCcw size={14} aria-hidden="true" />
             </IconButton>
           </Tooltip>
         </Box>
 
         {/* Progress bar */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.lg })}>
           <LinearProgress
             variant="determinate"
             value={progress}
@@ -404,16 +407,17 @@ export function WorkflowPage() {
 
               {/* Step breadcrumb */}
               {!isResult && (
-                <Box sx={{ display: "flex", alignItems: "center", gap: "4px", mb: 2 }}>
+                <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, mb: 2 })}>
                   {STEP_ORDER.map((s, idx) => {
                     const isDone    = !!selections[s]?.length;
                     const isCurrent = s === currentStep;
                     return (
-                      <Box key={s} sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      <Box key={s} sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
                         <Box sx={(theme) => ({
                           width: 22, height: 22, borderRadius: "50%",
                           display: "flex", alignItems: "center", justifyContent: "center",
-                          fontSize: "0.65rem", fontWeight: 700,
+                          fontSize: theme.typography.caption.fontSize,
+                          fontWeight: theme.typography.fontWeightBold,
                           bgcolor: isDone
                             ? theme.palette.primary.main
                             : isCurrent
@@ -464,7 +468,7 @@ export function WorkflowPage() {
           })}>
             <Button
               variant="ghost"
-              startIcon={<ChevronLeft size={16} />}
+              startIcon={<ChevronLeft size={16} aria-hidden="true" />}
               onClick={handleBack}
               disabled={history.length === 0 && !isResult}
             >
@@ -473,7 +477,7 @@ export function WorkflowPage() {
             {!isResult && (
               <Button
                 variant="contained"
-                endIcon={<ChevronRight size={16} />}
+                endIcon={<ChevronRight size={16} aria-hidden="true" />}
                 onClick={handleNext}
                 disabled={!canAdvance}
               >
@@ -481,7 +485,7 @@ export function WorkflowPage() {
               </Button>
             )}
             {isResult && (
-              <Button variant="outlined" onClick={handleReset} startIcon={<RotateCcw size={14} />}>
+              <Button variant="outlined" onClick={handleReset} startIcon={<RotateCcw size={14} aria-hidden="true" />}>
                 Restart
               </Button>
             )}
@@ -505,13 +509,13 @@ export function WorkflowPage() {
             sx={(theme) => ({
               px: theme.space.md,
               borderBottom: `1px solid ${theme.border.default}`,
-              "& .MuiTab-root": { minHeight: 40, fontSize: "0.78rem", py: 0 },
+              "& .MuiTab-root": { minHeight: 40, fontSize: theme.typography.caption.fontSize, py: 0 },
               flexShrink: 0,
               ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
             })}
           >
-            <Tab value="notes"     icon={<StickyNote size={13} />}   iconPosition="start" label="Notes"     />
-            <Tab value="resources" icon={<FlaskConical size={13} />} iconPosition="start" label="Resources" />
+            <Tab value="notes"     icon={<StickyNote size={13} aria-hidden="true" />}   iconPosition="start" label="Notes"     />
+            <Tab value="resources" icon={<FlaskConical size={13} aria-hidden="true" />} iconPosition="start" label="Resources" />
           </Tabs>
 
           {sideTab === "notes" && (
@@ -555,31 +559,21 @@ export function WorkflowPage() {
               <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1.5 }}>
                 Relevant clinical resources
               </Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
                 {RESOURCES.map((res) => (
-                  <Box key={res.id} sx={(theme) => ({
-                    display: "flex", alignItems: "flex-start", gap: theme.space.sm,
-                    p: theme.space.sm, borderRadius: `${theme.radius.md}px`,
-                    border: `1px solid ${theme.border.default}`,
-                    bgcolor: theme.surface.canvas,
-                    cursor: "pointer", transition: theme.motion.short,
-                    "&:hover": { bgcolor: theme.surface.raised },
-                    ...theme.applyStyles("dark", {
-                      bgcolor: theme.palette.grey[900],
-                      borderColor: theme.palette.grey[700],
-                      "&:hover": { bgcolor: theme.palette.grey[700] },
-                    }),
-                  })}>
-                    <FileText size={13} style={{ opacity: 0.5, marginTop: 2, flexShrink: 0 }} />
+                  <CsSidebarItem key={res.id} alignItems="flex-start">
+                    <Box component="span" sx={{ display: "flex", opacity: 0.5, mt: 0.5, flexShrink: 0 }}>
+                      <FileText size={13} aria-hidden="true" />
+                    </Box>
                     <Box>
-                      <Typography variant="caption" sx={{ display: "block", fontWeight: 500, lineHeight: 1.4 }}>
+                      <Typography variant="caption" sx={(theme) => ({ display: "block", fontWeight: theme.typography.fontWeightMedium, lineHeight: 1.4 })}>
                         {res.title}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary" sx={{ fontSize: "0.65rem" }}>
+                      <Typography variant="caption" color="text.secondary">
                         {res.type}
                       </Typography>
                     </Box>
-                  </Box>
+                  </CsSidebarItem>
                 ))}
               </Box>
             </Box>

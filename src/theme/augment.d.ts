@@ -55,7 +55,8 @@ declare module '@mui/material/styles' {
     MuiCsStatCard:      'root' | 'header' | 'label' | 'icon' | 'value' | 'delta';
     MuiCsStatusDot:     'root' | 'dot' | 'label';
     MuiCsEmptyState:    'root' | 'iconWrapper' | 'title' | 'description';
-    MuiCsSectionHeader: 'root' | 'row' | 'content' | 'title' | 'subtitle' | 'action';
+    MuiCsSectionHeader: 'root' | 'row' | 'icon' | 'content' | 'title' | 'subtitle' | 'action';
+    MuiCsSidebarItem:   'root';
   }
 
   // ── Custom component props lists ───────────────────────────────────────────
@@ -83,10 +84,14 @@ declare module '@mui/material/styles' {
       action:      { label: string; onClick: () => void; variant?: 'contained' | 'outlined' | 'ghost' };
     }>;
     MuiCsSectionHeader: Partial<{
-      variant:  'default' | 'divider';
+      variant:  'default' | 'divider' | 'eyebrow';
+      icon:     React.ReactNode;
       title:    string;
       subtitle: string;
       action:   React.ReactNode;
+    }>;
+    MuiCsSidebarItem: Partial<{
+      alignItems: 'center' | 'flex-start';
     }>;
   }
 
@@ -112,6 +117,11 @@ declare module '@mui/material/styles' {
       defaultProps?:   ComponentsPropsList['MuiCsSectionHeader'];
       styleOverrides?: ComponentsOverrides<Theme>['MuiCsSectionHeader'];
       variants?:       ComponentsVariants['MuiCsSectionHeader'];
+    };
+    MuiCsSidebarItem?: {
+      defaultProps?:   ComponentsPropsList['MuiCsSidebarItem'];
+      styleOverrides?: ComponentsOverrides<Theme>['MuiCsSidebarItem'];
+      variants?:       ComponentsVariants['MuiCsSidebarItem'];
     };
   }
 }

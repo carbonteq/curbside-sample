@@ -296,7 +296,7 @@ export function AnalyticsPage() {
                 icon={<Users size={16} aria-hidden="true" />} color="primary" />
               <Tooltip title="Hide card">
                 <IconButton className="cs-hide-btn" size="small" onClick={() => hide("users")}
-                  sx={{ position: "absolute", top: 8, right: 8, opacity: 0, transition: "opacity 0.15s" }}>
+                  sx={(theme) => ({ position: "absolute", top: 8, right: 8, opacity: 0, transition: theme.motion.short })}>
                   <X size={12} aria-hidden="true" />
                 </IconButton>
               </Tooltip>
@@ -311,7 +311,7 @@ export function AnalyticsPage() {
                 icon={<Eye size={16} aria-hidden="true" />} color="info" />
               <Tooltip title="Hide card">
                 <IconButton className="cs-hide-btn" size="small" onClick={() => hide("pageviews")}
-                  sx={{ position: "absolute", top: 8, right: 8, opacity: 0, transition: "opacity 0.15s" }}>
+                  sx={(theme) => ({ position: "absolute", top: 8, right: 8, opacity: 0, transition: theme.motion.short })}>
                   <X size={12} aria-hidden="true" />
                 </IconButton>
               </Tooltip>
@@ -326,7 +326,7 @@ export function AnalyticsPage() {
                 icon={<Activity size={16} aria-hidden="true" />} color="success" />
               <Tooltip title="Hide card">
                 <IconButton className="cs-hide-btn" size="small" onClick={() => hide("sessions-stat")}
-                  sx={{ position: "absolute", top: 8, right: 8, opacity: 0, transition: "opacity 0.15s" }}>
+                  sx={(theme) => ({ position: "absolute", top: 8, right: 8, opacity: 0, transition: theme.motion.short })}>
                   <X size={12} aria-hidden="true" />
                 </IconButton>
               </Tooltip>
@@ -341,7 +341,7 @@ export function AnalyticsPage() {
                 icon={<ShoppingCart size={16} aria-hidden="true" />} color="warning" />
               <Tooltip title="Hide card">
                 <IconButton className="cs-hide-btn" size="small" onClick={() => hide("orders-stat")}
-                  sx={{ position: "absolute", top: 8, right: 8, opacity: 0, transition: "opacity 0.15s" }}>
+                  sx={(theme) => ({ position: "absolute", top: 8, right: 8, opacity: 0, transition: theme.motion.short })}>
                   <X size={12} aria-hidden="true" />
                 </IconButton>
               </Tooltip>
@@ -478,7 +478,7 @@ export function AnalyticsPage() {
                     <TableRow key={i} hover sx={(theme) => ({ transition: theme.motion.short, "&:last-child td": { borderBottom: "none" } })}>
                       <TableCell>
                         <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
-                          <Avatar variant="soft" color="primary" sx={{ width: 28, height: 28, fontSize: "0.625rem" }}>
+                          <Avatar variant="soft" color="primary" sx={(theme) => ({ width: 28, height: 28, fontSize: theme.typography.caption.fontSize })}>
                             {user.initials}
                           </Avatar>
                           <Typography variant="body2">{user.name}</Typography>

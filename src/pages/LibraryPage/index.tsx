@@ -165,7 +165,7 @@ export function LibraryPage() {
                     size="small"
                     variant="soft"
                     color={tab === "All" ? "neutral" : TYPE_COLOR[tab as ContentType]}
-                    sx={{ height: 18, fontSize: "0.65rem", pointerEvents: "none" }}
+                    sx={(theme) => ({ height: 18, fontSize: theme.typography.caption.fontSize, pointerEvents: "none" })}
                   />
                 </Box>
               }
@@ -249,7 +249,7 @@ export function LibraryPage() {
                   {/* Author */}
                   <TableCell>
                     <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
-                      <Avatar variant="soft" sx={{ width: 24, height: 24, fontSize: "0.625rem" }}>
+                      <Avatar variant="soft" sx={(theme) => ({ width: 24, height: 24, fontSize: theme.typography.caption.fontSize })}>
                         {item.authorInitials}
                       </Avatar>
                       <Typography variant="body2" color="text.secondary" noWrap>

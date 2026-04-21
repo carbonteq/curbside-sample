@@ -147,11 +147,11 @@ function ZoomBar() {
   const { zoomIn, zoomOut } = useReactFlow();
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-      <IconButton size="small" sx={{ p: '2px' }} onClick={() => zoomOut()}>
+      <IconButton size="small" sx={(theme) => ({ p: theme.space["2xs"] })} onClick={() => zoomOut()}>
         <ZoomOut size={12} />
       </IconButton>
       <ZoomLevel />
-      <IconButton size="small" sx={{ p: '2px' }} onClick={() => zoomIn()}>
+      <IconButton size="small" sx={(theme) => ({ p: theme.space["2xs"] })} onClick={() => zoomIn()}>
         <ZoomIn size={12} />
       </IconButton>
     </Box>
@@ -223,10 +223,10 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
                   ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800] }),
                 })}>
                   <Typography variant="caption" color="text.secondary" display="block">{ref.authors}</Typography>
-                  <Typography variant="caption" display="block" sx={{ mt: '2px' }}>{ref.title}</Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: '4px' }}>
-                    <Chip label={ref.id} size="small" variant="soft" color="neutral" sx={{ height: 18, fontSize: 10 }} />
-                    <IconButton size="small" sx={{ p: '2px' }}>
+                  <Typography variant="caption" display="block" sx={(theme) => ({ mt: theme.space["2xs"] })}>{ref.title}</Typography>
+                  <Box sx={(theme) => ({ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: theme.space.xs })}>
+                    <Chip label={ref.id} size="small" variant="soft" color="neutral" sx={{ height: 18 }} />
+                    <IconButton size="small" sx={(theme) => ({ p: theme.space["2xs"] })}>
                       <ExternalLink size={12} />
                     </IconButton>
                   </Box>

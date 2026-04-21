@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import { Camera } from 'lucide-react';
 
 interface FormState {
@@ -141,7 +141,7 @@ export function ProfileSection() {
       <Divider sx={{ mb: 3 }} />
 
       <Grid container spacing={3}>
-        <Grid xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             id="firstName"
             label="First name"
@@ -156,7 +156,7 @@ export function ProfileSection() {
             inputProps={{ 'aria-describedby': errors.firstName ? 'firstName-error' : undefined }}
           />
         </Grid>
-        <Grid xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             id="lastName"
             label="Last name"
@@ -170,7 +170,7 @@ export function ProfileSection() {
             autoComplete="family-name"
           />
         </Grid>
-        <Grid xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             id="email"
             label="Email address"
@@ -185,7 +185,7 @@ export function ProfileSection() {
             autoComplete="email"
           />
         </Grid>
-        <Grid xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             id="phone"
             label="Phone number"
@@ -197,7 +197,7 @@ export function ProfileSection() {
             autoComplete="tel"
           />
         </Grid>
-        <Grid xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             id="title"
             label="Job title"
@@ -208,7 +208,7 @@ export function ProfileSection() {
             autoComplete="organization-title"
           />
         </Grid>
-        <Grid xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             id="department"
             label="Department"
