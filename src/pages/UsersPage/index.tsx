@@ -23,6 +23,11 @@ import InputLabel from "@mui/material/InputLabel";
 import Divider from "@mui/material/Divider";
 import { Search, X, UserPlus, Pencil, Trash2, FileClock } from "lucide-react";
 import { CsEmptyState } from "../../components/CsEmptyState";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
 
 type Status = "active" | "inactive" | "pending";
 type DraftStatus = "none" | "editing" | "submitted";
@@ -79,10 +84,11 @@ function initials(name: string) {
 }
 
 export function UsersPage() {
-  const [query,       setQuery]       = useState("");
-  const [institution, setInstitution] = useState("All");
-  const [page,        setPage]        = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [query,        setQuery]        = useState("");
+  const [institution,  setInstitution]  = useState("All");
+  const [page,         setPage]         = useState(0);
+  const [rowsPerPage,  setRowsPerPage]  = useState(10);
+  const [deleteTarget, setDeleteTarget] = useState<User | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase();
@@ -227,6 +233,7 @@ export function UsersPage() {
                       variant="inline"
                       title="No users found"
                       description="No users match your search. Try adjusting your filters."
+                      action={hasFilters ? { label: "Clear filters", onClick: clearFilters } : undefined}
                     />
                   </TableCell>
                 </TableRow>
@@ -305,7 +312,7 @@ export function UsersPage() {
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Delete user">
-                        <IconButton size="small" color="error" aria-label={`Delete ${user.name}`}>
+                        <IconButton size="small" color="error" aria-label={`Delete ${user.name}`} onClick={() => setDeleteTarget(user)}>
                           <Trash2 size={14} aria-hidden="true" />
                         </IconButton>
                       </Tooltip>
@@ -332,6 +339,18 @@ export function UsersPage() {
           })}
         />
       </Card>
+      <Dialog open={deleteTarget !== null} onClose={() => setDeleteTarget(null)} maxWidth="xs" fullWidth>
+        <DialogTitle>Delete user?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            This will permanently remove <strong>{deleteTarget?.name}</strong> from the system. This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="ghost" onClick={() => setDeleteTarget(null)}>Cancel</Button>
+          <Button variant="contained" color="error" onClick={() => setDeleteTarget(null)}>Delete</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

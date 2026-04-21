@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
@@ -23,8 +24,8 @@ type DateRange = "7D" | "30D" | "3M" | "6M" | "12M";
 type DataSource = "PLATFORM" | "EHR";
 
 // --- Spark bar chart ---
-interface SparkBarProps { data: number[]; color?: string }
-function SparkBar({ data, color = "var(--mui-palette-primary-main)" }: SparkBarProps) {
+interface SparkBarProps { data: number[]; color: string }
+function SparkBar({ data, color }: SparkBarProps) {
   const max = Math.max(...data);
   return (
     <Box sx={(theme) => ({ display: "flex", alignItems: "flex-end", gap: theme.space["2xs"], height: 60, mt: theme.space.xs })}>
@@ -47,8 +48,8 @@ function SparkBar({ data, color = "var(--mui-palette-primary-main)" }: SparkBarP
 }
 
 // --- Spark line chart (SVG polyline) ---
-interface SparkLineProps { data: number[]; color?: string }
-function SparkLine({ data, color = "var(--mui-palette-primary-main)" }: SparkLineProps) {
+interface SparkLineProps { data: number[]; color: string }
+function SparkLine({ data, color }: SparkLineProps) {
   const w = 200;
   const h = 60;
   const max = Math.max(...data);
@@ -190,16 +191,16 @@ function ChartCard({ title, description, chart, hidden, onHide, width, onExpand,
           >
             {width < 2 && (
               <Tooltip title="Expand">
-                <IconButton size="small" onClick={onExpand}><Maximize2 size={12} aria-hidden="true" /></IconButton>
+                <IconButton size="small" onClick={onExpand} aria-label={`Expand ${title} chart`}><Maximize2 size={12} aria-hidden="true" /></IconButton>
               </Tooltip>
             )}
             {width > 1 && (
               <Tooltip title="Shrink">
-                <IconButton size="small" onClick={onShrink}><Minimize2 size={12} aria-hidden="true" /></IconButton>
+                <IconButton size="small" onClick={onShrink} aria-label={`Shrink ${title} chart`}><Minimize2 size={12} aria-hidden="true" /></IconButton>
               </Tooltip>
             )}
             <Tooltip title="Hide">
-              <IconButton size="small" onClick={onHide}><X size={12} aria-hidden="true" /></IconButton>
+              <IconButton size="small" onClick={onHide} aria-label={`Hide ${title} chart`}><X size={12} aria-hidden="true" /></IconButton>
             </Tooltip>
           </Box>
         </Box>
@@ -210,6 +211,7 @@ function ChartCard({ title, description, chart, hidden, onHide, width, onExpand,
 }
 
 export function AnalyticsPage() {
+  const theme = useTheme();
   const [range,  setRange]  = useState<DateRange>("30D");
   const [source, setSource] = useState<DataSource>("PLATFORM");
   const [hidden, setHidden] = useState<Record<string, boolean>>({});
@@ -246,11 +248,11 @@ export function AnalyticsPage() {
         <Box sx={(theme) => ({ display: "flex", gap: theme.space.sm, flexWrap: "wrap", alignItems: "center" })}>
           <ToggleButtonGroup value={source} exclusive onChange={(_, v) => v && setSource(v)} size="small" aria-label="Data source">
             <ToggleButton value="PLATFORM" aria-label="Platform data">
-              <Monitor size={14} aria-hidden="true" style={{ marginRight: 6 }} />
+              <Box component="span" sx={(theme) => ({ display: "flex", mr: theme.space.xs })}><Monitor size={14} aria-hidden="true" /></Box>
               Platform
             </ToggleButton>
             <ToggleButton value="EHR" aria-label="EHR data">
-              <Cloud size={14} aria-hidden="true" style={{ marginRight: 6 }} />
+              <Box component="span" sx={(theme) => ({ display: "flex", mr: theme.space.xs })}><Cloud size={14} aria-hidden="true" /></Box>
               EHR
             </ToggleButton>
           </ToggleButtonGroup>
@@ -295,7 +297,7 @@ export function AnalyticsPage() {
                 delta={fmtDelta(d.trend.activeUsers)} trend={toTrend(d.trend.activeUsers)}
                 icon={<Users size={16} aria-hidden="true" />} color="primary" />
               <Tooltip title="Hide card">
-                <IconButton className="cs-hide-btn" size="small" onClick={() => hide("users")}
+                <IconButton className="cs-hide-btn" size="small" onClick={() => hide("users")} aria-label="Hide Active Users card"
                   sx={(theme) => ({ position: "absolute", top: 8, right: 8, opacity: 0, transition: theme.motion.short })}>
                   <X size={12} aria-hidden="true" />
                 </IconButton>
@@ -310,7 +312,7 @@ export function AnalyticsPage() {
                 delta={fmtDelta(d.trend.pageViews)} trend={toTrend(d.trend.pageViews)}
                 icon={<Eye size={16} aria-hidden="true" />} color="info" />
               <Tooltip title="Hide card">
-                <IconButton className="cs-hide-btn" size="small" onClick={() => hide("pageviews")}
+                <IconButton className="cs-hide-btn" size="small" onClick={() => hide("pageviews")} aria-label="Hide Page Views card"
                   sx={(theme) => ({ position: "absolute", top: 8, right: 8, opacity: 0, transition: theme.motion.short })}>
                   <X size={12} aria-hidden="true" />
                 </IconButton>
@@ -325,7 +327,7 @@ export function AnalyticsPage() {
                 delta={fmtDelta(d.trend.sessions)} trend={toTrend(d.trend.sessions)}
                 icon={<Activity size={16} aria-hidden="true" />} color="success" />
               <Tooltip title="Hide card">
-                <IconButton className="cs-hide-btn" size="small" onClick={() => hide("sessions-stat")}
+                <IconButton className="cs-hide-btn" size="small" onClick={() => hide("sessions-stat")} aria-label="Hide Sessions card"
                   sx={(theme) => ({ position: "absolute", top: 8, right: 8, opacity: 0, transition: theme.motion.short })}>
                   <X size={12} aria-hidden="true" />
                 </IconButton>
@@ -340,7 +342,7 @@ export function AnalyticsPage() {
                 delta={fmtDelta(d.trend.orders)} trend={toTrend(d.trend.orders)}
                 icon={<ShoppingCart size={16} aria-hidden="true" />} color="warning" />
               <Tooltip title="Hide card">
-                <IconButton className="cs-hide-btn" size="small" onClick={() => hide("orders-stat")}
+                <IconButton className="cs-hide-btn" size="small" onClick={() => hide("orders-stat")} aria-label="Hide Orders card"
                   sx={(theme) => ({ position: "absolute", top: 8, right: 8, opacity: 0, transition: theme.motion.short })}>
                   <X size={12} aria-hidden="true" />
                 </IconButton>
@@ -354,25 +356,25 @@ export function AnalyticsPage() {
       <Grid container spacing={2} sx={(theme) => ({ mb: theme.space.md })}>
         <Grid size={{ xs: 12, md: widths["views"] === 2 ? 8 : 6 }}>
           <ChartCard title="Content Views" description={`Trend over ${range}`}
-            chart={<SparkLine data={d.viewsLine} color="var(--mui-palette-info-main)" />}
+            chart={<SparkLine data={d.viewsLine} color={theme.palette.info.main} />}
             hidden={!!hidden["views-chart"]} onHide={() => hide("views-chart")}
             width={widths["views"] || 1} onExpand={() => expand("views")} onShrink={() => shrink("views")} />
         </Grid>
         <Grid size={{ xs: 12, md: widths["views"] === 2 ? 4 : 6 }}>
           <ChartCard title="Sessions" description={`Volume over ${range}`}
-            chart={<SparkBar data={d.sessionsBars} color="var(--mui-palette-success-main)" />}
+            chart={<SparkBar data={d.sessionsBars} color={theme.palette.success.main} />}
             hidden={!!hidden["sessions-chart"]} onHide={() => hide("sessions-chart")}
             width={widths["sessions"] || 1} onExpand={() => expand("sessions")} onShrink={() => shrink("sessions")} />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <ChartCard title="Orders" description={`Volume over ${range}`}
-            chart={<SparkBar data={d.ordersBars} color="var(--mui-palette-warning-main)" />}
+            chart={<SparkBar data={d.ordersBars} color={theme.palette.warning.main} />}
             hidden={!!hidden["orders-chart"]} onHide={() => hide("orders-chart")}
             width={widths["orders"] || 1} onExpand={() => expand("orders")} onShrink={() => shrink("orders")} />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <ChartCard title="Active Users" description={`DAU over ${range}`}
-            chart={<SparkBar data={d.usersBars} color="var(--mui-palette-primary-main)" />}
+            chart={<SparkBar data={d.usersBars} color={theme.palette.primary.main} />}
             hidden={!!hidden["users-chart"]} onHide={() => hide("users-chart")}
             width={widths["users-chart"] || 1} onExpand={() => expand("users-chart")} onShrink={() => shrink("users-chart")} />
         </Grid>

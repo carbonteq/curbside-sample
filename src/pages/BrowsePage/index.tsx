@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { CsSidebarItem } from "../../components/CsSidebarItem";
 import { CsSectionHeader } from "../../components/CsSectionHeader";
+import { CsEmptyState } from "../../components/CsEmptyState";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -98,8 +99,13 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
 
   return (
     <Box
+      role="button"
+      tabIndex={0}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onKeyDown={(e: React.KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") e.preventDefault();
+      }}
       sx={(theme) => ({
         display: "flex", alignItems: "center", gap: theme.space.sm,
         px: theme.space.md, py: theme.space.xs,
@@ -111,6 +117,10 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
         "&:hover": {
           bgcolor: theme.surface.subtle,
           borderColor: theme.border.default,
+        },
+        "&:focus-visible": {
+          outline: `2px solid ${theme.palette.primary.main}`,
+          outlineOffset: 2,
         },
         ...theme.applyStyles("dark", {
           bgcolor: theme.palette.grey[900],
@@ -205,6 +215,7 @@ export function BrowsePage() {
   const [items,       setItems]       = useState(MOCK_ITEMS);
   const [typeFilters, setTypeFilters] = useState<Set<ContentType>>(new Set());
   const [specFilters, setSpecFilters] = useState<Set<string>>(new Set());
+  const [deptFilters, setDeptFilters] = useState<Set<string>>(new Set());
 
   const specialties = useMemo(() => [...new Set(MOCK_ITEMS.map((i) => i.specialty))].sort(), []);
 
@@ -213,6 +224,7 @@ export function BrowsePage() {
     if (query)             list = list.filter((i) => i.title.toLowerCase().includes(query.toLowerCase()));
     if (typeFilters.size)  list = list.filter((i) => typeFilters.has(i.type));
     if (specFilters.size)  list = list.filter((i) => specFilters.has(i.specialty));
+    if (deptFilters.size)  list = list.filter((i) => deptFilters.has(i.department));
     if (tab === "Starred") list = list.filter((i) => i.starred);
     if (tab === "New")     list = list.filter((i) => !!i.isNew);
     if (tab === "Updated") list = list.filter((i) => !!i.isUpdated);
@@ -225,8 +237,13 @@ export function BrowsePage() {
     setTypeFilters((p) => { const s = new Set(p); s.has(t) ? s.delete(t) : s.add(t); return s; });
   const toggleSpec = (s: string) =>
     setSpecFilters((p) => { const set = new Set(p); set.has(s) ? set.delete(s) : set.add(s); return set; });
+  const toggleDept = (d: string) =>
+    setDeptFilters((p) => { const s = new Set(p); s.has(d) ? s.delete(d) : s.add(d); return s; });
   const toggleStar = (id: string) =>
     setItems((p) => p.map((i) => i.id === id ? { ...i, starred: !i.starred } : i));
+  const clearAllFilters = () => {
+    setQuery(""); setTypeFilters(new Set()); setSpecFilters(new Set()); setDeptFilters(new Set()); setTab("All");
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}>
@@ -358,7 +375,7 @@ export function BrowsePage() {
               {["ICU", "ED", "Medical/Surg", "OR", "All"].map((d) => (
                 <FormControlLabel
                   key={d}
-                  control={<Checkbox size="small" />}
+                  control={<Checkbox size="small" checked={deptFilters.has(d)} onChange={() => toggleDept(d)} />}
                   label={<Typography variant="body2">{d}</Typography>}
                   sx={{ mx: 0 }}
                 />
@@ -417,7 +434,12 @@ export function BrowsePage() {
           })}>
             {filtered.length === 0 ? (
               <Box sx={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Typography variant="body2" color="text.secondary">No results found</Typography>
+                <CsEmptyState
+                  variant="inline"
+                  title="No results found"
+                  description="Try adjusting your search, filters, or selected tab."
+                  action={{ label: "Clear all filters", onClick: clearAllFilters }}
+                />
               </Box>
             ) : (
               filtered.map((item) => (

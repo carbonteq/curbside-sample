@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
+import { focusRing } from "../../theme/recipes";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -127,12 +128,18 @@ const RESOURCES = [
   { id: "r4", title: "ACS Anticoagulation Protocol",            type: "Protocol"  },
 ];
 
-// ─── Flag colour (answer option indicator dot) — palette key, not hex ─────────
+// ─── Flag colour + icon — palette key and icon component, not hex ─────────────
 
 const FLAG_PALETTE: Record<string, PaletteIntent> = {
   warn: "warning",
   ok:   "success",
   info: "info",
+};
+
+const FLAG_ICON: Record<string, React.ElementType> = {
+  warn: AlertTriangle,
+  ok:   CheckCircle2,
+  info: Info,
 };
 
 // ─── Step component ───────────────────────────────────────────────────────────
@@ -148,7 +155,7 @@ function QuestionStep({
         {step.question}
       </Typography>
       {step.hint && (
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
           {step.hint}
         </Typography>
       )}
@@ -157,11 +164,18 @@ function QuestionStep({
         {step.answers.map((ans) => {
           const isSelected   = selected.includes(ans.id);
           const flagColorKey = ans.flag ? FLAG_PALETTE[ans.flag] : undefined;
+          const FlagIcon     = ans.flag ? FLAG_ICON[ans.flag] : null;
 
           return (
             <Box
               key={ans.id}
+              role={step.type === "single" ? "radio" : "checkbox"}
+              aria-checked={isSelected}
+              tabIndex={0}
               onClick={() => onSelect(ans.id)}
+              onKeyDown={(e: React.KeyboardEvent) => {
+                if (e.key === " " || e.key === "Enter") { e.preventDefault(); onSelect(ans.id); }
+              }}
               sx={(theme) => ({
                 display: "flex", alignItems: "center", gap: theme.space.md,
                 px: theme.space.lg, py: theme.space.md,
@@ -173,6 +187,7 @@ function QuestionStep({
                   borderColor: theme.palette.primary.main,
                   bgcolor: alpha(theme.palette.primary.main, 0.04),
                 },
+                "&:focus-visible": { ...focusRing(theme) },
                 ...theme.applyStyles("dark", {
                   bgcolor: isSelected
                     ? alpha(theme.palette.primary.main, 0.12)
@@ -194,7 +209,6 @@ function QuestionStep({
                   <Box sx={(theme) => ({
                     width: 8, height: 8,
                     borderRadius: step.type === "multi" ? `${theme.radius.sm / 2}px` : "50%",
-                    // Use contrastText instead of hardcoded white
                     bgcolor: theme.palette.primary.contrastText,
                   })} />
                 )}
@@ -204,13 +218,11 @@ function QuestionStep({
                 {ans.label}
               </Typography>
 
-              {/* Flag dot — palette color, adapts to dark mode */}
-              {flagColorKey && (
-                <Box sx={(theme) => ({
-                  width: 8, height: 8, borderRadius: "50%",
-                  bgcolor: theme.palette[flagColorKey].main,
-                  flexShrink: 0,
-                })} />
+              {/* Flag icon — icon + palette color, never color-only */}
+              {flagColorKey && FlagIcon && (
+                <Box sx={(theme) => ({ color: theme.palette[flagColorKey].main, display: "flex", flexShrink: 0 })}>
+                  <FlagIcon size={13} aria-hidden="true" />
+                </Box>
               )}
             </Box>
           );
@@ -233,7 +245,7 @@ function ResultView({ result }: { result: Result }) {
     <Box>
       {/* Result banner — alpha() inside sx so theme is resolved correctly */}
       <Box sx={(theme) => ({
-        display: "flex", alignItems: "flex-start", gap: theme.space.lg, mb: 2.5,
+        display: "flex", alignItems: "flex-start", gap: theme.space.lg, mb: 3,
         p: 2, borderRadius: `${theme.radius.lg}px`,
         bgcolor: alpha(theme.palette[severityKey].main, 0.08),
         border: `1.5px solid ${alpha(theme.palette[severityKey].main, 0.25)}`,
@@ -531,6 +543,7 @@ export function WorkflowPage() {
                 value={notes}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value)}
                 placeholder="Type your notes here…"
+                aria-label="Clinical notes for this encounter"
                 sx={(theme) => ({
                   flex: 1, resize: "none",
                   border: `1px solid ${theme.border.default}`,
@@ -542,12 +555,11 @@ export function WorkflowPage() {
                   fontSize: theme.typography.body2.fontSize,
                   lineHeight: 1.7,
                   outline: "none",
-                  "&:focus": { borderColor: theme.palette.primary.main },
+                  "&:focus": { ...focusRing(theme) },
                   transition: theme.motion.short,
                   ...theme.applyStyles("dark", {
                     bgcolor: theme.palette.grey[900],
                     borderColor: theme.palette.grey[700],
-                    "&:focus": { borderColor: theme.palette.primary.light },
                   }),
                 })}
               />
