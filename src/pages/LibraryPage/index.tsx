@@ -109,12 +109,12 @@ export function LibraryPage() {
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Header */}
       <Box
-        sx={(theme) => ({
+        sx={{
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "space-between",
           mb: 4,
-        })}
+        }}
       >
         <Box>
           <Typography variant="h4" gutterBottom>Library</Typography>
@@ -135,7 +135,7 @@ export function LibraryPage() {
           borderBottom: "none",
         })}
       >
-        <Box sx={(theme) => ({ px: 2, pt: 2, pb: 0 })}>
+        <Box sx={{ px: 2, pt: 2, pb: 0 }}>
           <TextField
             placeholder="Search by title or author…"
             value={query}
@@ -156,7 +156,7 @@ export function LibraryPage() {
         <Tabs
           value={activeTab}
           onChange={(_, v) => { setActiveTab(v); setPage(0); }}
-          sx={(theme) => ({ px: 2 })}
+          sx={{ px: 2 }}
           aria-label="Filter by content type"
         >
           {TABS.map(tab => (
@@ -164,7 +164,7 @@ export function LibraryPage() {
               key={tab}
               value={tab}
               label={
-                <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   {tab}
                   <Chip
                     label={counts[tab]}
@@ -238,7 +238,7 @@ export function LibraryPage() {
                 >
                   {/* Title */}
                   <TableCell sx={{ maxWidth: 280 }}>
-                    <Typography variant="body2" fontWeight="fontWeightMedium" noWrap>
+                    <Typography variant="body2" noWrap sx={{ fontWeight: 'fontWeightMedium' }}>
                       {item.title}
                     </Typography>
                   </TableCell>
@@ -255,7 +255,7 @@ export function LibraryPage() {
 
                   {/* Author */}
                   <TableCell>
-                    <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                       <Avatar variant="soft" sx={(theme) => ({ width: 24, height: 24, fontSize: theme.typography.caption.fontSize })}>
                         {item.authorInitials}
                       </Avatar>
@@ -279,7 +279,7 @@ export function LibraryPage() {
 
                   {/* Actions */}
                   <TableCell>
-                    <Box sx={(theme) => ({ display: "flex", gap: 1 })}>
+                    <Box sx={{ display: "flex", gap: 1 }}>
                       <Tooltip title="Preview">
                         <IconButton size="small" aria-label={`Preview ${item.title}`}>
                           <Eye size={14} aria-hidden="true" />

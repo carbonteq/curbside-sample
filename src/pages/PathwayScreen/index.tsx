@@ -147,11 +147,11 @@ function ZoomBar() {
   const { zoomIn, zoomOut } = useReactFlow();
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-      <IconButton size="small" sx={(theme) => ({ p: 1 })} onClick={() => zoomOut()}>
+      <IconButton size="small" sx={{ p: 1 }} onClick={() => zoomOut()}>
         <ZoomOut size={12} />
       </IconButton>
       <ZoomLevel />
-      <IconButton size="small" sx={(theme) => ({ p: 1 })} onClick={() => zoomIn()}>
+      <IconButton size="small" sx={{ p: 1 }} onClick={() => zoomIn()}>
         <ZoomIn size={12} />
       </IconButton>
     </Box>
@@ -191,7 +191,7 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
         flexShrink: 0,
         ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
       })}>
-        <Typography variant="subtitle1" fontWeight="fontWeightSemibold">Resources</Typography>
+        <Typography variant="subtitle1" sx={{ fontWeight: 'fontWeightSemibold' }}>Resources</Typography>
         <IconButton size="small" onClick={onClose} aria-label="Close resources panel">
           <X size={16} />
         </IconButton>
@@ -204,16 +204,16 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
           })}>
             <AccordionSummary
               expandIcon={<ChevronDown size={16} />}
-              sx={(theme) => ({ px: 4, py: 2, minHeight: 0 })}
+              sx={{ px: 4, py: 2, minHeight: 0 }}
             >
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
                 <BookOpen size={14} style={{ marginTop: 2, flexShrink: 0, color: 'var(--mui-palette-primary-main)' }} />
-                <Typography variant="body2" fontWeight="fontWeightMedium" sx={{ lineHeight: 1.4 }}>
+                <Typography variant="body2" sx={{ fontWeight: 'fontWeightMedium', lineHeight: 1.4 }}>
                   {ev.title}
                 </Typography>
               </Box>
             </AccordionSummary>
-            <AccordionDetails sx={(theme) => ({ px: 4, pt: 0, pb: 3 })}>
+            <AccordionDetails sx={{ px: 4, pt: 0, pb: 3 }}>
               {ev.refs.map((ref, j) => (
                 <Box key={j} sx={(theme) => ({
                   bgcolor: theme.surface.subtle,
@@ -222,11 +222,11 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
                   mb: j < ev.refs.length - 1 ? 1 : 0,
                   ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800] }),
                 })}>
-                  <Typography variant="caption" color="text.secondary" display="block">{ref.authors}</Typography>
-                  <Typography variant="caption" display="block" sx={(theme) => ({ mt: 1 })}>{ref.title}</Typography>
-                  <Box sx={(theme) => ({ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1 })}>
+                  <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>{ref.authors}</Typography>
+                  <Typography variant="caption" sx={{ display: 'block', mt: 1 }}>{ref.title}</Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1 }}>
                     <Chip label={ref.id} size="small" variant="soft" color="neutral" sx={{ height: 18 }} />
-                    <IconButton size="small" sx={(theme) => ({ p: 1 })}>
+                    <IconButton size="small" sx={{ p: 1 }}>
                       <ExternalLink size={12} />
                     </IconButton>
                   </Box>
@@ -264,15 +264,15 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
         flexShrink: 0,
         ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
       })}>
-        <Typography variant="subtitle1" fontWeight="fontWeightSemibold">Feedback</Typography>
+        <Typography variant="subtitle1" sx={{ fontWeight: 'fontWeightSemibold' }}>Feedback</Typography>
         <IconButton size="small" onClick={onClose} aria-label="Close feedback panel">
           <X size={16} />
         </IconButton>
       </Box>
 
-      <Box sx={(theme) => ({ flex: 1, overflowY: 'auto', p: 4, display: 'flex', flexDirection: 'column', gap: 4 })}>
+      <Box sx={{ flex: 1, overflowY: 'auto', p: 4, display: 'flex', flexDirection: 'column', gap: 4 }}>
         <Box>
-          <Typography variant="body2" color="text.secondary" sx={(theme) => ({ mb: 2 })}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             Share feedback directly with the pathway editors.
           </Typography>
           <TextField
@@ -296,7 +296,7 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
             disabled={!text.trim()}
             onClick={handleSend}
             startIcon={<Send size={14} />}
-            sx={(theme) => ({ mt: 3 })}
+            sx={{ mt: 3 }}
           >
             Send to Editors
           </Button>
@@ -305,19 +305,19 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
         <Divider />
 
         <Box>
-          <Typography variant="overline" color="text.muted" display="block" sx={(theme) => ({ mb: 2 })}>
+          <Typography variant="overline" color="text.muted" sx={{ display: 'block', mb: 2 }}>
             Pathway Editors
           </Typography>
           {EDITORS.map((ed) => (
-            <Box key={ed.name} sx={(theme) => ({
+            <Box key={ed.name} sx={{
               display: 'flex', alignItems: 'center', gap: 3,
               py: 2,
-            })}>
+            }}>
               <Avatar variant="soft" color={ed.color} sx={{ width: 32, height: 32, fontSize: 12 }}>
                 {ed.initials}
               </Avatar>
               <Box>
-                <Typography variant="body2" fontWeight="fontWeightMedium">{ed.name}</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 'fontWeightMedium' }}>{ed.name}</Typography>
                 <Typography variant="caption" color="text.secondary">{ed.role}</Typography>
               </Box>
             </Box>
@@ -364,7 +364,7 @@ export function PathwayScreen() {
               Infectious Disease
             </Typography>
             <ChevronRight size={14} color="var(--mui-palette-text-disabled)" />
-            <Typography variant="body2" fontWeight="fontWeightSemibold" noWrap>
+            <Typography variant="body2" noWrap sx={{ fontWeight: 'fontWeightSemibold' }}>
               Sepsis Management Protocol
             </Typography>
             <Chip
@@ -372,9 +372,9 @@ export function PathwayScreen() {
               size="small"
               variant="soft"
               color="success"
-              sx={(theme) => ({ ml: 1, height: 20, fontSize: 11 })}
+              sx={{ ml: 1, height: 20, fontSize: 11 }}
             />
-            <Typography variant="caption" color="text.disabled" sx={(theme) => ({ ml: 1 })}>
+            <Typography variant="caption" color="text.disabled" sx={{ ml: 1 }}>
               v2.4
             </Typography>
           </Box>

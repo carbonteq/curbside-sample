@@ -2,6 +2,7 @@ import type * as React from 'react';
 import type {
   ComponentsOverrides,
   ComponentsVariants,
+  CssVarsTheme,
 } from '@mui/material/styles';
 import '@mui/material/styles';
 import '@mui/material/Avatar';
@@ -19,6 +20,7 @@ import '@mui/material/Accordion';
 
 declare module '@mui/material/styles' {
   interface Theme {
+    vars: CssVarsTheme['vars'];
     surface:   { canvas: string; subtle: string; raised: string; overlay: string; scrim: string };
     fill:      { default: string; emphasis: string; selected: string };
     border:    { subtle: string; default: string; strong: string };
@@ -38,6 +40,8 @@ declare module '@mui/material/styles' {
 
   interface Palette        { neutral: Palette['primary'] }
   interface PaletteOptions { neutral?: PaletteOptions['primary'] }
+
+  interface Color { 850: string }
 
   interface TypeText { muted: string }
 
@@ -148,8 +152,20 @@ declare module '@mui/material/Card' {
   interface CardPropsVariantOverrides { subtle: true; raised: true }
 }
 
+declare module '@mui/material/Paper' {
+  interface PaperPropsVariantOverrides { subtle: true; raised: true; soft: true }
+}
+
 declare module '@mui/material/OutlinedInput' {
   interface OutlinedInputPropsColorOverrides { ghost: true; soft: true }
+}
+
+declare module '@mui/material/InputBase' {
+  interface InputBasePropsColorOverrides { ghost: true; soft: true }
+}
+
+declare module '@mui/material/LinearProgress' {
+  interface LinearProgressPropsColorOverrides { neutral: true }
 }
 
 declare module '@mui/material/Switch' {
@@ -167,8 +183,3 @@ declare module '@mui/material/Tabs' {
   interface TabsPropsVariantOverrides { pills: true }
 }
 
-declare module '@mui/material/Accordion' {
-  interface AccordionOwnProps {
-    variant?: 'default' | 'soft';
-  }
-}

@@ -29,7 +29,7 @@ const CsStatCardRoot = styled('div', {
   slot: 'root',
   shouldForwardProp: (prop) =>
     !['label', 'value', 'delta', 'trend', 'icon', 'color'].includes(prop as string),
-})<CsStatCardProps>(({ theme }) => ({
+})(({ theme }) => ({
   minWidth: 200,
   flex: '1 1 200px',
   padding: theme.spacing(3),

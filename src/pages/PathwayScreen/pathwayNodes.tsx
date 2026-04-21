@@ -25,7 +25,7 @@ export function StartNode({ data }: NodeProps) {
           '&:hover': { boxShadow: theme.shadows[4] },
         })}
       >
-        <Typography variant="body2" fontWeight="fontWeightSemibold" textAlign="center">
+        <Typography variant="body2" sx={{ fontWeight: 'fontWeightSemibold', textAlign: 'center' }}>
           {label}
         </Typography>
       </Box>
@@ -56,11 +56,11 @@ export function ActionNode({ data }: NodeProps) {
           }),
         })}
       >
-        <Typography variant="body2" fontWeight="fontWeightSemibold" textAlign="center">
+        <Typography variant="body2" sx={{ fontWeight: 'fontWeightSemibold', textAlign: 'center' }}>
           {label}
         </Typography>
         {sublabel && (
-          <Typography variant="caption" color="text.secondary" textAlign="center">
+          <Typography variant="caption" color="text.secondary" sx={{ textAlign: 'center' }}>
             {sublabel}
           </Typography>
         )}
@@ -87,11 +87,11 @@ export function DecisionNode({ data }: NodeProps) {
           '&:hover': { boxShadow: theme.shadows[3] },
         })}
       >
-        <Typography variant="body2" fontWeight="fontWeightSemibold" color="warning.dark" textAlign="center">
+        <Typography variant="body2" color="warning.dark" sx={{ fontWeight: 'fontWeightSemibold', textAlign: 'center' }}>
           {label}
         </Typography>
         {sublabel && (
-          <Typography variant="caption" color="warning.dark" sx={{ opacity: 0.75 }} textAlign="center">
+          <Typography variant="caption" color="warning.dark" sx={{ opacity: 0.75, textAlign: 'center' }}>
             {sublabel}
           </Typography>
         )}
@@ -121,7 +121,7 @@ export function EndNode({ data }: NodeProps) {
           '&:hover': { boxShadow: theme.shadows[4] },
         })}
       >
-        <Typography variant="body2" fontWeight="fontWeightSemibold" textAlign="center">
+        <Typography variant="body2" sx={{ fontWeight: 'fontWeightSemibold', textAlign: 'center' }}>
           {label}
         </Typography>
       </Box>
@@ -151,11 +151,11 @@ export function SideNode({ data }: NodeProps) {
           }),
         })}
       >
-        <Typography variant="body2" fontWeight="fontWeightMedium" color="text.secondary" textAlign="center">
+        <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 'fontWeightMedium', textAlign: 'center' }}>
           {label}
         </Typography>
         {sublabel && (
-          <Typography variant="caption" color="text.disabled" textAlign="center">
+          <Typography variant="caption" color="text.disabled" sx={{ textAlign: 'center' }}>
             {sublabel}
           </Typography>
         )}

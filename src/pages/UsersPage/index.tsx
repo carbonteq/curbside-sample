@@ -112,12 +112,12 @@ export function UsersPage() {
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Page header */}
       <Box
-        sx={(theme) => ({
+        sx={{
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "space-between",
           mb: 4,
-        })}
+        }}
       >
         <Box>
           <Typography variant="h4" gutterBottom>All Users</Typography>
@@ -139,13 +139,13 @@ export function UsersPage() {
         })}
       >
         <Box
-          sx={(theme) => ({
+          sx={{
             p: 2,
             display: "flex",
             gap: 2,
             alignItems: "center",
             flexWrap: "wrap",
-          })}
+          }}
         >
           <TextField
             placeholder="Search by name, email, or role…"
@@ -248,7 +248,7 @@ export function UsersPage() {
                 >
                   {/* User */}
                   <TableCell>
-                    <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 2 })}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                       <Avatar
                         variant="soft"
                         color="primary"
@@ -257,7 +257,7 @@ export function UsersPage() {
                         {initials(user.name)}
                       </Avatar>
                       <Box>
-                        <Typography variant="body2" fontWeight="fontWeightMedium">
+                        <Typography variant="body2" sx={{ fontWeight: 'fontWeightMedium' }}>
                           {user.name}
                         </Typography>
                         <Typography variant="caption" color="text.muted">
@@ -292,7 +292,7 @@ export function UsersPage() {
                   {/* Draft */}
                   <TableCell>
                     {DRAFT_LABEL[user.draft] ? (
-                      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <FileClock size={14} aria-hidden="true" style={{ opacity: 0.6 }} />
                         <Typography variant="caption" color="text.secondary">
                           {DRAFT_LABEL[user.draft]}
@@ -305,7 +305,7 @@ export function UsersPage() {
 
                   {/* Actions */}
                   <TableCell>
-                    <Box sx={(theme) => ({ display: "flex", gap: 1 })}>
+                    <Box sx={{ display: "flex", gap: 1 }}>
                       <Tooltip title="Edit user">
                         <IconButton size="small" aria-label={`Edit ${user.name}`}>
                           <Pencil size={14} aria-hidden="true" />

@@ -169,7 +169,7 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
       </Typography>
 
       {/* Badges — MUI Chip color prop handles dark mode automatically */}
-      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 })}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 }}>
         {item.isNew && (
           <Chip label="New" size="small" color="success" variant="soft" sx={chipSx} />
         )}
@@ -407,7 +407,7 @@ export function BrowsePage() {
                 <Tab key={t} value={t} label={t} />
               ))}
             </Tabs>
-            <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 })}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 }}>
               <Typography variant="caption" color="text.secondary">{filtered.length} results</Typography>
               <Select
                 value={sortBy}
@@ -427,11 +427,11 @@ export function BrowsePage() {
           </Box>
 
           {/* Items */}
-          <Box sx={(theme) => ({
+          <Box sx={{
             flex: 1, overflow: "auto",
             px: 6, py: 4,
             display: "flex", flexDirection: "column", gap: 1,
-          })}>
+          }}>
             {filtered.length === 0 ? (
               <Box sx={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <CsEmptyState
@@ -468,7 +468,7 @@ export function BrowsePage() {
               icon={<Bell size={13} />}
               title="Announcements"
             />
-            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
               {ANNOUNCEMENTS.map((a) => (
                 <CsSidebarItem key={a.id} alignItems="flex-start" style={{ flexDirection: "column" }}>
                   <Typography variant="caption" sx={(theme) => ({ display: "block", fontWeight: theme.typography.fontWeightMedium, lineHeight: 1.45 })}>
@@ -494,7 +494,7 @@ export function BrowsePage() {
               icon={<Sparkles size={13} />}
               title="New Content"
             />
-            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
               {MOCK_ITEMS.filter((i) => i.isNew).map((item) => {
                 const cfg = TYPE_CONFIG[item.type];
                 return (

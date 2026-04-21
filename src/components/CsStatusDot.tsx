@@ -29,7 +29,7 @@ const CsStatusDotRoot = styled('span', {
   slot: 'root',
   shouldForwardProp: (prop) =>
     !['status', 'label', 'size', 'showLabel'].includes(prop as string),
-})<CsStatusDotProps>(({ theme }) => ({
+})(({ theme }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   gap: theme.spacing(1),

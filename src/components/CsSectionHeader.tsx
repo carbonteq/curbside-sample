@@ -43,7 +43,7 @@ const CsSectionHeaderRoot = styled('div', {
 
 const CsSectionHeaderRow = styled('div', { name: 'MuiCsSectionHeader', slot: 'row' })<{
   variant?: CsSectionHeaderVariant;
-}>(({ theme }) => ({
+}>(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-start',

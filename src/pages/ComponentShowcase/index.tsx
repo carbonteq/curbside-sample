@@ -17,7 +17,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Tooltip from "@mui/material/Tooltip";
 import CircularProgress from "@mui/material/CircularProgress";
 import Avatar from "@mui/material/Avatar";
-import Badge from "@mui/material/Badge";
 import LinearProgress from "@mui/material/LinearProgress";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -28,7 +27,6 @@ import { useState } from "react";
 import {
   Bell,
   Check,
-  Info,
   AlertTriangle,
   XCircle,
   Plus,
@@ -36,7 +34,6 @@ import {
   Edit2,
   Download,
   Star,
-  User,
   Heart,
   Settings,
   ChevronDown,
@@ -48,7 +45,7 @@ import {
   Search,
   Filter,
 } from "lucide-react";
-import { softTint, focusRing } from "@/theme/recipes";
+import { focusRing } from "@/theme/recipes";
 import { CsStatCard } from "@/components/CsStatCard";
 import { CsStatusDot } from "@/components/CsStatusDot";
 import { CsEmptyState } from "@/components/CsEmptyState";
@@ -782,7 +779,7 @@ export function ComponentShowcase() {
               ["fontWeightBold", 700],
             ] as const
           ).map(([name, w]) => (
-            <Typography key={name} variant="body1" fontWeight={w}>
+            <Typography key={name} variant="body1" sx={{ fontWeight: w }}>
               {name} ({w})
             </Typography>
           ))}

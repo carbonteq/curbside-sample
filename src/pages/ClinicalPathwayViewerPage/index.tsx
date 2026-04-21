@@ -214,7 +214,7 @@ function CardNode({
         ))}
       </Box>
       {/* Body */}
-      <Box sx={(theme) => ({ p: 4 })}>
+      <Box sx={{ p: 4 }}>
         {children}
       </Box>
     </Box>
@@ -481,14 +481,14 @@ function PathwayCanvas({
         <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: 4, mb: 1 })}>
           Plus a macrolide
         </Box>
-        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" })}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" }}>
           <Pill>Azithromycin 500 mg orally or IV daily</Pill>
           <Pill wide>Clarithromycin 500 mg orally twice daily</Pill>
         </Box>
         <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: 4, mb: 1 })}>
           Or monotherapy
         </Box>
-        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" })}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" }}>
           <Pill>Ceftazidime 2 g every 8 hours</Pill>
           <Pill wide>Piperacillin-tazobactam 4.5 g every 6 hours</Pill>
         </Box>
@@ -499,14 +499,14 @@ function PathwayCanvas({
         <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mb: 1 })}>
           If previous MRSA, add one
         </Box>
-        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" })}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" }}>
           <Pill wide>Vancomycin 15 mg/kg IV every 12 hours (adjust by level)</Pill>
           <Pill wide>Linezolid 600 mg IV every 12 hours</Pill>
         </Box>
         <Box component="p" sx={(theme) => ({ ...sectionLabel, color: theme.palette.text.secondary, m: 0, mt: 4, mb: 1 })}>
           If previous Pseudomonas, use one
         </Box>
-        <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" })}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" }}>
           <Pill>Imipenem 500 mg IV every 6 hours</Pill>
           <Pill>Meropenem 1 g IV every 8 hours</Pill>
           <Pill>Aztreonam 2 g IV every 8 hours</Pill>
@@ -734,12 +734,12 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
         borderColor: theme.palette.grey[700],
       }),
     })}>
-      <Box sx={(theme) => ({ width: 320, p: 4, overflowY: "auto", height: "100%" })}>
+      <Box sx={{ width: 320, p: 4, overflowY: "auto", height: "100%" }}>
         {/* Header */}
-        <Box sx={(theme) => ({
+        <Box sx={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           mb: 1,
-        })}>
+        }}>
           <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold })}>
             Abbreviations
           </Typography>
@@ -749,7 +749,7 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
             </IconButton>
           </Tooltip>
         </Box>
-        <Typography variant="caption" color="text.secondary" sx={(theme) => ({ display: "block", mb: 4 })}>
+        <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 4 }}>
           Persistent — always available while you read.
         </Typography>
 
@@ -784,7 +784,7 @@ function CpSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
         <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, mt: 7, mb: 2 })}>
           Likely organisms
         </Typography>
-        <Typography variant="caption" color="text.secondary" sx={(theme) => ({ display: "block", mb: 3 })}>
+        <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 3 }}>
           Organisms responsible for CAP include:
         </Typography>
         <Box sx={(theme) => ({
@@ -845,7 +845,7 @@ function CpHeader({ onFeedback }: { onFeedback: () => void }) {
       }),
     })}>
       {/* Left: logo + title */}
-      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 3, minWidth: 0 })}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 3, minWidth: 0 }}>
         <Box sx={(theme) => ({
           width: 32, height: 32,
           borderRadius: `${theme.radius.lg}px`,
@@ -863,10 +863,10 @@ function CpHeader({ onFeedback }: { onFeedback: () => void }) {
           CP
         </Box>
         <Box sx={{ minWidth: 0 }}>
-          <Typography sx={(theme) => ({
+          <Typography sx={{
             fontSize: 11, textTransform: "uppercase",
             letterSpacing: "0.08em", color: "text.secondary",
-          })}>
+          }}>
             Clinical Pathway Viewer
           </Typography>
           <Typography sx={(theme) => ({
@@ -880,28 +880,28 @@ function CpHeader({ onFeedback }: { onFeedback: () => void }) {
       </Box>
 
       {/* Right: metadata + feedback */}
-      <Box sx={(theme) => ({
+      <Box sx={{
         display: "flex", alignItems: "center", gap: 6,
         color: "text.secondary", fontSize: 12,
         fontVariantNumeric: "tabular-nums", flexShrink: 0,
-      })}>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+      }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Tag size={13} aria-hidden="true" />
           <Typography variant="caption">
             <strong>{PATHWAY.version}</strong>
           </Typography>
         </Box>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Clock size={13} aria-hidden="true" />
           <Typography variant="caption">
             Reviewed <strong>{PATHWAY.reviewed}</strong>
           </Typography>
         </Box>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <User size={13} aria-hidden="true" />
           <Typography variant="caption">{PATHWAY.author}</Typography>
         </Box>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <BookOpen size={13} aria-hidden="true" />
           <Typography variant="caption">Source: {PATHWAY.source}</Typography>
         </Box>
@@ -974,7 +974,7 @@ function FootnoteTooltip({
           </Tooltip>
         </Box>
         {/* Body */}
-        <Box sx={(theme) => ({ p: 3 })}>
+        <Box sx={{ p: 3 }}>
           <Typography variant="caption" sx={{ lineHeight: 1.55 }}>
             {body}
           </Typography>

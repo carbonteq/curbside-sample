@@ -262,7 +262,7 @@ function ResultView({ result }: { result: Result }) {
       </Box>
 
       <Typography variant="subtitle2" sx={(theme) => ({ mb: 2, fontWeight: theme.typography.fontWeightBold })}>Recommended Orders</Typography>
-      <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
         {result.orders.map((order, idx) => (
           <Box key={idx} sx={(theme) => ({
             display: "flex", alignItems: "flex-start", gap: 2,
@@ -363,7 +363,7 @@ export function WorkflowPage() {
         flexShrink: 0,
         ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
       })}>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 4, mb: 1 })}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 4, mb: 1 }}>
           {/* Workflow icon — uses palette intent, not hardcoded hex */}
           <Box sx={(theme) => ({
             width: 32, height: 32, borderRadius: `${theme.radius.md}px`,
@@ -388,7 +388,7 @@ export function WorkflowPage() {
         </Box>
 
         {/* Progress bar */}
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 4 })}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
           <LinearProgress
             variant="determinate"
             value={progress}
@@ -409,22 +409,22 @@ export function WorkflowPage() {
       <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
 
         {/* Main workflow area */}
-        <Box sx={(theme) => ({
+        <Box sx={{
           flex: 1, display: "flex", flexDirection: "column", overflow: "hidden",
           px: { xs: 6, md: 8 },
           py: 6,
-        })}>
+        }}>
           <Box sx={{ flex: 1, overflow: "auto" }}>
             <Box sx={{ maxWidth: 680 }}>
 
               {/* Step breadcrumb */}
               {!isResult && (
-                <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1, mb: 2 })}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                   {STEP_ORDER.map((s, idx) => {
                     const isDone    = !!selections[s]?.length;
                     const isCurrent = s === currentStep;
                     return (
-                      <Box key={s} sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
+                      <Box key={s} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <Box sx={(theme) => ({
                           width: 22, height: 22, borderRadius: "50%",
                           display: "flex", alignItems: "center", justifyContent: "center",
@@ -531,10 +531,10 @@ export function WorkflowPage() {
           </Tabs>
 
           {sideTab === "notes" && (
-            <Box sx={(theme) => ({
+            <Box sx={{
               flex: 1, p: 4,
               display: "flex", flexDirection: "column", gap: 3,
-            })}>
+            }}>
               <Typography variant="caption" color="text.secondary">
                 Add clinical notes for this encounter
               </Typography>
@@ -567,11 +567,11 @@ export function WorkflowPage() {
           )}
 
           {sideTab === "resources" && (
-            <Box sx={(theme) => ({ flex: 1, overflow: "auto", p: 4 })}>
+            <Box sx={{ flex: 1, overflow: "auto", p: 4 }}>
               <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 2 }}>
                 Relevant clinical resources
               </Typography>
-              <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                 {RESOURCES.map((res) => (
                   <CsSidebarItem key={res.id} alignItems="flex-start">
                     <Box component="span" sx={{ display: "flex", opacity: 0.5, mt: 1, flexShrink: 0 }}>
