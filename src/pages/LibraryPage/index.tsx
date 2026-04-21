@@ -21,6 +21,11 @@ import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
 import { Search, Plus, Pencil, Eye, Copy, Trash2 } from "lucide-react";
 import { CsEmptyState } from "../../components/CsEmptyState";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
 
 type ContentType = "Pathway" | "Protocol" | "Document" | "Workflow";
 type ContentStatus = "Published" | "Draft" | "In Review" | "Archived";
@@ -43,11 +48,11 @@ const TYPE_COLOR: Record<ContentType, "primary" | "info" | "secondary" | "warnin
   Workflow: "warning",
 };
 
-const STATUS_COLOR: Record<ContentStatus, "success" | "neutral" | "warning" | "error"> = {
+const STATUS_COLOR: Record<ContentStatus, "success" | "neutral" | "warning"> = {
   Published:   "success",
   Draft:       "neutral",
   "In Review": "warning",
-  Archived:    "error",
+  Archived:    "neutral",
 };
 
 const MOCK_CONTENT: ContentItem[] = [
@@ -77,10 +82,11 @@ type FilterTab = "All" | ContentType;
 const TABS: FilterTab[] = ["All", "Pathway", "Protocol", "Document", "Workflow"];
 
 export function LibraryPage() {
-  const [query,       setQuery]       = useState("");
-  const [activeTab,   setActiveTab]   = useState<FilterTab>("All");
-  const [page,        setPage]        = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [query,        setQuery]        = useState("");
+  const [activeTab,    setActiveTab]    = useState<FilterTab>("All");
+  const [page,         setPage]         = useState(0);
+  const [rowsPerPage,  setRowsPerPage]  = useState(10);
+  const [deleteTarget, setDeleteTarget] = useState<ContentItem | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase();
@@ -135,7 +141,7 @@ export function LibraryPage() {
             value={query}
             onChange={e => { setQuery(e.target.value); setPage(0); }}
             size="small"
-            sx={(theme) => ({ width: 320, mb: theme.space.sm })}
+            sx={{ width: 320, mb: 1 }}
             slotProps={{
               input: {
                 startAdornment: (
@@ -216,6 +222,7 @@ export function LibraryPage() {
                       variant="inline"
                       title="No content found"
                       description="No content matches your search. Try adjusting your filters."
+                      action={query ? { label: "Clear search", onClick: () => { setQuery(""); setPage(0); } } : undefined}
                     />
                   </TableCell>
                 </TableRow>
@@ -289,7 +296,7 @@ export function LibraryPage() {
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Delete">
-                        <IconButton size="small" color="error" aria-label={`Delete ${item.title}`}>
+                        <IconButton size="small" color="error" aria-label={`Delete ${item.title}`} onClick={() => setDeleteTarget(item)}>
                           <Trash2 size={14} aria-hidden="true" />
                         </IconButton>
                       </Tooltip>
@@ -313,6 +320,18 @@ export function LibraryPage() {
           sx={{ borderTop: "none" }}
         />
       </Card>
+      <Dialog open={deleteTarget !== null} onClose={() => setDeleteTarget(null)} maxWidth="xs" fullWidth>
+        <DialogTitle>Delete content?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            This will permanently delete <strong>{deleteTarget?.title}</strong>. This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="ghost" onClick={() => setDeleteTarget(null)}>Cancel</Button>
+          <Button variant="contained" color="error" onClick={() => setDeleteTarget(null)}>Delete</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

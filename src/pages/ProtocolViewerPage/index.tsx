@@ -12,6 +12,7 @@ import {
   Star, FileText, Paperclip, ChevronRight,
   BookOpen, Download, ExternalLink, Clock, User,
   AlertTriangle, CheckCircle, Info,
+  GitBranch, Workflow, ClipboardList,
 } from "lucide-react";
 import { CsSidebarItem } from "../../components/CsSidebarItem";
 import { CsSectionHeader } from "../../components/CsSectionHeader";
@@ -28,6 +29,13 @@ const TYPE_COLOR: Record<string, PaletteIntent> = {
   Protocol: "secondary",
   Document: "success",
   Workflow: "warning",
+};
+
+const TYPE_ICON: Record<string, React.ElementType> = {
+  Pathway:  GitBranch,
+  Protocol: ClipboardList,
+  Document: FileText,
+  Workflow: Workflow,
 };
 
 // Section marker configs — icon component + palette intent key
@@ -154,22 +162,26 @@ export function ProtocolViewerPage() {
         ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
       })}>
         {/* Breadcrumb */}
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, mb: 1 })}>
+        <Box component="nav" aria-label="Breadcrumb" sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, mb: 1 })}>
           <Typography variant="caption" color="text.secondary"
-            sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
+            role="link" tabIndex={0}
+            onKeyDown={(e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
+            sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" }, "&:focus-visible": { outline: "2px solid", outlineOffset: 2 } }}>
             Library
           </Typography>
-          <Box component="span" sx={{ opacity: 0.4, display: "flex" }}>
-            <ChevronRight size={12} aria-hidden="true" />
+          <Box component="span" sx={{ opacity: 0.4, display: "flex" }} aria-hidden="true">
+            <ChevronRight size={12} />
           </Box>
           <Typography variant="caption" color="text.secondary"
-            sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
+            role="link" tabIndex={0}
+            onKeyDown={(e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
+            sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" }, "&:focus-visible": { outline: "2px solid", outlineOffset: 2 } }}>
             Protocols
           </Typography>
-          <Box component="span" sx={{ opacity: 0.4, display: "flex" }}>
-            <ChevronRight size={12} aria-hidden="true" />
+          <Box component="span" sx={{ opacity: 0.4, display: "flex" }} aria-hidden="true">
+            <ChevronRight size={12} />
           </Box>
-          <Typography variant="caption" color="primary">Sepsis Management Protocol</Typography>
+          <Typography variant="caption" color="primary" aria-current="page">Sepsis Management Protocol</Typography>
         </Box>
 
         {/* Title row */}
@@ -331,8 +343,14 @@ export function ProtocolViewerPage() {
             />
             <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
               {ATTACHMENTS.map((att) => (
-                <CsSidebarItem key={att.id}>
-                  <Box sx={(theme) => ({ color: theme.palette.error.main, flexShrink: 0 })}>
+                <CsSidebarItem
+                  key={att.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Download ${att.name}`}
+                  onKeyDown={(e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") e.currentTarget.click(); }}
+                >
+                  <Box sx={(theme) => ({ color: theme.palette.primary.main, flexShrink: 0 })}>
                     <FileText size={14} aria-hidden="true" />
                   </Box>
                   <Box sx={{ flex: 1, overflow: "hidden" }}>
@@ -369,14 +387,13 @@ export function ProtocolViewerPage() {
             <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
               {RELATED.map((rel) => {
                 const relColorKey = TYPE_COLOR[rel.type] ?? "primary";
+                const RelIcon = TYPE_ICON[rel.type] ?? FileText;
                 return (
                   <CsSidebarItem key={rel.id}>
-                    {/* Color dot uses palette intent — auto-adapts */}
-                    <Box sx={(theme) => ({
-                      width: 7, height: 7, borderRadius: "50%",
-                      bgcolor: theme.palette[relColorKey].main,
-                      flexShrink: 0,
-                    })} />
+                    {/* Type icon + palette color — never color-only */}
+                    <Box sx={(theme) => ({ color: theme.palette[relColorKey].main, display: "flex", flexShrink: 0 })}>
+                      <RelIcon size={13} aria-hidden="true" />
+                    </Box>
                     <Box sx={{ flex: 1, overflow: "hidden" }}>
                       <Typography variant="caption" sx={(theme) => ({
                         display: "block", fontWeight: theme.typography.fontWeightMedium,

@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { User, ShieldCheck, Bell } from 'lucide-react';
+import { focusRing } from '../../theme/recipes';
 import { ProfileSection }       from './ProfileSection';
 import { SecuritySection }      from './SecuritySection';
 import { NotificationsSection } from './NotificationsSection';
@@ -57,6 +58,7 @@ export function AccountSettings() {
               selected={active === item.id}
               onClick={() => setActive(item.id)}
               aria-current={active === item.id ? 'page' : undefined}
+              sx={(theme) => ({ "&:focus-visible": { ...focusRing(theme) } })}
             >
               <ListItemIcon sx={{ minWidth: 32, color: 'inherit' }}>
                 {item.icon}
