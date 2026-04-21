@@ -17,15 +17,16 @@ import { LibraryPage }        from '@/pages/LibraryPage';
 import { AnalyticsPage }      from '@/pages/AnalyticsPage';
 import { PathwayScreen }      from '@/pages/PathwayScreen';
 import { BrowsePage }         from '@/pages/BrowsePage';
-import { ProtocolViewerPage } from '@/pages/ProtocolViewerPage';
-import { WorkflowPage }       from '@/pages/WorkflowPage';
+import { ProtocolViewerPage }        from '@/pages/ProtocolViewerPage';
+import { WorkflowPage }               from '@/pages/WorkflowPage';
+import { ClinicalPathwayViewerPage }  from '@/pages/ClinicalPathwayViewerPage';
 
 type Page =
   | 'settings' | 'showcase' | 'users' | 'library' | 'analytics' | 'pathway'
-  | 'browse' | 'protocol' | 'workflow';
+  | 'browse' | 'protocol' | 'workflow' | 'clinicalpathway';
 
 // Pages that need full-height layout (no padding wrapper)
-const FULL_HEIGHT_PAGES: Page[] = ['pathway', 'browse', 'protocol', 'workflow'];
+const FULL_HEIGHT_PAGES: Page[] = ['pathway', 'browse', 'protocol', 'workflow', 'clinicalpathway'];
 
 function ColorSchemeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -112,9 +113,10 @@ export function App() {
             <Tab value="analytics" label="Analytics" />
             <Tab value="pathway"   label="Pathway Builder" />
             {/* ── New pages ── */}
-            <Tab value="browse"   label="Browse" />
-            <Tab value="protocol" label="Protocol Viewer" />
-            <Tab value="workflow" label="Workflow" />
+            <Tab value="browse"           label="Browse" />
+            <Tab value="protocol"         label="Protocol Viewer" />
+            <Tab value="workflow"         label="Workflow" />
+            <Tab value="clinicalpathway"  label="Clinical Pathway" />
           </Tabs>
 
           <ColorSchemeToggle />
@@ -143,10 +145,11 @@ export function App() {
         {/* Full-height pages */}
         {isFullHeight ? (
           <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            {page === 'pathway'  && <PathwayScreen />}
-            {page === 'browse'   && <BrowsePage />}
-            {page === 'protocol' && <ProtocolViewerPage />}
-            {page === 'workflow' && <WorkflowPage />}
+            {page === 'pathway'          && <PathwayScreen />}
+            {page === 'browse'           && <BrowsePage />}
+            {page === 'protocol'         && <ProtocolViewerPage />}
+            {page === 'workflow'         && <WorkflowPage />}
+            {page === 'clinicalpathway'  && <ClinicalPathwayViewerPage />}
           </Box>
         ) : page === 'settings' ? (
           <Box
