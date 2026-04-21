@@ -151,7 +151,7 @@ function QuestionStep({
 }) {
   return (
     <Box>
-      <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightSemibold, mb: 0.75, lineHeight: 1.4 })}>
+      <Typography variant="h6" sx={(theme) => ({ fontWeight: theme.typography.fontWeightSemibold, mb: 1, lineHeight: 1.4 })}>
         {step.question}
       </Typography>
       {step.hint && (
@@ -177,8 +177,8 @@ function QuestionStep({
                 if (e.key === " " || e.key === "Enter") { e.preventDefault(); onSelect(ans.id); }
               }}
               sx={(theme) => ({
-                display: "flex", alignItems: "center", gap: theme.space.md,
-                px: theme.space.lg, py: theme.space.md,
+                display: "flex", alignItems: "center", gap: 3,
+                px: 4, py: 3,
                 borderRadius: `${theme.radius.lg}px`,
                 border: `1.5px solid ${isSelected ? theme.palette.primary.main : theme.border.default}`,
                 bgcolor: isSelected ? alpha(theme.palette.primary.main, 0.06) : theme.surface.canvas,
@@ -245,28 +245,28 @@ function ResultView({ result }: { result: Result }) {
     <Box>
       {/* Result banner — alpha() inside sx so theme is resolved correctly */}
       <Box sx={(theme) => ({
-        display: "flex", alignItems: "flex-start", gap: theme.space.lg, mb: 3,
+        display: "flex", alignItems: "flex-start", gap: 4, mb: 3,
         p: 2, borderRadius: `${theme.radius.lg}px`,
         bgcolor: alpha(theme.palette[severityKey].main, 0.08),
         border: `1.5px solid ${alpha(theme.palette[severityKey].main, 0.25)}`,
       })}>
-        <Box sx={(theme) => ({ color: theme.palette[severityKey].main, flexShrink: 0, mt: 0.5 })}>
+        <Box sx={(theme) => ({ color: theme.palette[severityKey].main, flexShrink: 0, mt: 1 })}>
           <SeverityIcon size={20} aria-hidden="true" />
         </Box>
         <Box>
           <Typography variant="subtitle1" sx={(theme) => ({ fontWeight: theme.typography.fontWeightBold, color: theme.palette[severityKey].main })}>
             {result.heading}
           </Typography>
-          <Typography variant="body2" sx={{ mt: 0.5, lineHeight: 1.7 }}>{result.summary}</Typography>
+          <Typography variant="body2" sx={{ mt: 1, lineHeight: 1.7 }}>{result.summary}</Typography>
         </Box>
       </Box>
 
-      <Typography variant="subtitle2" sx={(theme) => ({ mb: 1.5, fontWeight: theme.typography.fontWeightBold })}>Recommended Orders</Typography>
-      <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
+      <Typography variant="subtitle2" sx={(theme) => ({ mb: 2, fontWeight: theme.typography.fontWeightBold })}>Recommended Orders</Typography>
+      <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
         {result.orders.map((order, idx) => (
           <Box key={idx} sx={(theme) => ({
-            display: "flex", alignItems: "flex-start", gap: theme.space.sm,
-            px: theme.space.md, py: theme.space.sm,
+            display: "flex", alignItems: "flex-start", gap: 2,
+            px: 3, py: 2,
             borderRadius: `${theme.radius.md}px`,
             border: `1px solid ${theme.border.subtle}`,
             bgcolor: theme.surface.subtle,
@@ -275,7 +275,7 @@ function ResultView({ result }: { result: Result }) {
               borderColor: theme.palette.grey[700],
             }),
           })}>
-            <Box component="span" sx={{ display: "flex", flexShrink: 0, mt: 0.5, opacity: 0.55 }}>
+            <Box component="span" sx={{ display: "flex", flexShrink: 0, mt: 1, opacity: 0.55 }}>
               <ClipboardList size={13} aria-hidden="true" />
             </Box>
             <Typography variant="body2">{order}</Typography>
@@ -358,12 +358,12 @@ export function WorkflowPage() {
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <Box sx={(theme) => ({
-        px: theme.space["2xl"], py: theme.space.md,
+        px: 6, py: 3,
         borderBottom: `1px solid ${theme.border.default}`,
         flexShrink: 0,
         ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
       })}>
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.lg, mb: 1 })}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 4, mb: 1 })}>
           {/* Workflow icon — uses palette intent, not hardcoded hex */}
           <Box sx={(theme) => ({
             width: 32, height: 32, borderRadius: `${theme.radius.md}px`,
@@ -388,7 +388,7 @@ export function WorkflowPage() {
         </Box>
 
         {/* Progress bar */}
-        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.lg })}>
+        <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 4 })}>
           <LinearProgress
             variant="determinate"
             value={progress}
@@ -411,20 +411,20 @@ export function WorkflowPage() {
         {/* Main workflow area */}
         <Box sx={(theme) => ({
           flex: 1, display: "flex", flexDirection: "column", overflow: "hidden",
-          px: { xs: theme.space["2xl"], md: theme.space["4xl"] },
-          py: theme.space["2xl"],
+          px: { xs: 6, md: 8 },
+          py: 6,
         })}>
           <Box sx={{ flex: 1, overflow: "auto" }}>
             <Box sx={{ maxWidth: 680 }}>
 
               {/* Step breadcrumb */}
               {!isResult && (
-                <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, mb: 2 })}>
+                <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1, mb: 2 })}>
                   {STEP_ORDER.map((s, idx) => {
                     const isDone    = !!selections[s]?.length;
                     const isCurrent = s === currentStep;
                     return (
-                      <Box key={s} sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs })}>
+                      <Box key={s} sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1 })}>
                         <Box sx={(theme) => ({
                           width: 22, height: 22, borderRadius: "50%",
                           display: "flex", alignItems: "center", justifyContent: "center",
@@ -473,7 +473,7 @@ export function WorkflowPage() {
           {/* Navigation buttons */}
           <Box sx={(theme) => ({
             display: "flex", alignItems: "center", justifyContent: "space-between",
-            pt: theme.space.lg, mt: theme.space.lg,
+            pt: 4, mt: 4,
             borderTop: `1px solid ${theme.border.subtle}`,
             flexShrink: 0,
             ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
@@ -519,7 +519,7 @@ export function WorkflowPage() {
             value={sideTab}
             onChange={(_, v: SideTab) => setSideTab(v)}
             sx={(theme) => ({
-              px: theme.space.md,
+              px: 3,
               borderBottom: `1px solid ${theme.border.default}`,
               "& .MuiTab-root": { minHeight: 40, fontSize: theme.typography.caption.fontSize, py: 0 },
               flexShrink: 0,
@@ -532,8 +532,8 @@ export function WorkflowPage() {
 
           {sideTab === "notes" && (
             <Box sx={(theme) => ({
-              flex: 1, p: theme.space.lg,
-              display: "flex", flexDirection: "column", gap: theme.space.md,
+              flex: 1, p: 4,
+              display: "flex", flexDirection: "column", gap: 3,
             })}>
               <Typography variant="caption" color="text.secondary">
                 Add clinical notes for this encounter
@@ -548,7 +548,7 @@ export function WorkflowPage() {
                   flex: 1, resize: "none",
                   border: `1px solid ${theme.border.default}`,
                   borderRadius: `${theme.radius.lg}px`,
-                  p: theme.space.md,
+                  p: 3,
                   bgcolor: theme.surface.canvas,
                   color: theme.palette.text.primary,
                   fontFamily: theme.typography.fontFamily,
@@ -567,14 +567,14 @@ export function WorkflowPage() {
           )}
 
           {sideTab === "resources" && (
-            <Box sx={(theme) => ({ flex: 1, overflow: "auto", p: theme.space.lg })}>
-              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1.5 }}>
+            <Box sx={(theme) => ({ flex: 1, overflow: "auto", p: 4 })}>
+              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 2 }}>
                 Relevant clinical resources
               </Typography>
-              <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
+              <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
                 {RESOURCES.map((res) => (
                   <CsSidebarItem key={res.id} alignItems="flex-start">
-                    <Box component="span" sx={{ display: "flex", opacity: 0.5, mt: 0.5, flexShrink: 0 }}>
+                    <Box component="span" sx={{ display: "flex", opacity: 0.5, mt: 1, flexShrink: 0 }}>
                       <FileText size={13} aria-hidden="true" />
                     </Box>
                     <Box>

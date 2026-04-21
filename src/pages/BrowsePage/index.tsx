@@ -89,7 +89,7 @@ const ANNOUNCEMENTS = [
 
 // ─── Chip label override — uses theme typography scale, not raw rem ───────────
 // Height + label padding are intentional density overrides for this compact list.
-const chipSx = { height: 17, "& .MuiChip-label": { px: 0.75 } };
+const chipSx = { height: 17, "& .MuiChip-label": { px: 1 } };
 
 // ─── Content list item ────────────────────────────────────────────────────────
 
@@ -107,8 +107,8 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
         if (e.key === "Enter" || e.key === " ") e.preventDefault();
       }}
       sx={(theme) => ({
-        display: "flex", alignItems: "center", gap: theme.space.sm,
-        px: theme.space.md, py: theme.space.xs,
+        display: "flex", alignItems: "center", gap: 2,
+        px: 3, py: 1,
         borderRadius: `${theme.radius.md}px`,
         border: `1px solid ${theme.border.subtle}`,
         bgcolor: theme.surface.canvas,
@@ -135,7 +135,7 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
           size="small"
           onClick={(e) => { e.stopPropagation(); onStar(item.id); }}
           sx={(theme) => ({
-            p: theme.space["2xs"], flexShrink: 0,
+            p: 1, flexShrink: 0,
             color: item.starred ? theme.palette.warning.main : theme.palette.text.disabled,
             "&:hover": { color: theme.palette.warning.main },
             transition: theme.motion.short,
@@ -169,7 +169,7 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
       </Typography>
 
       {/* Badges — MUI Chip color prop handles dark mode automatically */}
-      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, flexShrink: 0 })}>
+      <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 })}>
         {item.isNew && (
           <Chip label="New" size="small" color="success" variant="soft" sx={chipSx} />
         )}
@@ -194,7 +194,7 @@ function ContentListItem({ item, onStar }: { item: ContentItem; onStar: (id: str
         onClick={(e) => e.stopPropagation()}
         aria-label="More options"
         sx={(theme) => ({
-          p: theme.space["2xs"], flexShrink: 0,
+          p: 1, flexShrink: 0,
           color: theme.palette.text.secondary,
           opacity: hover ? 1 : 0,
           transition: theme.motion.short,
@@ -251,7 +251,7 @@ export function BrowsePage() {
       {/* ── Search bar ─────────────────────────────────────────────────────── */}
       <Box sx={(theme) => ({
         bgcolor: theme.palette.primary.main,
-        px: 3, py: theme.space.md,
+        px: 3, py: 3,
         display: "flex", justifyContent: "center",
         flexShrink: 0,
       })}>
@@ -275,7 +275,7 @@ export function BrowsePage() {
             borderRadius: `${theme.radius.pill}px`,
             color: theme.palette.primary.contrastText,
             "& fieldset": { border: "none" },
-            "& input": { color: theme.palette.primary.contrastText, py: theme.space.xs },
+            "& input": { color: theme.palette.primary.contrastText, py: 1 },
             "& input::placeholder": { color: alpha(theme.palette.primary.contrastText, 0.55), opacity: 1 },
             boxShadow: `0 0 0 2px ${alpha(theme.palette.primary.contrastText, 0.15)}`,
             "&:hover, &.Mui-focused": { boxShadow: `0 0 0 2px ${alpha(theme.palette.primary.contrastText, 0.35)}` },
@@ -291,8 +291,8 @@ export function BrowsePage() {
           width: 228, flexShrink: 0, overflow: "auto",
           borderRight: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.subtle,
-          px: theme.space.md, py: theme.space.lg,
-          display: "flex", flexDirection: "column", gap: theme.space["2xs"],
+          px: 3, py: 4,
+          display: "flex", flexDirection: "column", gap: 1,
           ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
             borderColor: theme.palette.grey[700],
@@ -315,7 +315,7 @@ export function BrowsePage() {
                     control={<Checkbox size="small" checked={typeFilters.has(t)} onChange={() => toggleType(t)} />}
                     label={
                       <Box sx={(theme) => ({
-                        display: "flex", alignItems: "center", gap: theme.space.xs,
+                        display: "flex", alignItems: "center", gap: 1,
                         color: theme.palette[cfg.colorKey].main,
                       })}>
                         {cfg.icon}
@@ -333,7 +333,7 @@ export function BrowsePage() {
 
           <Divider sx={(theme) => ({
             borderColor: theme.border.subtle,
-            my: theme.space.xs,
+            my: 1,
             ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
           })} />
 
@@ -359,7 +359,7 @@ export function BrowsePage() {
 
           <Divider sx={(theme) => ({
             borderColor: theme.border.subtle,
-            my: theme.space.xs,
+            my: 1,
             ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
           })} />
 
@@ -393,7 +393,7 @@ export function BrowsePage() {
           {/* Tab bar + sort */}
           <Box sx={(theme) => ({
             display: "flex", alignItems: "center", justifyContent: "space-between",
-            px: theme.space["2xl"],
+            px: 6,
             borderBottom: `1px solid ${theme.border.default}`,
             flexShrink: 0,
             ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
@@ -407,7 +407,7 @@ export function BrowsePage() {
                 <Tab key={t} value={t} label={t} />
               ))}
             </Tabs>
-            <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: theme.space.xs, flexShrink: 0 })}>
+            <Box sx={(theme) => ({ display: "flex", alignItems: "center", gap: 1, flexShrink: 0 })}>
               <Typography variant="caption" color="text.secondary">{filtered.length} results</Typography>
               <Select
                 value={sortBy}
@@ -429,8 +429,8 @@ export function BrowsePage() {
           {/* Items */}
           <Box sx={(theme) => ({
             flex: 1, overflow: "auto",
-            px: theme.space["2xl"], py: theme.space.lg,
-            display: "flex", flexDirection: "column", gap: theme.space.xs,
+            px: 6, py: 4,
+            display: "flex", flexDirection: "column", gap: 1,
           })}>
             {filtered.length === 0 ? (
               <Box sx={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -454,8 +454,8 @@ export function BrowsePage() {
           width: 236, flexShrink: 0, overflow: "auto",
           borderLeft: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.subtle,
-          px: theme.space.lg, py: theme.space.lg,
-          display: "flex", flexDirection: "column", gap: theme.space.xl,
+          px: 4, py: 4,
+          display: "flex", flexDirection: "column", gap: 5,
           ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
             borderColor: theme.palette.grey[700],
@@ -468,7 +468,7 @@ export function BrowsePage() {
               icon={<Bell size={13} />}
               title="Announcements"
             />
-            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
+            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
               {ANNOUNCEMENTS.map((a) => (
                 <CsSidebarItem key={a.id} alignItems="flex-start" style={{ flexDirection: "column" }}>
                   <Typography variant="caption" sx={(theme) => ({ display: "block", fontWeight: theme.typography.fontWeightMedium, lineHeight: 1.45 })}>
@@ -494,12 +494,12 @@ export function BrowsePage() {
               icon={<Sparkles size={13} />}
               title="New Content"
             />
-            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: theme.space.xs })}>
+            <Box sx={(theme) => ({ display: "flex", flexDirection: "column", gap: 1 })}>
               {MOCK_ITEMS.filter((i) => i.isNew).map((item) => {
                 const cfg = TYPE_CONFIG[item.type];
                 return (
                   <CsSidebarItem key={item.id} alignItems="flex-start">
-                    <Box sx={(theme) => ({ color: theme.palette[cfg.colorKey].main, mt: 0.5, flexShrink: 0 })}>
+                    <Box sx={(theme) => ({ color: theme.palette[cfg.colorKey].main, mt: 1, flexShrink: 0 })}>
                       {cfg.icon}
                     </Box>
                     <Typography variant="caption" sx={(theme) => ({ fontWeight: theme.typography.fontWeightMedium, lineHeight: 1.45 })}>

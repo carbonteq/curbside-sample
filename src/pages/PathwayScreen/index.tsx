@@ -146,12 +146,12 @@ function ZoomLevel() {
 function ZoomBar() {
   const { zoomIn, zoomOut } = useReactFlow();
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-      <IconButton size="small" sx={(theme) => ({ p: theme.space["2xs"] })} onClick={() => zoomOut()}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <IconButton size="small" sx={(theme) => ({ p: 1 })} onClick={() => zoomOut()}>
         <ZoomOut size={12} />
       </IconButton>
       <ZoomLevel />
-      <IconButton size="small" sx={(theme) => ({ p: theme.space["2xs"] })} onClick={() => zoomIn()}>
+      <IconButton size="small" sx={(theme) => ({ p: 1 })} onClick={() => zoomIn()}>
         <ZoomIn size={12} />
       </IconButton>
     </Box>
@@ -186,7 +186,7 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Box sx={(theme) => ({
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        px: theme.space.lg, py: theme.space.md,
+        px: 4, py: 3,
         borderBottom: `1px solid ${theme.border.subtle}`,
         flexShrink: 0,
         ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
@@ -204,7 +204,7 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
           })}>
             <AccordionSummary
               expandIcon={<ChevronDown size={16} />}
-              sx={(theme) => ({ px: theme.space.lg, py: theme.space.sm, minHeight: 0 })}
+              sx={(theme) => ({ px: 4, py: 2, minHeight: 0 })}
             >
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
                 <BookOpen size={14} style={{ marginTop: 2, flexShrink: 0, color: 'var(--mui-palette-primary-main)' }} />
@@ -213,20 +213,20 @@ function ResourcesTab({ onClose }: { onClose: () => void }) {
                 </Typography>
               </Box>
             </AccordionSummary>
-            <AccordionDetails sx={(theme) => ({ px: theme.space.lg, pt: 0, pb: theme.space.md })}>
+            <AccordionDetails sx={(theme) => ({ px: 4, pt: 0, pb: 3 })}>
               {ev.refs.map((ref, j) => (
                 <Box key={j} sx={(theme) => ({
                   bgcolor: theme.surface.subtle,
                   borderRadius: `${theme.radius.sm}px`,
-                  p: theme.space.sm,
-                  mb: j < ev.refs.length - 1 ? theme.space.xs : 0,
+                  p: 2,
+                  mb: j < ev.refs.length - 1 ? 1 : 0,
                   ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800] }),
                 })}>
                   <Typography variant="caption" color="text.secondary" display="block">{ref.authors}</Typography>
-                  <Typography variant="caption" display="block" sx={(theme) => ({ mt: theme.space["2xs"] })}>{ref.title}</Typography>
-                  <Box sx={(theme) => ({ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: theme.space.xs })}>
+                  <Typography variant="caption" display="block" sx={(theme) => ({ mt: 1 })}>{ref.title}</Typography>
+                  <Box sx={(theme) => ({ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1 })}>
                     <Chip label={ref.id} size="small" variant="soft" color="neutral" sx={{ height: 18 }} />
-                    <IconButton size="small" sx={(theme) => ({ p: theme.space["2xs"] })}>
+                    <IconButton size="small" sx={(theme) => ({ p: 1 })}>
                       <ExternalLink size={12} />
                     </IconButton>
                   </Box>
@@ -259,7 +259,7 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Box sx={(theme) => ({
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        px: theme.space.lg, py: theme.space.md,
+        px: 4, py: 3,
         borderBottom: `1px solid ${theme.border.subtle}`,
         flexShrink: 0,
         ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
@@ -270,9 +270,9 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
         </IconButton>
       </Box>
 
-      <Box sx={(theme) => ({ flex: 1, overflowY: 'auto', p: theme.space.lg, display: 'flex', flexDirection: 'column', gap: theme.space.lg })}>
+      <Box sx={(theme) => ({ flex: 1, overflowY: 'auto', p: 4, display: 'flex', flexDirection: 'column', gap: 4 })}>
         <Box>
-          <Typography variant="body2" color="text.secondary" sx={(theme) => ({ mb: theme.space.sm })}>
+          <Typography variant="body2" color="text.secondary" sx={(theme) => ({ mb: 2 })}>
             Share feedback directly with the pathway editors.
           </Typography>
           <TextField
@@ -296,7 +296,7 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
             disabled={!text.trim()}
             onClick={handleSend}
             startIcon={<Send size={14} />}
-            sx={(theme) => ({ mt: theme.space.md })}
+            sx={(theme) => ({ mt: 3 })}
           >
             Send to Editors
           </Button>
@@ -305,13 +305,13 @@ function FeedbackTab({ onClose }: { onClose: () => void }) {
         <Divider />
 
         <Box>
-          <Typography variant="overline" color="text.muted" display="block" sx={(theme) => ({ mb: theme.space.sm })}>
+          <Typography variant="overline" color="text.muted" display="block" sx={(theme) => ({ mb: 2 })}>
             Pathway Editors
           </Typography>
           {EDITORS.map((ed) => (
             <Box key={ed.name} sx={(theme) => ({
-              display: 'flex', alignItems: 'center', gap: theme.space.md,
-              py: theme.space.sm,
+              display: 'flex', alignItems: 'center', gap: 3,
+              py: 2,
             })}>
               <Avatar variant="soft" color={ed.color} sx={{ width: 32, height: 32, fontSize: 12 }}>
                 {ed.initials}
@@ -345,7 +345,7 @@ export function PathwayScreen() {
 
         {/* ── Top bar ─────────────────────────────────────────────────────────── */}
         <Box sx={(theme) => ({
-          display: 'flex', alignItems: 'center', gap: theme.space.md,
+          display: 'flex', alignItems: 'center', gap: 3,
           px: theme.space['2xl'], height: 52, flexShrink: 0,
           bgcolor: theme.surface.canvas,
           borderBottom: `1px solid ${theme.border.default}`,
@@ -355,7 +355,7 @@ export function PathwayScreen() {
           }),
         })}>
           {/* Breadcrumb */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flex: 1, minWidth: 0 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1, minWidth: 0 }}>
             <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer', '&:hover': { color: 'primary.main' } }}>
               Pathways
             </Typography>
@@ -372,9 +372,9 @@ export function PathwayScreen() {
               size="small"
               variant="soft"
               color="success"
-              sx={(theme) => ({ ml: theme.space.xs, height: 20, fontSize: 11 })}
+              sx={(theme) => ({ ml: 1, height: 20, fontSize: 11 })}
             />
-            <Typography variant="caption" color="text.disabled" sx={(theme) => ({ ml: theme.space.xs })}>
+            <Typography variant="caption" color="text.disabled" sx={(theme) => ({ ml: 1 })}>
               v2.4
             </Typography>
           </Box>
@@ -387,7 +387,7 @@ export function PathwayScreen() {
             <Button variant="ghost" size="small" startIcon={<MessageSquare size={14} />} onClick={() => openDrawer('feedback')}>
               Feedback
             </Button>
-            <Divider orientation="vertical" flexItem sx={{ mx: 0.5, my: 1 }} />
+            <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
             <Tooltip title="Share pathway">
               <IconButton size="small" variant="ghost"><Share2 size={16} /></IconButton>
             </Tooltip>
@@ -407,7 +407,7 @@ export function PathwayScreen() {
           <Box sx={(theme) => ({
             width: 44,
             display: 'flex', flexDirection: 'column', alignItems: 'center',
-            gap: theme.space.xs, pt: theme.space.md,
+            gap: 1, pt: 3,
             bgcolor: theme.surface.canvas,
             borderLeft: `1px solid ${theme.border.default}`,
             flexShrink: 0,
@@ -421,7 +421,7 @@ export function PathwayScreen() {
                 <MousePointer2 size={16} />
               </IconButton>
             </Tooltip>
-            <Divider flexItem sx={{ my: 0.5 }} />
+            <Divider flexItem sx={{ my: 1 }} />
             <ZoomControls />
           </Box>
         </Box>

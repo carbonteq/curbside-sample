@@ -25,10 +25,6 @@ declare module '@mui/material/styles' {
     radius:    { sm: number; md: number; lg: number; pill: number };
     motion:    { short: string; standard: string; complex: string; enter: string; leave: string };
     elevation: { none: 0; low: number; high: number };
-    space: {
-      '2xs': string; xs: string; sm: string; md: string; lg: string;
-      xl: string; '2xl': string; '3xl': string; '4xl': string; '5xl': string;
-    };
   }
 
   interface ThemeOptions {
@@ -38,7 +34,6 @@ declare module '@mui/material/styles' {
     radius?:    Partial<Theme['radius']>;
     motion?:    Partial<Theme['motion']>;
     elevation?: Partial<Theme['elevation']>;
-    space?:     Partial<Theme['space']>;
   }
 
   interface Palette        { neutral: Palette['primary'] }
