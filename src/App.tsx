@@ -20,13 +20,14 @@ import { BrowsePage }         from '@/pages/BrowsePage';
 import { ProtocolViewerPage }        from '@/pages/ProtocolViewerPage';
 import { WorkflowPage }               from '@/pages/WorkflowPage';
 import { ClinicalPathwayViewerPage }  from '@/pages/ClinicalPathwayViewerPage';
+import { PathwayEditorPage }          from '@/pages/PathwayEditorPage';
 
 type Page =
   | 'settings' | 'showcase' | 'users' | 'library' | 'analytics' | 'pathway'
-  | 'browse' | 'protocol' | 'workflow' | 'clinicalpathway';
+  | 'browse' | 'protocol' | 'workflow' | 'clinicalpathway' | 'pathwayeditor';
 
 // Pages that need full-height layout (no padding wrapper)
-const FULL_HEIGHT_PAGES: Page[] = ['pathway', 'browse', 'protocol', 'workflow', 'clinicalpathway'];
+const FULL_HEIGHT_PAGES: Page[] = ['pathway', 'browse', 'protocol', 'workflow', 'clinicalpathway', 'pathwayeditor'];
 
 function ColorSchemeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -117,6 +118,7 @@ export function App() {
             <Tab value="protocol"         label="Protocol Viewer" />
             <Tab value="workflow"         label="Workflow" />
             <Tab value="clinicalpathway"  label="Clinical Pathway" />
+            <Tab value="pathwayeditor"    label="Pathway Editor" />
           </Tabs>
 
           <ColorSchemeToggle />
@@ -150,6 +152,7 @@ export function App() {
             {page === 'protocol'         && <ProtocolViewerPage />}
             {page === 'workflow'         && <WorkflowPage />}
             {page === 'clinicalpathway'  && <ClinicalPathwayViewerPage />}
+            {page === 'pathwayeditor'    && <PathwayEditorPage />}
           </Box>
         ) : page === 'settings' ? (
           <Box
