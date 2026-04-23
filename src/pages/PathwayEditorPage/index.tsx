@@ -28,8 +28,8 @@ import {
   Globe,
   History,
   CheckCircle2,
-  MoreHorizontal,
   Search,
+  NotepadText,
   MessageSquare,
   UserPlus,
   Send,
@@ -44,13 +44,13 @@ import {
   Spline,
   Waypoints,
   Grid3x3,
-  Link as LinkIcon,
   Paperclip,
   Hash,
   Crosshair,
   Maximize2,
   Map as MapIcon,
   Minus,
+  Maximize,
   Sparkles,
   Pin,
   X,
@@ -98,6 +98,7 @@ function TopBar() {
         <Button
           variant="ghost"
           size="small"
+          startIcon={<NotepadText size={14} />}
           endIcon={<ChevronDown size={12} />}
           sx={{ fontWeight: "fontWeightSemibold" }}
         >
@@ -106,12 +107,23 @@ function TopBar() {
         <Chip
           size="small"
           variant="soft"
-          color="neutral"
+          color="warning"
           label={
             <Box
               component="span"
               sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}
             >
+              <Box
+                component="span"
+                sx={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  bgcolor: "warning.main",
+                  display: "inline-block",
+                  flexShrink: 0,
+                }}
+              />
               <Box component="span">Editing</Box>
               <Box
                 component="span"
@@ -167,14 +179,14 @@ function TopBar() {
           </IconButton>
         </Tooltip>
         <Tooltip title="All changes saved">
-          <Chip
+          <IconButton
+            variant="ghost"
             size="small"
-            variant="soft"
-            color="success"
-            icon={<CheckCircle2 size={12} />}
-            label="Saved"
-            sx={{ ml: 1 }}
-          />
+            aria-label="All changes saved"
+            sx={{ ml: 1, color: "success.main" }}
+          >
+            <CheckCircle2 size={16} />
+          </IconButton>
         </Tooltip>
       </Box>
 
@@ -217,12 +229,16 @@ function TopBar() {
 
       <Button
         variant="outlined"
-        size="small"
+        size="medium"
         startIcon={<UserPlus size={14} />}
       >
         Share
       </Button>
-      <Button variant="contained" size="small" startIcon={<Send size={14} />}>
+      <Button
+        variant="contained"
+        size="medium"
+        startIcon={<Send size={14} />}
+      >
         Send for Publishing
       </Button>
     </Box>
@@ -398,10 +414,7 @@ function ShapeCell({
           color: theme.palette.text.secondary,
           transition: theme.motion.short,
           "&:hover": {
-            bgcolor: alpha(
-              theme.palette.primary.main,
-              theme.palette.action.hoverOpacity * 2,
-            ),
+            bgcolor: alpha(theme.palette.primary.main, 0.1),
             color: theme.palette.primary.main,
           },
         })}
@@ -604,9 +617,15 @@ function ShapesPanel() {
                 <rect x={2} y={6} width={36} height={18} rx={2} />
               </Glyph>
             </ShapeCell>
-            <ShapeCell label="Rounded">
+            <ShapeCell label="Header">
               <Glyph>
-                <rect x={2} y={6} width={36} height={18} rx={9} />
+                <rect x={2} y={6} width={36} height={18} rx={2} />
+                <rect x={2} y={6} width={36} height={6} rx={2} fill="currentColor" fillOpacity={0.2} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Filled">
+              <Glyph>
+                <rect x={2} y={6} width={36} height={18} rx={2} fill="currentColor" fillOpacity={0.12} />
               </Glyph>
             </ShapeCell>
             <ShapeCell label="Dashed">
@@ -621,9 +640,58 @@ function ShapesPanel() {
                 />
               </Glyph>
             </ShapeCell>
+            <ShapeCell label="Rounded">
+              <Glyph>
+                <rect x={2} y={6} width={36} height={18} rx={9} />
+              </Glyph>
+            </ShapeCell>
             <ShapeCell label="Hexagon">
               <Glyph>
                 <path d="M20 4l14 8v6l-14 8-14-8v-6z" />
+              </Glyph>
+            </ShapeCell>
+          </ShapeGrid>
+
+          <Divider sx={{ my: 3, borderStyle: "dashed" }} />
+          <Typography
+            variant="overline"
+            sx={{ display: "block", color: "text.muted", mb: 2 }}
+          >
+            Utility
+          </Typography>
+          <ShapeGrid>
+            <ShapeCell label="Link">
+              <Glyph>
+                <path d="M14 15a5 5 0 0 1 5-5h3M26 15a5 5 0 0 1-5 5h-3M16 15h8" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Warning">
+              <Glyph>
+                <path d="M20 5l16 22H4z" />
+                <path d="M20 14v6M20 23v1" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Video">
+              <Glyph>
+                <rect x={2} y={5} width={28} height={20} rx={2} />
+                <polygon points="32 10 38 7 38 23 32 20" fill="currentColor" fillOpacity={0.2} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Curbside">
+              <Glyph>
+                <rect x={2} y={5} width={36} height={20} rx={3} />
+                <circle cx={11} cy={15} r={4} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Calculator">
+              <Glyph>
+                <rect x={8} y={3} width={24} height={24} rx={2} />
+                <path d="M12 9h16M12 15h4M19 15h4M26 15h2M12 21h4M19 21h4M26 21h2" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Divider">
+              <Glyph>
+                <line x1={4} y1={15} x2={36} y2={15} />
               </Glyph>
             </ShapeCell>
           </ShapeGrid>
@@ -694,6 +762,39 @@ function ShapesPanel() {
               ),
             )}
           </Box>
+        </PanelSection>
+
+        <PanelSection title="Tables">
+          <ShapeGrid>
+            <ShapeCell label="2 col">
+              <Glyph>
+                <rect x={2} y={5} width={36} height={20} rx={1} />
+                <line x1={20} y1={5} x2={20} y2={25} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="3 col">
+              <Glyph>
+                <rect x={2} y={5} width={36} height={20} rx={1} />
+                <line x1={14} y1={5} x2={14} y2={25} />
+                <line x1={26} y1={5} x2={26} y2={25} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Grid">
+              <Glyph>
+                <rect x={2} y={5} width={36} height={20} rx={1} />
+                <line x1={20} y1={5} x2={20} y2={25} />
+                <line x1={2} y1={15} x2={38} y2={15} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Dense">
+              <Glyph>
+                <rect x={2} y={5} width={36} height={20} rx={1} />
+                <line x1={14} y1={5} x2={14} y2={25} />
+                <line x1={26} y1={5} x2={26} y2={25} />
+                <line x1={2} y1={15} x2={38} y2={15} />
+              </Glyph>
+            </ShapeCell>
+          </ShapeGrid>
         </PanelSection>
       </Box>
 
@@ -910,17 +1011,28 @@ function CanvasArea({
             variant="soft"
             color="primary"
             aria-label="Select"
+            sx={{ borderRadius: "50%" }}
           >
             <MousePointer2 size={14} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Connector">
-          <IconButton variant="ghost" size="small" aria-label="Connector">
+          <IconButton
+            variant="ghost"
+            size="small"
+            aria-label="Connector"
+            sx={{ borderRadius: "50%" }}
+          >
             <Waypoints size={14} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Curved connector">
-          <IconButton variant="ghost" size="small" aria-label="Curved">
+          <IconButton
+            variant="ghost"
+            size="small"
+            aria-label="Curved"
+            sx={{ borderRadius: "50%" }}
+          >
             <Spline size={14} />
           </IconButton>
         </Tooltip>
@@ -931,12 +1043,18 @@ function CanvasArea({
             color="primary"
             size="small"
             aria-label="Grid"
+            sx={{ borderRadius: "50%" }}
           >
             <Grid3x3 size={14} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Canvas settings">
-          <IconButton variant="ghost" size="small" aria-label="Settings">
+          <IconButton
+            variant="ghost"
+            size="small"
+            aria-label="Settings"
+            sx={{ borderRadius: "50%" }}
+          >
             <Settings size={14} />
           </IconButton>
         </Tooltip>
@@ -1097,6 +1215,11 @@ function CanvasArea({
         >
           {zoom}%
         </Typography>
+        <Tooltip title="Fullscreen">
+          <IconButton variant="ghost" size="small" aria-label="Fullscreen">
+            <Maximize size={14} />
+          </IconButton>
+        </Tooltip>
         <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
         <Button
           size="small"
