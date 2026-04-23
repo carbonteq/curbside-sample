@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,6 +22,8 @@ import { ProtocolViewerPage }        from '@/pages/ProtocolViewerPage';
 import { WorkflowPage }               from '@/pages/WorkflowPage';
 import { ClinicalPathwayViewerPage }  from '@/pages/ClinicalPathwayViewerPage';
 import { PathwayEditorPage }          from '@/pages/PathwayEditorPage';
+import { CommunityPage }              from '@/pages/CommunityPage';
+
 type Page =
   | 'settings' | 'showcase' | 'users' | 'library' | 'analytics' | 'pathway'
   | 'browse' | 'protocol' | 'workflow' | 'clinicalpathway' | 'pathwayeditor';
@@ -46,7 +49,7 @@ function ColorSchemeToggle() {
   );
 }
 
-export function App() {
+function MainApp() {
   const [page, setPage] = useState<Page>('browse');
 
   const isFullHeight = FULL_HEIGHT_PAGES.includes(page);
@@ -183,8 +186,15 @@ export function App() {
           </Box>
         )}
       </Box>
-
-
     </Box>
+  );
+}
+
+export function App() {
+  return (
+    <Routes>
+      <Route path="/community" element={<CommunityPage />} />
+      <Route path="/*" element={<MainApp />} />
+    </Routes>
   );
 }

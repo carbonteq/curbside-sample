@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Chip from '@mui/material/Chip';
-import Divider from '@mui/material/Divider';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Typography from '@mui/material/Typography';
-import InputAdornment from '@mui/material/InputAdornment';
-import Collapse from '@mui/material/Collapse';
-import Slider from '@mui/material/Slider';
-import { alpha } from '@mui/material/styles';
+import { useState } from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Typography from "@mui/material/Typography";
+import InputAdornment from "@mui/material/InputAdornment";
+import Collapse from "@mui/material/Collapse";
+import Slider from "@mui/material/Slider";
+import { alpha } from "@mui/material/styles";
 import {
   ChevronDown,
   Undo2,
@@ -48,7 +48,7 @@ import {
   Sparkles,
   Pin,
   X,
-} from 'lucide-react';
+} from "lucide-react";
 
 // ─── Top bar ─────────────────────────────────────────────────────────────────
 
@@ -56,15 +56,15 @@ function TopBar() {
   return (
     <Box
       sx={(theme) => ({
-        display: 'flex',
-        alignItems: 'center',
+        display: "flex",
+        alignItems: "center",
         gap: 3,
         px: 5,
         height: 56,
         flexShrink: 0,
         bgcolor: theme.surface.canvas,
         borderBottom: `1px solid ${theme.border.default}`,
-        ...theme.applyStyles('dark', {
+        ...theme.applyStyles("dark", {
           bgcolor: theme.palette.grey[900],
           borderColor: theme.palette.grey[700],
         }),
@@ -76,10 +76,10 @@ function TopBar() {
           width: 32,
           height: 32,
           borderRadius: `${theme.radius.md}px`,
-          display: 'grid',
-          placeItems: 'center',
+          display: "grid",
+          placeItems: "center",
           color: theme.palette.primary.contrastText,
-          fontWeight: 'fontWeightBold',
+          fontWeight: "fontWeightBold",
           background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
           flexShrink: 0,
         })}
@@ -88,12 +88,12 @@ function TopBar() {
       </Box>
 
       {/* Pathway name + mode */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <Button
           variant="ghost"
           size="small"
           endIcon={<ChevronDown size={12} />}
-          sx={{ fontWeight: 'fontWeightSemibold' }}
+          sx={{ fontWeight: "fontWeightSemibold" }}
         >
           Test Pathway
         </Button>
@@ -102,9 +102,15 @@ function TopBar() {
           variant="soft"
           color="warning"
           label={
-            <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', gap: 1 }}>
+            <Box
+              component="span"
+              sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}
+            >
               <Box component="span">Editing</Box>
-              <Box component="span" sx={{ color: 'text.muted', fontWeight: 'fontWeightRegular' }}>
+              <Box
+                component="span"
+                sx={{ color: "text.muted", fontWeight: "fontWeightRegular" }}
+              >
                 v0.0.2
               </Box>
               <ChevronDown size={10} />
@@ -117,43 +123,91 @@ function TopBar() {
       <Divider orientation="vertical" flexItem sx={{ my: 2 }} />
 
       {/* Undo/redo */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
         <Tooltip title="Undo">
-          <IconButton variant="ghost" size="small" aria-label="Undo"><Undo2 size={16} /></IconButton>
+          <IconButton variant="ghost" size="small" aria-label="Undo">
+            <Undo2 size={16} />
+          </IconButton>
         </Tooltip>
         <Tooltip title="Redo">
-          <IconButton variant="ghost" size="small" aria-label="Redo"><Redo2 size={16} /></IconButton>
+          <IconButton variant="ghost" size="small" aria-label="Redo">
+            <Redo2 size={16} />
+          </IconButton>
         </Tooltip>
       </Box>
 
       <Divider orientation="vertical" flexItem sx={{ my: 2 }} />
 
       {/* Meta actions */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-        <Tooltip title="Lock editing"><IconButton variant="ghost" size="small" aria-label="Lock"><Lock size={16} /></IconButton></Tooltip>
-        <Tooltip title="Bookmark"><IconButton variant="ghost" size="small" aria-label="Bookmark"><Star size={16} /></IconButton></Tooltip>
-        <Tooltip title="Language"><IconButton variant="ghost" size="small" aria-label="Language"><Globe size={16} /></IconButton></Tooltip>
-        <Tooltip title="Version history"><IconButton variant="ghost" size="small" aria-label="History"><History size={16} /></IconButton></Tooltip>
-        <Tooltip title="All changes saved"><IconButton variant="ghost" size="small" aria-label="Saved" color="success"><CheckCircle2 size={16} /></IconButton></Tooltip>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
+        <Tooltip title="Lock editing">
+          <IconButton variant="ghost" size="small" aria-label="Lock">
+            <Lock size={16} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Bookmark">
+          <IconButton variant="ghost" size="small" aria-label="Bookmark">
+            <Star size={16} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Language">
+          <IconButton variant="ghost" size="small" aria-label="Language">
+            <Globe size={16} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Version history">
+          <IconButton variant="ghost" size="small" aria-label="History">
+            <History size={16} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="All changes saved">
+          <IconButton
+            variant="ghost"
+            size="small"
+            aria-label="Saved"
+            color="success"
+          >
+            <CheckCircle2 size={16} />
+          </IconButton>
+        </Tooltip>
       </Box>
 
       <Box sx={{ flex: 1 }} />
 
       <Tooltip title="2 collaborators">
-        <AvatarGroup max={3} sx={{ '& .MuiAvatar-root': { width: 28, height: 28, fontSize: 11 } }}>
-          <Avatar variant="soft" color="primary">CA</Avatar>
-          <Avatar variant="soft" color="success">HA</Avatar>
+        <AvatarGroup
+          max={3}
+          sx={{ "& .MuiAvatar-root": { width: 28, height: 28, fontSize: 11 } }}
+        >
+          <Avatar variant="soft" color="primary">
+            CA
+          </Avatar>
+          <Avatar variant="soft" color="success">
+            HA
+          </Avatar>
         </AvatarGroup>
       </Tooltip>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-        <Tooltip title="Search"><IconButton variant="ghost" size="small" aria-label="Search"><Search size={16} /></IconButton></Tooltip>
-        <Tooltip title="Comments"><IconButton variant="ghost" size="small" aria-label="Comments"><MessageSquare size={16} /></IconButton></Tooltip>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
+        <Tooltip title="Search">
+          <IconButton variant="ghost" size="small" aria-label="Search">
+            <Search size={16} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Comments">
+          <IconButton variant="ghost" size="small" aria-label="Comments">
+            <MessageSquare size={16} />
+          </IconButton>
+        </Tooltip>
       </Box>
 
       <Divider orientation="vertical" flexItem sx={{ my: 2 }} />
 
-      <Button variant="outlined" size="small" startIcon={<UserPlus size={14} />}>
+      <Button
+        variant="outlined"
+        size="small"
+        startIcon={<UserPlus size={14} />}
+      >
         Share
       </Button>
       <Button variant="contained" size="small" startIcon={<Send size={14} />}>
@@ -165,14 +219,20 @@ function TopBar() {
 
 // ─── Left rail ───────────────────────────────────────────────────────────────
 
-type RailKey = 'shapes' | 'images' | 'videos' | 'quizzes';
+type RailKey = "shapes" | "images" | "videos" | "quizzes";
 
-function Rail({ active, onSelect }: { active: RailKey; onSelect: (k: RailKey) => void }) {
+function Rail({
+  active,
+  onSelect,
+}: {
+  active: RailKey;
+  onSelect: (k: RailKey) => void;
+}) {
   const items: Array<{ key: RailKey; label: string; icon: React.ReactNode }> = [
-    { key: 'shapes',  label: 'Shapes',  icon: <LayoutGrid size={20} /> },
-    { key: 'images',  label: 'Images',  icon: <ImageIcon size={20} /> },
-    { key: 'videos',  label: 'Videos',  icon: <Video size={20} /> },
-    { key: 'quizzes', label: 'Quizzes', icon: <HelpCircle size={20} /> },
+    { key: "shapes", label: "Shapes", icon: <LayoutGrid size={20} /> },
+    { key: "images", label: "Images", icon: <ImageIcon size={20} /> },
+    { key: "videos", label: "Videos", icon: <Video size={20} /> },
+    { key: "quizzes", label: "Quizzes", icon: <HelpCircle size={20} /> },
   ];
 
   return (
@@ -181,14 +241,14 @@ function Rail({ active, onSelect }: { active: RailKey; onSelect: (k: RailKey) =>
       aria-label="Editor sections"
       sx={(theme) => ({
         width: 72,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '2px',
+        display: "flex",
+        flexDirection: "column",
+        gap: "2px",
         py: 4,
         px: 2,
         bgcolor: theme.surface.subtle,
         borderRight: `1px solid ${theme.border.default}`,
-        ...theme.applyStyles('dark', {
+        ...theme.applyStyles("dark", {
           bgcolor: theme.palette.grey[900],
           borderColor: theme.palette.grey[700],
         }),
@@ -202,27 +262,30 @@ function Rail({ active, onSelect }: { active: RailKey; onSelect: (k: RailKey) =>
             component="button"
             onClick={() => onSelect(it.key)}
             sx={(theme) => ({
-              position: 'relative',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
               gap: 1,
               py: 2,
               border: 0,
-              background: 'none',
-              cursor: 'pointer',
+              background: "none",
+              cursor: "pointer",
               borderRadius: `${theme.radius.md}px`,
               color: theme.palette.text.secondary,
               fontSize: theme.typography.caption.fontSize,
-              fontWeight: 'fontWeightMedium',
+              fontWeight: "fontWeightMedium",
               transition: theme.motion.short,
-              '&:hover': { bgcolor: theme.palette.action.hover, color: theme.palette.text.primary },
+              "&:hover": {
+                bgcolor: theme.palette.action.hover,
+                color: theme.palette.text.primary,
+              },
               ...(isActive && {
                 bgcolor: theme.palette.action.selected,
                 color: theme.palette.primary.main,
-                '&::before': {
+                "&::before": {
                   content: '""',
-                  position: 'absolute',
+                  position: "absolute",
                   left: -6,
                   top: 10,
                   bottom: 10,
@@ -240,7 +303,9 @@ function Rail({ active, onSelect }: { active: RailKey; onSelect: (k: RailKey) =>
       })}
       <Box sx={{ flex: 1 }} />
       <Tooltip title="Settings" placement="right">
-        <IconButton variant="ghost" size="small" aria-label="Settings"><Settings size={18} /></IconButton>
+        <IconButton variant="ghost" size="small" aria-label="Settings">
+          <Settings size={18} />
+        </IconButton>
       </Tooltip>
     </Box>
   );
@@ -253,36 +318,44 @@ function SectionHeader({
   priority = false,
   open,
   onToggle,
-}: { title: string; priority?: boolean; open: boolean; onToggle: () => void }) {
+}: {
+  title: string;
+  priority?: boolean;
+  open: boolean;
+  onToggle: () => void;
+}) {
   return (
     <Box
       component="button"
       onClick={onToggle}
       sx={(theme) => ({
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: '100%',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
         border: 0,
-        background: 'none',
-        cursor: 'pointer',
+        background: "none",
+        cursor: "pointer",
         p: 0,
         mb: 3,
         color: priority ? theme.palette.text.primary : theme.palette.text.muted,
       })}
     >
       <Typography
-        variant={priority ? 'body2' : 'overline'}
-        sx={{ fontWeight: priority ? 'fontWeightSemibold' : 'fontWeightBold', m: 0 }}
+        variant={priority ? "body2" : "overline"}
+        sx={{
+          fontWeight: priority ? "fontWeightSemibold" : "fontWeightBold",
+          m: 0,
+        }}
       >
         {title}
       </Typography>
       <Box
         sx={(theme) => ({
-          display: 'inline-flex',
+          display: "inline-flex",
           color: theme.palette.text.muted,
           transition: theme.motion.short,
-          transform: open ? 'rotate(0)' : 'rotate(-90deg)',
+          transform: open ? "rotate(0)" : "rotate(-90deg)",
         })}
       >
         <ChevronDown size={14} />
@@ -291,32 +364,45 @@ function SectionHeader({
   );
 }
 
-function ShapeCell({ label, children }: { label: string; children: React.ReactNode }) {
+function ShapeCell({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <Tooltip title={label}>
       <Box
         sx={(theme) => ({
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           gap: 1,
           py: 2,
           px: 1,
           borderRadius: `${theme.radius.sm}px`,
-          cursor: 'grab',
+          cursor: "grab",
           color: theme.palette.text.secondary,
           transition: theme.motion.short,
-          '&:hover': {
-            bgcolor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity * 2),
+          "&:hover": {
+            bgcolor: alpha(
+              theme.palette.primary.main,
+              theme.palette.action.hoverOpacity * 2,
+            ),
             color: theme.palette.primary.main,
           },
         })}
       >
-        <Box sx={{ width: 32, height: 28, display: 'grid', placeItems: 'center' }}>{children}</Box>
+        <Box
+          sx={{ width: 32, height: 28, display: "grid", placeItems: "center" }}
+        >
+          {children}
+        </Box>
         <Typography
           variant="caption"
           noWrap
-          sx={{ fontSize: 10, color: 'text.muted', maxWidth: '100%' }}
+          sx={{ fontSize: 10, color: "text.muted", maxWidth: "100%" }}
         >
           {label}
         </Typography>
@@ -326,14 +412,24 @@ function ShapeCell({ label, children }: { label: string; children: React.ReactNo
 }
 
 function ShapeGrid({ children }: { children: React.ReactNode }) {
-  return <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2 }}>{children}</Box>;
+  return (
+    <Box
+      sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 2 }}
+    >
+      {children}
+    </Box>
+  );
 }
 
 function PanelSection({
   title,
   priority,
   children,
-}: { title: string; priority?: boolean; children: React.ReactNode }) {
+}: {
+  title: string;
+  priority?: boolean;
+  children: React.ReactNode;
+}) {
   const [open, setOpen] = useState(true);
   return (
     <Paper
@@ -342,10 +438,15 @@ function PanelSection({
         p: 3,
         borderColor: theme.border.subtle,
         borderRadius: `${theme.radius.md}px`,
-        ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
+        ...theme.applyStyles("dark", { borderColor: theme.palette.grey[700] }),
       })}
     >
-      <SectionHeader title={title} priority={priority} open={open} onToggle={() => setOpen((o) => !o)} />
+      <SectionHeader
+        title={title}
+        priority={priority}
+        open={open}
+        onToggle={() => setOpen((o) => !o)}
+      />
       <Collapse in={open} unmountOnExit>
         {children}
       </Collapse>
@@ -356,7 +457,14 @@ function PanelSection({
 // Simple placeholder glyph for a shape cell.
 function Glyph({ children }: { children: React.ReactNode }) {
   return (
-    <svg viewBox="0 0 40 30" fill="none" stroke="currentColor" strokeWidth={1.5} width="100%" height="100%">
+    <svg
+      viewBox="0 0 40 30"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      width="100%"
+      height="100%"
+    >
       {children}
     </svg>
   );
@@ -367,12 +475,12 @@ function ShapesPanel() {
     <Box
       sx={(theme) => ({
         width: 280,
-        display: 'flex',
-        flexDirection: 'column',
+        display: "flex",
+        flexDirection: "column",
         minHeight: 0,
         bgcolor: theme.surface.canvas,
         borderRight: `1px solid ${theme.border.default}`,
-        ...theme.applyStyles('dark', {
+        ...theme.applyStyles("dark", {
           bgcolor: theme.palette.grey[900],
           borderColor: theme.palette.grey[700],
         }),
@@ -380,12 +488,14 @@ function ShapesPanel() {
     >
       <Box
         sx={(theme) => ({
-          display: 'flex',
-          alignItems: 'center',
+          display: "flex",
+          alignItems: "center",
           gap: 2,
           p: 4,
           borderBottom: `1px solid ${theme.border.subtle}`,
-          ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
+          ...theme.applyStyles("dark", {
+            borderColor: theme.palette.grey[700],
+          }),
         })}
       >
         <OutlinedInput
@@ -399,74 +509,178 @@ function ShapesPanel() {
           }
         />
         <Tooltip title="Shape settings">
-          <IconButton variant="ghost" size="small" aria-label="Shape settings"><SlidersHorizontal size={16} /></IconButton>
+          <IconButton variant="ghost" size="small" aria-label="Shape settings">
+            <SlidersHorizontal size={16} />
+          </IconButton>
         </Tooltip>
       </Box>
 
-      <Box sx={{ flex: 1, overflowY: 'auto', p: 4, display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <Box
+        sx={{
+          flex: 1,
+          overflowY: "auto",
+          p: 4,
+          display: "flex",
+          flexDirection: "column",
+          gap: 4,
+        }}
+      >
         <PanelSection title="Shapes in use" priority>
           <ShapeGrid>
             <ShapeCell label="Checklist">
-              <Glyph><rect x={1} y={3} width={38} height={24} rx={3} /><path d="M6 10h3M12 10h20M6 15h3M12 15h16M6 20h3M12 20h14" /></Glyph>
+              <Glyph>
+                <rect x={1} y={3} width={38} height={24} rx={3} />
+                <path d="M6 10h3M12 10h20M6 15h3M12 15h16M6 20h3M12 20h14" />
+              </Glyph>
             </ShapeCell>
             <ShapeCell label="Rectangle">
-              <Glyph><rect x={2} y={6} width={36} height={18} rx={3} /></Glyph>
+              <Glyph>
+                <rect x={2} y={6} width={36} height={18} rx={3} />
+              </Glyph>
             </ShapeCell>
             <ShapeCell label="Rounded">
-              <Glyph><rect x={2} y={6} width={36} height={18} rx={9} /></Glyph>
+              <Glyph>
+                <rect x={2} y={6} width={36} height={18} rx={9} />
+              </Glyph>
             </ShapeCell>
           </ShapeGrid>
         </PanelSection>
 
         <PanelSection title="Standard">
-          <Typography variant="overline" sx={{ display: 'block', color: 'text.muted', mb: 2, fontSize: 9 }}>
+          <Typography
+            variant="overline"
+            sx={{ display: "block", color: "text.muted", mb: 2, fontSize: 9 }}
+          >
             Content
           </Typography>
           <ShapeGrid>
-            <ShapeCell label="Text"><Glyph><path d="M10 8h20M20 8v16M15 24h10" /></Glyph></ShapeCell>
-            <ShapeCell label="Checklist"><Glyph><rect x={6} y={6} width={5} height={5} rx={1} /><path d="M13 9h20M6 16h28M6 22h22" /></Glyph></ShapeCell>
-            <ShapeCell label="Document"><Glyph><path d="M8 4h18l6 6v16H8z" /><path d="M26 4v6h6M12 14h16M12 19h16M12 24h10" /></Glyph></ShapeCell>
-            <ShapeCell label="Rich text"><Glyph><rect x={2} y={4} width={36} height={22} rx={2} /><path d="M7 11h4M7 16h20M7 20h14" /></Glyph></ShapeCell>
+            <ShapeCell label="Text">
+              <Glyph>
+                <path d="M10 8h20M20 8v16M15 24h10" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Checklist">
+              <Glyph>
+                <rect x={6} y={6} width={5} height={5} rx={1} />
+                <path d="M13 9h20M6 16h28M6 22h22" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Document">
+              <Glyph>
+                <path d="M8 4h18l6 6v16H8z" />
+                <path d="M26 4v6h6M12 14h16M12 19h16M12 24h10" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Rich text">
+              <Glyph>
+                <rect x={2} y={4} width={36} height={22} rx={2} />
+                <path d="M7 11h4M7 16h20M7 20h14" />
+              </Glyph>
+            </ShapeCell>
           </ShapeGrid>
 
-          <Divider sx={{ my: 3, borderStyle: 'dashed' }} />
-          <Typography variant="overline" sx={{ display: 'block', color: 'text.muted', mb: 2, fontSize: 9 }}>
+          <Divider sx={{ my: 3, borderStyle: "dashed" }} />
+          <Typography
+            variant="overline"
+            sx={{ display: "block", color: "text.muted", mb: 2, fontSize: 9 }}
+          >
             Containers
           </Typography>
           <ShapeGrid>
-            <ShapeCell label="Rectangle"><Glyph><rect x={2} y={6} width={36} height={18} rx={2} /></Glyph></ShapeCell>
-            <ShapeCell label="Rounded"><Glyph><rect x={2} y={6} width={36} height={18} rx={9} /></Glyph></ShapeCell>
-            <ShapeCell label="Dashed"><Glyph><rect x={2} y={6} width={36} height={18} rx={2} strokeDasharray="3 2" /></Glyph></ShapeCell>
-            <ShapeCell label="Hexagon"><Glyph><path d="M20 4l14 8v6l-14 8-14-8v-6z" /></Glyph></ShapeCell>
+            <ShapeCell label="Rectangle">
+              <Glyph>
+                <rect x={2} y={6} width={36} height={18} rx={2} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Rounded">
+              <Glyph>
+                <rect x={2} y={6} width={36} height={18} rx={9} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Dashed">
+              <Glyph>
+                <rect
+                  x={2}
+                  y={6}
+                  width={36}
+                  height={18}
+                  rx={2}
+                  strokeDasharray="3 2"
+                />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Hexagon">
+              <Glyph>
+                <path d="M20 4l14 8v6l-14 8-14-8v-6z" />
+              </Glyph>
+            </ShapeCell>
           </ShapeGrid>
         </PanelSection>
 
         <PanelSection title="Flowchart">
           <ShapeGrid>
-            <ShapeCell label="End"><Glyph><ellipse cx={20} cy={15} rx={16} ry={9} /></Glyph></ShapeCell>
-            <ShapeCell label="Decision"><Glyph><path d="M20 4l16 11-16 11L4 15z" /></Glyph></ShapeCell>
-            <ShapeCell label="Process"><Glyph><rect x={4} y={7} width={32} height={16} rx={1} /></Glyph></ShapeCell>
-            <ShapeCell label="Input"><Glyph><path d="M8 7h28l-4 16H4z" /></Glyph></ShapeCell>
-            <ShapeCell label="Arrow"><Glyph><path d="M4 10h18V5l14 10-14 10v-5H4z" /></Glyph></ShapeCell>
-            <ShapeCell label="Start"><Glyph><path d="M8 23h24L28 7H12z" /></Glyph></ShapeCell>
+            <ShapeCell label="End">
+              <Glyph>
+                <ellipse cx={20} cy={15} rx={16} ry={9} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Decision">
+              <Glyph>
+                <path d="M20 4l16 11-16 11L4 15z" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Process">
+              <Glyph>
+                <rect x={4} y={7} width={32} height={16} rx={1} />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Input">
+              <Glyph>
+                <path d="M8 7h28l-4 16H4z" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Arrow">
+              <Glyph>
+                <path d="M4 10h18V5l14 10-14 10v-5H4z" />
+              </Glyph>
+            </ShapeCell>
+            <ShapeCell label="Start">
+              <Glyph>
+                <path d="M8 23h24L28 7H12z" />
+              </Glyph>
+            </ShapeCell>
           </ShapeGrid>
         </PanelSection>
 
         <PanelSection title="Statuses">
-          <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '6px' }}>
-            {(['info', 'warning', 'success', 'error', 'primary'] as const).map((intent) => (
-              <Tooltip key={intent} title={intent.charAt(0).toUpperCase() + intent.slice(1)}>
-                <Box
-                  sx={(theme) => ({
-                    height: 22,
-                    borderRadius: `${theme.radius.sm}px`,
-                    bgcolor: alpha(theme.palette[intent].main, theme.palette.action.hoverOpacity * 3),
-                    border: `1px solid ${alpha(theme.palette[intent].main, 0.3)}`,
-                    cursor: 'grab',
-                  })}
-                />
-              </Tooltip>
-            ))}
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(5, 1fr)",
+              gap: "6px",
+            }}
+          >
+            {(["info", "warning", "success", "error", "primary"] as const).map(
+              (intent) => (
+                <Tooltip
+                  key={intent}
+                  title={intent.charAt(0).toUpperCase() + intent.slice(1)}
+                >
+                  <Box
+                    sx={(theme) => ({
+                      height: 22,
+                      borderRadius: `${theme.radius.sm}px`,
+                      bgcolor: alpha(
+                        theme.palette[intent].main,
+                        theme.palette.action.hoverOpacity * 3,
+                      ),
+                      border: `1px solid ${alpha(theme.palette[intent].main, 0.3)}`,
+                      cursor: "grab",
+                    })}
+                  />
+                </Tooltip>
+              ),
+            )}
           </Box>
         </PanelSection>
       </Box>
@@ -475,7 +689,9 @@ function ShapesPanel() {
         sx={(theme) => ({
           p: 3,
           borderTop: `1px solid ${theme.border.subtle}`,
-          ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
+          ...theme.applyStyles("dark", {
+            borderColor: theme.palette.grey[700],
+          }),
         })}
       >
         <Button
@@ -484,9 +700,9 @@ function ShapesPanel() {
           color="neutral"
           startIcon={<Plus size={14} />}
           sx={(theme) => ({
-            borderStyle: 'dashed',
+            borderStyle: "dashed",
             bgcolor: theme.surface.subtle,
-            ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800] }),
+            ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[800] }),
           })}
         >
           Shape library
@@ -500,14 +716,18 @@ function ShapesPanel() {
 
 function Connector() {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Box sx={(theme) => ({ width: 2, height: 28, bgcolor: theme.border.strong })} />
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <Box
+        sx={(theme) => ({ width: 2, height: 28, bgcolor: theme.border.strong })}
+      />
       <Box
         sx={(theme) => ({
           width: 0,
           height: 0,
-          borderLeft: '4px solid transparent',
-          borderRight: '4px solid transparent',
+          borderLeft: "4px solid transparent",
+          borderRight: "4px solid transparent",
           borderTop: `6px solid ${theme.border.strong}`,
         })}
       />
@@ -526,11 +746,17 @@ function Node({ title, sub }: { title: string; sub?: string }) {
         borderRadius: `${theme.radius.md}px`,
         bgcolor: theme.surface.canvas,
         boxShadow: theme.elevation.low,
-        ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800] }),
+        ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[800] }),
       })}
     >
-      <Typography variant="body2" sx={{ fontWeight: 'fontWeightSemibold' }}>{title}</Typography>
-      {sub && <Typography variant="caption" color="text.muted">{sub}</Typography>}
+      <Typography variant="body2" sx={{ fontWeight: "fontWeightSemibold" }}>
+        {title}
+      </Typography>
+      {sub && (
+        <Typography variant="caption" color="text.muted">
+          {sub}
+        </Typography>
+      )}
     </Paper>
   );
 }
@@ -545,7 +771,7 @@ function HeaderNode({ title, body }: { title: string; body: string }) {
           bgcolor: theme.palette.primary.main,
           color: theme.palette.primary.contrastText,
           borderRadius: `${theme.radius.md}px ${theme.radius.md}px 0 0`,
-          fontWeight: 'fontWeightSemibold',
+          fontWeight: "fontWeightSemibold",
           fontSize: theme.typography.caption.fontSize,
         })}
       >
@@ -561,7 +787,7 @@ function HeaderNode({ title, body }: { title: string; body: string }) {
           bgcolor: theme.surface.canvas,
           color: theme.palette.text.secondary,
           fontSize: theme.typography.caption.fontSize,
-          ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800] }),
+          ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[800] }),
         })}
       >
         {body}
@@ -576,17 +802,17 @@ function Decision({ label }: { label: string }) {
       sx={(theme) => ({
         width: 160,
         height: 72,
-        display: 'grid',
-        placeItems: 'center',
-        textAlign: 'center',
+        display: "grid",
+        placeItems: "center",
+        textAlign: "center",
         px: 3,
         border: `2px solid ${theme.palette.primary.main}`,
         color: theme.palette.primary.main,
         bgcolor: theme.surface.canvas,
         borderRadius: `${theme.radius.sm}px`,
-        fontWeight: 'fontWeightSemibold',
+        fontWeight: "fontWeightSemibold",
         fontSize: theme.typography.caption.fontSize,
-        ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800] }),
+        ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[800] }),
       })}
     >
       {label}
@@ -597,7 +823,10 @@ function Decision({ label }: { label: string }) {
 function StatusNode({
   label,
   intent,
-}: { label: string; intent: 'success' | 'info' | 'warning' }) {
+}: {
+  label: string;
+  intent: "success" | "info" | "warning";
+}) {
   return (
     <Box
       sx={(theme) => ({
@@ -605,8 +834,11 @@ function StatusNode({
         py: 2,
         borderRadius: `${theme.radius.md}px`,
         fontSize: theme.typography.caption.fontSize,
-        fontWeight: 'fontWeightSemibold',
-        bgcolor: alpha(theme.palette[intent].main, theme.palette.action.hoverOpacity * 3),
+        fontWeight: "fontWeightSemibold",
+        bgcolor: alpha(
+          theme.palette[intent].main,
+          theme.palette.action.hoverOpacity * 3,
+        ),
         color: theme.palette[intent].dark,
         border: `1px solid ${alpha(theme.palette[intent].main, 0.3)}`,
       })}
@@ -616,64 +848,100 @@ function StatusNode({
   );
 }
 
-function CanvasArea({ aiOpen, onToggleAi }: { aiOpen: boolean; onToggleAi: () => void }) {
+function CanvasArea({
+  aiOpen,
+  onToggleAi,
+}: {
+  aiOpen: boolean;
+  onToggleAi: () => void;
+}) {
   const [zoom, setZoom] = useState(60);
 
   return (
     <Box
       sx={(theme) => ({
-        position: 'absolute',
+        position: "absolute",
         inset: 0,
-        overflow: 'hidden',
+        overflow: "hidden",
         bgcolor: theme.surface.subtle,
         backgroundImage: `radial-gradient(circle, ${theme.border.default} 1px, transparent 1px)`,
-        backgroundSize: '20px 20px',
-        ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[900] }),
+        backgroundSize: "20px 20px",
+        ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[900] }),
       })}
     >
       {/* Canvas top tool pill */}
       <Paper
         elevation={0}
         sx={(theme) => ({
-          position: 'absolute',
-          top: 16,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '2px',
-          p: '4px',
+          position: "absolute",
+          top: 14,
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          alignItems: "center",
+          gap: "2px",
+          p: "4px",
           borderRadius: `${theme.radius.pill}px`,
           border: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.canvas,
           boxShadow: theme.elevation.low,
           zIndex: theme.zIndex.fab,
-          ...theme.applyStyles('dark', {
+          ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
             borderColor: theme.palette.grey[700],
           }),
         })}
       >
-        <Tooltip title="Select"><IconButton size="small" variant="soft" color="primary" aria-label="Select"><MousePointer2 size={14} /></IconButton></Tooltip>
-        <Tooltip title="Connector"><IconButton variant="ghost" size="small" aria-label="Connector"><Waypoints size={14} /></IconButton></Tooltip>
-        <Tooltip title="Curved connector"><IconButton variant="ghost" size="small" aria-label="Curved"><Spline size={14} /></IconButton></Tooltip>
+        <Tooltip title="Select">
+          <IconButton
+            size="small"
+            variant="soft"
+            color="primary"
+            aria-label="Select"
+          >
+            <MousePointer2 size={14} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Connector">
+          <IconButton variant="ghost" size="small" aria-label="Connector">
+            <Waypoints size={14} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Curved connector">
+          <IconButton variant="ghost" size="small" aria-label="Curved">
+            <Spline size={14} />
+          </IconButton>
+        </Tooltip>
         <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
-        <Tooltip title="Show grid"><IconButton variant="soft" color="primary" size="small" aria-label="Grid"><Grid3x3 size={14} /></IconButton></Tooltip>
-        <Tooltip title="Canvas settings"><IconButton variant="ghost" size="small" aria-label="Settings"><Settings size={14} /></IconButton></Tooltip>
+        <Tooltip title="Show grid">
+          <IconButton
+            variant="soft"
+            color="primary"
+            size="small"
+            aria-label="Grid"
+          >
+            <Grid3x3 size={14} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Canvas settings">
+          <IconButton variant="ghost" size="small" aria-label="Settings">
+            <Settings size={14} />
+          </IconButton>
+        </Tooltip>
       </Paper>
 
       {/* Draft watermark */}
       <Typography
         sx={(theme) => ({
-          position: 'absolute',
+          position: "absolute",
           top: 20,
           right: 24,
-          fontWeight: 'fontWeightBold',
+          fontWeight: "fontWeightBold",
           fontSize: 48,
           color: alpha(theme.palette.text.primary, 0.06),
-          pointerEvents: 'none',
-          userSelect: 'none',
-          letterSpacing: '-0.03em',
+          pointerEvents: "none",
+          userSelect: "none",
+          letterSpacing: "-0.03em",
         })}
       >
         Draft
@@ -682,17 +950,25 @@ function CanvasArea({ aiOpen, onToggleAi }: { aiOpen: boolean; onToggleAi: () =>
       {/* Stage */}
       <Box
         sx={{
-          position: 'absolute',
+          position: "absolute",
           inset: 0,
           pt: 10,
           pb: 10,
           px: 8,
-          overflow: 'auto',
-          display: 'flex',
-          justifyContent: 'center',
+          overflow: "auto",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7, pb: 8 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 7,
+            pb: 8,
+          }}
+        >
           <Node title="Start: Patient intake" sub="Entry node · 1 outgoing" />
           <Connector />
           <HeaderNode
@@ -701,13 +977,20 @@ function CanvasArea({ aiOpen, onToggleAi }: { aiOpen: boolean; onToggleAi: () =>
           />
           <Connector />
           <Decision label="Severity ≥ moderate?" />
-          <Box sx={{ display: 'flex', gap: 9, alignItems: 'flex-start' }}>
-            {([
-              { intent: 'warning' as const, label: 'Urgent referral' },
-              { intent: 'info' as const,    label: 'Standard workflow' },
-              { intent: 'success' as const, label: 'Discharge + follow-up' },
-            ]).map((b) => (
-              <Box key={b.label} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Box sx={{ display: "flex", gap: 9, alignItems: "flex-start" }}>
+            {[
+              { intent: "warning" as const, label: "Urgent referral" },
+              { intent: "info" as const, label: "Standard workflow" },
+              { intent: "success" as const, label: "Discharge + follow-up" },
+            ].map((b) => (
+              <Box
+                key={b.label}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <Connector />
                 <StatusNode intent={b.intent} label={b.label} />
               </Box>
@@ -720,33 +1003,58 @@ function CanvasArea({ aiOpen, onToggleAi }: { aiOpen: boolean; onToggleAi: () =>
       <Paper
         elevation={0}
         sx={(theme) => ({
-          position: 'absolute',
+          position: "absolute",
           bottom: 16,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '2px',
-          p: '4px',
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          alignItems: "center",
+          gap: "2px",
+          p: "4px",
           borderRadius: `${theme.radius.md}px`,
           border: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.canvas,
           boxShadow: theme.elevation.low,
           zIndex: theme.zIndex.fab,
-          ...theme.applyStyles('dark', {
+          ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
             borderColor: theme.palette.grey[700],
           }),
         })}
       >
-        <Tooltip title="Attach content"><IconButton variant="ghost" size="small" aria-label="Attach"><Paperclip size={14} /></IconButton></Tooltip>
+        <Tooltip title="Attach content">
+          <IconButton variant="ghost" size="small" aria-label="Attach">
+            <Paperclip size={14} />
+          </IconButton>
+        </Tooltip>
         <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
-        <Tooltip title="Show node IDs"><IconButton variant="ghost" size="small" aria-label="IDs"><Hash size={14} /></IconButton></Tooltip>
-        <Tooltip title="Zoom to start"><IconButton variant="ghost" size="small" aria-label="Center"><Crosshair size={14} /></IconButton></Tooltip>
-        <Tooltip title="Zoom to fit"><IconButton variant="ghost" size="small" aria-label="Fit"><Maximize2 size={14} /></IconButton></Tooltip>
-        <Tooltip title="Mini map"><IconButton variant="ghost" size="small" aria-label="Map"><MapIcon size={14} /></IconButton></Tooltip>
+        <Tooltip title="Show node IDs">
+          <IconButton variant="ghost" size="small" aria-label="IDs">
+            <Hash size={14} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Zoom to start">
+          <IconButton variant="ghost" size="small" aria-label="Center">
+            <Crosshair size={14} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Zoom to fit">
+          <IconButton variant="ghost" size="small" aria-label="Fit">
+            <Maximize2 size={14} />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Mini map">
+          <IconButton variant="ghost" size="small" aria-label="Map">
+            <MapIcon size={14} />
+          </IconButton>
+        </Tooltip>
         <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
-        <IconButton variant="ghost" size="small" aria-label="Zoom out" onClick={() => setZoom((z) => Math.max(10, z - 10))}>
+        <IconButton
+          variant="ghost"
+          size="small"
+          aria-label="Zoom out"
+          onClick={() => setZoom((z) => Math.max(10, z - 10))}
+        >
           <Minus size={14} />
         </IconButton>
         <Slider
@@ -758,10 +1066,23 @@ function CanvasArea({ aiOpen, onToggleAi }: { aiOpen: boolean; onToggleAi: () =>
           sx={{ width: 100, mx: 2 }}
           aria-label="Zoom"
         />
-        <IconButton variant="ghost" size="small" aria-label="Zoom in" onClick={() => setZoom((z) => Math.min(100, z + 10))}>
+        <IconButton
+          variant="ghost"
+          size="small"
+          aria-label="Zoom in"
+          onClick={() => setZoom((z) => Math.min(100, z + 10))}
+        >
           <Plus size={14} />
         </IconButton>
-        <Typography variant="caption" color="text.secondary" sx={{ minWidth: 36, textAlign: 'center', fontVariantNumeric: 'tabular-nums' }}>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{
+            minWidth: 36,
+            textAlign: "center",
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
           {zoom}%
         </Typography>
         <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
@@ -771,10 +1092,18 @@ function CanvasArea({ aiOpen, onToggleAi }: { aiOpen: boolean; onToggleAi: () =>
           startIcon={<Sparkles size={14} />}
           sx={(theme) => ({
             borderRadius: `${theme.radius.pill}px`,
-            bgcolor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity * 2),
+            bgcolor: alpha(
+              theme.palette.primary.main,
+              theme.palette.action.hoverOpacity * 2,
+            ),
             color: theme.palette.primary.main,
             border: `1px solid ${alpha(theme.palette.primary.main, 0.28)}`,
-            '&:hover': { bgcolor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity * 3) },
+            "&:hover": {
+              bgcolor: alpha(
+                theme.palette.primary.main,
+                theme.palette.action.hoverOpacity * 3,
+              ),
+            },
           })}
         >
           AI Assistant
@@ -790,42 +1119,57 @@ function CanvasArea({ aiOpen, onToggleAi }: { aiOpen: boolean; onToggleAi: () =>
 // ─── AI Panel ────────────────────────────────────────────────────────────────
 
 function AiPanel({ onClose }: { onClose: () => void }) {
-  const [messages, setMessages] = useState<Array<{ role: 'user' | 'assistant'; text: string }>>([
-    { role: 'assistant', text: "Hi! I'm your pathway assistant. I can help you understand and navigate this clinical pathway. What would you like to know?" },
+  const [messages, setMessages] = useState<
+    Array<{ role: "user" | "assistant"; text: string }>
+  >([
+    {
+      role: "assistant",
+      text: "Hi! I'm your pathway assistant. I can help you understand and navigate this clinical pathway. What would you like to know?",
+    },
   ]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(true);
 
   const send = (text: string) => {
     if (!text.trim()) return;
-    setMessages((m) => [...m, { role: 'user', text }]);
+    setMessages((m) => [...m, { role: "user", text }]);
     setShowSuggestions(false);
-    setInput('');
+    setInput("");
     setTimeout(() => {
-      setMessages((m) => [...m, { role: 'assistant', text: "Got it — I'm analyzing this pathway now. In a moment I'll surface relevant decision points and context." }]);
+      setMessages((m) => [
+        ...m,
+        {
+          role: "assistant",
+          text: "Got it — I'm analyzing this pathway now. In a moment I'll surface relevant decision points and context.",
+        },
+      ]);
     }, 500);
   };
 
-  const suggestions = ['Summarize this pathway', 'What are the decision points?', 'Suggest improvements for clarity'];
+  const suggestions = [
+    "Summarize this pathway",
+    "What are the decision points?",
+    "Suggest improvements for clarity",
+  ];
 
   return (
     <Paper
       elevation={0}
       sx={(theme) => ({
-        position: 'absolute',
+        position: "absolute",
         right: 20,
         bottom: 68,
         width: 360,
         height: 500,
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
         borderRadius: `${theme.radius.lg}px`,
         border: `1px solid ${theme.border.default}`,
         bgcolor: theme.surface.canvas,
         boxShadow: theme.elevation.high,
         zIndex: theme.zIndex.modal,
-        ...theme.applyStyles('dark', {
+        ...theme.applyStyles("dark", {
           bgcolor: theme.palette.grey[800],
           borderColor: theme.palette.grey[700],
         }),
@@ -833,54 +1177,94 @@ function AiPanel({ onClose }: { onClose: () => void }) {
     >
       <Box
         sx={(theme) => ({
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
           px: 4,
           py: 3,
           bgcolor: theme.surface.subtle,
           borderBottom: `1px solid ${theme.border.subtle}`,
-          ...theme.applyStyles('dark', {
+          ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[900],
             borderColor: theme.palette.grey[700],
           }),
         })}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Box sx={{ color: 'primary.main', display: 'inline-flex' }}><Sparkles size={20} /></Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <Box sx={{ color: "primary.main", display: "inline-flex" }}>
+            <Sparkles size={20} />
+          </Box>
           <Box>
-            <Typography variant="subtitle2" sx={{ fontWeight: 'fontWeightSemibold' }}>Pathway Assistant</Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Typography variant="caption" color="text.muted">Powered by Curbside Health AI</Typography>
-              <Chip label="BETA" size="small" variant="soft" color="info" sx={{ height: 16, fontSize: 9, fontWeight: 'fontWeightBold' }} />
+            <Typography
+              variant="subtitle2"
+              sx={{ fontWeight: "fontWeightSemibold" }}
+            >
+              Pathway Assistant
+            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Typography variant="caption" color="text.muted">
+                Powered by Curbside Health AI
+              </Typography>
+              <Chip
+                label="BETA"
+                size="small"
+                variant="soft"
+                color="info"
+                sx={{ height: 16, fontSize: 9, fontWeight: "fontWeightBold" }}
+              />
             </Box>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', gap: 0 }}>
-          <Tooltip title="Pin"><IconButton variant="ghost" size="small" aria-label="Pin"><Pin size={14} /></IconButton></Tooltip>
-          <Tooltip title="Close"><IconButton variant="ghost" size="small" aria-label="Close" onClick={onClose}><X size={14} /></IconButton></Tooltip>
+        <Box sx={{ display: "flex", gap: 0 }}>
+          <Tooltip title="Pin">
+            <IconButton variant="ghost" size="small" aria-label="Pin">
+              <Pin size={14} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Close">
+            <IconButton
+              variant="ghost"
+              size="small"
+              aria-label="Close"
+              onClick={onClose}
+            >
+              <X size={14} />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Box>
 
-      <Box sx={{ flex: 1, overflowY: 'auto', p: 4, display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <Box
+        sx={{
+          flex: 1,
+          overflowY: "auto",
+          p: 4,
+          display: "flex",
+          flexDirection: "column",
+          gap: 3,
+        }}
+      >
         {messages.map((m, i) => (
           <Box
             key={i}
             sx={(theme) => ({
-              maxWidth: '85%',
-              alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
+              maxWidth: "85%",
+              alignSelf: m.role === "user" ? "flex-end" : "flex-start",
               px: 3,
               py: 2,
               borderRadius: `${theme.radius.md}px`,
               fontSize: theme.typography.body2.fontSize,
               lineHeight: 1.45,
-              ...(m.role === 'user'
-                ? { bgcolor: theme.palette.primary.main, color: theme.palette.primary.contrastText }
+              ...(m.role === "user"
+                ? {
+                    bgcolor: theme.palette.primary.main,
+                    color: theme.palette.primary.contrastText,
+                  }
                 : {
                     bgcolor: theme.surface.subtle,
                     color: theme.palette.text.primary,
                     border: `1px solid ${theme.border.subtle}`,
-                    ...theme.applyStyles('dark', {
+                    ...theme.applyStyles("dark", {
                       bgcolor: theme.palette.grey[900],
                       borderColor: theme.palette.grey[700],
                     }),
@@ -891,7 +1275,7 @@ function AiPanel({ onClose }: { onClose: () => void }) {
           </Box>
         ))}
         {showSuggestions && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
             {suggestions.map((s) => (
               <Button
                 key={s}
@@ -899,7 +1283,7 @@ function AiPanel({ onClose }: { onClose: () => void }) {
                 color="neutral"
                 size="small"
                 onClick={() => send(s)}
-                sx={{ justifyContent: 'flex-start', textAlign: 'left' }}
+                sx={{ justifyContent: "flex-start", textAlign: "left" }}
               >
                 {s}
               </Button>
@@ -911,10 +1295,12 @@ function AiPanel({ onClose }: { onClose: () => void }) {
       <Box
         sx={(theme) => ({
           p: 3,
-          display: 'flex',
+          display: "flex",
           gap: 2,
           borderTop: `1px solid ${theme.border.subtle}`,
-          ...theme.applyStyles('dark', { borderColor: theme.palette.grey[700] }),
+          ...theme.applyStyles("dark", {
+            borderColor: theme.palette.grey[700],
+          }),
         })}
       >
         <OutlinedInput
@@ -923,10 +1309,17 @@ function AiPanel({ onClose }: { onClose: () => void }) {
           placeholder="Ask about this pathway…"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') send(input); }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") send(input);
+          }}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton variant="ghost" size="small" aria-label="Send" onClick={() => send(input)}>
+              <IconButton
+                variant="ghost"
+                size="small"
+                aria-label="Send"
+                onClick={() => send(input)}
+              >
                 <Send size={14} />
               </IconButton>
             </InputAdornment>
@@ -940,16 +1333,18 @@ function AiPanel({ onClose }: { onClose: () => void }) {
 // ─── Main page ───────────────────────────────────────────────────────────────
 
 export function PathwayEditorPage() {
-  const [rail, setRail] = useState<RailKey>('shapes');
+  const [rail, setRail] = useState<RailKey>("shapes");
   const [aiOpen, setAiOpen] = useState(true);
 
   return (
-    <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+    <Box
+      sx={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}
+    >
       <TopBar />
-      <Box sx={{ flex: 1, display: 'flex', minHeight: 0 }}>
+      <Box sx={{ flex: 1, display: "flex", minHeight: 0 }}>
         <Rail active={rail} onSelect={setRail} />
         <ShapesPanel />
-        <Box sx={{ flex: 1, minWidth: 0, position: 'relative' }}>
+        <Box sx={{ flex: 1, minWidth: 0, position: "relative" }}>
           <CanvasArea aiOpen={aiOpen} onToggleAi={() => setAiOpen((o) => !o)} />
         </Box>
       </Box>
