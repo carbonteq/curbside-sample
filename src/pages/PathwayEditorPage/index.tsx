@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
+import ButtonBase from "@mui/material/ButtonBase";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -8,7 +9,11 @@ import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import Collapse from "@mui/material/Collapse";
@@ -23,6 +28,7 @@ import {
   Globe,
   History,
   CheckCircle2,
+  MoreHorizontal,
   Search,
   MessageSquare,
   UserPlus,
@@ -100,7 +106,7 @@ function TopBar() {
         <Chip
           size="small"
           variant="soft"
-          color="warning"
+          color="neutral"
           label={
             <Box
               component="span"
@@ -161,14 +167,14 @@ function TopBar() {
           </IconButton>
         </Tooltip>
         <Tooltip title="All changes saved">
-          <IconButton
-            variant="ghost"
+          <Chip
             size="small"
-            aria-label="Saved"
+            variant="soft"
             color="success"
-          >
-            <CheckCircle2 size={16} />
-          </IconButton>
+            icon={<CheckCircle2 size={12} />}
+            label="Saved"
+            sx={{ ml: 1 }}
+          />
         </Tooltip>
       </Box>
 
@@ -177,7 +183,13 @@ function TopBar() {
       <Tooltip title="2 collaborators">
         <AvatarGroup
           max={3}
-          sx={{ "& .MuiAvatar-root": { width: 28, height: 28, fontSize: 11 } }}
+          sx={(t) => ({
+            "& .MuiAvatar-root": {
+              width: 28,
+              height: 28,
+              fontSize: t.typography.caption.fontSize,
+            },
+          })}
         >
           <Avatar variant="soft" color="primary">
             CA
@@ -243,7 +255,7 @@ function Rail({
         width: 72,
         display: "flex",
         flexDirection: "column",
-        gap: "2px",
+        gap: 0,
         py: 4,
         px: 2,
         bgcolor: theme.surface.subtle,
@@ -257,20 +269,18 @@ function Rail({
       {items.map((it) => {
         const isActive = it.key === active;
         return (
-          <Box
+          <ButtonBase
             key={it.key}
-            component="button"
             onClick={() => onSelect(it.key)}
+            aria-pressed={isActive}
             sx={(theme) => ({
               position: "relative",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              width: "100%",
               gap: 1,
               py: 2,
-              border: 0,
-              background: "none",
-              cursor: "pointer",
               borderRadius: `${theme.radius.md}px`,
               color: theme.palette.text.secondary,
               fontSize: theme.typography.caption.fontSize,
@@ -298,7 +308,7 @@ function Rail({
           >
             {it.icon}
             <Box component="span">{it.label}</Box>
-          </Box>
+          </ButtonBase>
         );
       })}
       <Box sx={{ flex: 1 }} />
@@ -381,6 +391,8 @@ function ShapeCell({
           gap: 1,
           py: 2,
           px: 1,
+          minWidth: 0,
+          overflow: "hidden",
           borderRadius: `${theme.radius.sm}px`,
           cursor: "grab",
           color: theme.palette.text.secondary,
@@ -402,7 +414,7 @@ function ShapeCell({
         <Typography
           variant="caption"
           noWrap
-          sx={{ fontSize: 10, color: "text.muted", maxWidth: "100%" }}
+          sx={{ color: "text.muted", maxWidth: "100%", fontSize: 8 }}
         >
           {label}
         </Typography>
@@ -549,7 +561,7 @@ function ShapesPanel() {
         <PanelSection title="Standard">
           <Typography
             variant="overline"
-            sx={{ display: "block", color: "text.muted", mb: 2, fontSize: 9 }}
+            sx={{ display: "block", color: "text.muted", mb: 2 }}
           >
             Content
           </Typography>
@@ -582,7 +594,7 @@ function ShapesPanel() {
           <Divider sx={{ my: 3, borderStyle: "dashed" }} />
           <Typography
             variant="overline"
-            sx={{ display: "block", color: "text.muted", mb: 2, fontSize: 9 }}
+            sx={{ display: "block", color: "text.muted", mb: 2 }}
           >
             Containers
           </Typography>
@@ -657,7 +669,7 @@ function ShapesPanel() {
             sx={{
               display: "grid",
               gridTemplateColumns: "repeat(5, 1fr)",
-              gap: "6px",
+              gap: 2,
             }}
           >
             {(["info", "warning", "success", "error", "primary"] as const).map(
@@ -726,9 +738,9 @@ function Connector() {
         sx={(theme) => ({
           width: 0,
           height: 0,
-          borderLeft: "4px solid transparent",
-          borderRight: "4px solid transparent",
-          borderTop: `6px solid ${theme.border.strong}`,
+          borderLeft: `${theme.spacing(1)} solid transparent`,
+          borderRight: `${theme.spacing(1)} solid transparent`,
+          borderTop: `${theme.spacing(2)} solid ${theme.border.strong}`,
         })}
       />
     </Box>
@@ -865,7 +877,7 @@ function CanvasArea({
         overflow: "hidden",
         bgcolor: theme.surface.subtle,
         backgroundImage: `radial-gradient(circle, ${theme.border.default} 1px, transparent 1px)`,
-        backgroundSize: "20px 20px",
+        backgroundSize: `${theme.spacing(5)} ${theme.spacing(5)}`,
         ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[900] }),
       })}
     >
@@ -879,8 +891,8 @@ function CanvasArea({
           transform: "translateX(-50%)",
           display: "flex",
           alignItems: "center",
-          gap: "2px",
-          p: "4px",
+          gap: 0,
+          p: 1,
           borderRadius: `${theme.radius.pill}px`,
           border: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.canvas,
@@ -937,7 +949,7 @@ function CanvasArea({
           top: 20,
           right: 24,
           fontWeight: "fontWeightBold",
-          fontSize: 48,
+          fontSize: theme.typography.h1.fontSize,
           color: alpha(theme.palette.text.primary, 0.06),
           pointerEvents: "none",
           userSelect: "none",
@@ -1009,8 +1021,8 @@ function CanvasArea({
           transform: "translateX(-50%)",
           display: "flex",
           alignItems: "center",
-          gap: "2px",
-          p: "4px",
+          gap: 0,
+          p: 1,
           borderRadius: `${theme.radius.md}px`,
           border: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.canvas,

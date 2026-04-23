@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,29 +6,23 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import { useColorScheme } from '@mui/material/styles';
-import { Sun, Moon, Monitor } from 'lucide-react';
-import { AccountSettings }    from '@/pages/AccountSettings';
-import { ComponentShowcase }  from '@/pages/ComponentShowcase';
-import { UsersPage }          from '@/pages/UsersPage';
-import { LibraryPage }        from '@/pages/LibraryPage';
-import { AnalyticsPage }      from '@/pages/AnalyticsPage';
-import { PathwayScreen }      from '@/pages/PathwayScreen';
-import { BrowsePage }         from '@/pages/BrowsePage';
-import { ProtocolViewerPage }        from '@/pages/ProtocolViewerPage';
+import { Sun, Moon, Monitor, Home } from 'lucide-react';
+import { AccountSettings }           from '@/pages/AccountSettings';
+import { ComponentShowcase }          from '@/pages/ComponentShowcase';
+import { UsersPage }                  from '@/pages/UsersPage';
+import { LibraryPage }                from '@/pages/LibraryPage';
+import { AnalyticsPage }              from '@/pages/AnalyticsPage';
+import { PathwayScreen }              from '@/pages/PathwayScreen';
+import { BrowsePage }                 from '@/pages/BrowsePage';
+import { ProtocolViewerPage }         from '@/pages/ProtocolViewerPage';
 import { WorkflowPage }               from '@/pages/WorkflowPage';
 import { ClinicalPathwayViewerPage }  from '@/pages/ClinicalPathwayViewerPage';
 import { PathwayEditorPage }          from '@/pages/PathwayEditorPage';
 import { CommunityPage }              from '@/pages/CommunityPage';
+import { HomePage }                   from '@/pages/HomePage';
 
-type Page =
-  | 'settings' | 'showcase' | 'users' | 'library' | 'analytics' | 'pathway'
-  | 'browse' | 'protocol' | 'workflow' | 'clinicalpathway' | 'pathwayeditor';
-
-// Pages that need full-height layout (no padding wrapper)
-const FULL_HEIGHT_PAGES: Page[] = ['pathway', 'browse', 'protocol', 'workflow', 'clinicalpathway', 'pathwayeditor'];
+const FULL_HEIGHT_PATHS = new Set(['/pathway', '/browse', '/protocol', '/workflow', '/clinicalpathway', '/pathwayeditor']);
 
 function ColorSchemeToggle() {
   const { mode, setMode } = useColorScheme();
@@ -49,10 +42,10 @@ function ColorSchemeToggle() {
   );
 }
 
-function MainApp() {
-  const [page, setPage] = useState<Page>('browse');
-
-  const isFullHeight = FULL_HEIGHT_PAGES.includes(page);
+function Shell({ children, fullHeight }: { children: React.ReactNode; fullHeight?: boolean }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
 
   return (
     <Box
@@ -64,7 +57,6 @@ function MainApp() {
         ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[900] }),
       })}
     >
-      {/* Skip link */}
       <Box
         component="a"
         href="#main-content"
@@ -79,7 +71,6 @@ function MainApp() {
         Skip to main content
       </Box>
 
-      {/* Top app bar */}
       <AppBar
         position="fixed"
         elevation={0}
@@ -94,34 +85,30 @@ function MainApp() {
         })}
       >
         <Toolbar sx={{ px: { xs: 2, md: 4 }, gap: 2 }}>
+          <Tooltip title="Home">
+            <IconButton
+              aria-label="Go to home"
+              onClick={() => navigate('/')}
+              size="small"
+              sx={(theme) => ({
+                color: isHome ? theme.palette.primary.main : theme.palette.text.secondary,
+                mr: 0.5,
+              })}
+            >
+              <Home size={20} />
+            </IconButton>
+          </Tooltip>
+
           <Typography
             variant="h6"
             component="div"
-            sx={{ fontWeight: 'fontWeightSemibold', mr: 2, whiteSpace: 'nowrap' }}
+            onClick={() => navigate('/')}
+            sx={{ fontWeight: 'fontWeightSemibold', whiteSpace: 'nowrap', cursor: 'pointer', mr: 1 }}
           >
             Curbside Health
           </Typography>
 
-          <Tabs
-            value={page}
-            onChange={(_, v: Page) => setPage(v)}
-            sx={{ flex: 1 }}
-            aria-label="Top-level pages"
-          >
-            {/* ── Original pages ── */}
-            <Tab value="settings"  label="Account Settings" />
-            <Tab value="showcase"  label="Components" />
-            <Tab value="users"     label="Users" />
-            <Tab value="library"   label="Library" />
-            <Tab value="analytics" label="Analytics" />
-            <Tab value="pathway"   label="Pathway Builder" />
-            {/* ── New pages ── */}
-            <Tab value="browse"           label="Browse" />
-            <Tab value="protocol"         label="Protocol Viewer" />
-            <Tab value="workflow"         label="Workflow" />
-            <Tab value="clinicalpathway"  label="Clinical Pathway" />
-            <Tab value="pathwayeditor"    label="Pathway Editor" />
-          </Tabs>
+          <Box sx={{ flex: 1 }} />
 
           <ColorSchemeToggle />
           <Tooltip title="Jordan Rivera">
@@ -141,22 +128,49 @@ function MainApp() {
         </Toolbar>
       </AppBar>
 
-      {/* Toolbar offset */}
       <Box sx={(theme) => ({ ...theme.mixins.toolbar, flexShrink: 0 })} />
 
-      {/* Page content */}
-      <Box id="main-content" sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        {/* Full-height pages */}
-        {isFullHeight ? (
-          <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            {page === 'pathway'          && <PathwayScreen />}
-            {page === 'browse'           && <BrowsePage />}
-            {page === 'protocol'         && <ProtocolViewerPage />}
-            {page === 'workflow'         && <WorkflowPage />}
-            {page === 'clinicalpathway'  && <ClinicalPathwayViewerPage />}
-            {page === 'pathwayeditor'    && <PathwayEditorPage />}
-          </Box>
-        ) : page === 'settings' ? (
+      <Box
+        id="main-content"
+        sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: fullHeight ? 'hidden' : 'auto' }}
+      >
+        {children}
+      </Box>
+    </Box>
+  );
+}
+
+function PaddedPage({ children }: { children: React.ReactNode }) {
+  return (
+    <Box
+      sx={(theme) => ({
+        flex: 1,
+        overflow: 'auto',
+        p: { xs: 3, md: 5 },
+        [theme.breakpoints.up('lg')]: { maxWidth: 1400, width: '100%', mx: 'auto' },
+      })}
+    >
+      {children}
+    </Box>
+  );
+}
+
+export function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Shell><HomePage /></Shell>} />
+
+      {/* Full-height pages */}
+      <Route path="/browse"          element={<Shell fullHeight><BrowsePage /></Shell>} />
+      <Route path="/protocol"        element={<Shell fullHeight><ProtocolViewerPage /></Shell>} />
+      <Route path="/workflow"        element={<Shell fullHeight><WorkflowPage /></Shell>} />
+      <Route path="/clinicalpathway" element={<Shell fullHeight><ClinicalPathwayViewerPage /></Shell>} />
+      <Route path="/pathwayeditor"   element={<Shell fullHeight><PathwayEditorPage /></Shell>} />
+      <Route path="/pathway"         element={<Shell fullHeight><PathwayScreen /></Shell>} />
+
+      {/* Settings */}
+      <Route path="/settings" element={
+        <Shell>
           <Box
             sx={(theme) => ({
               flex: 1,
@@ -167,34 +181,23 @@ function MainApp() {
           >
             <AccountSettings />
           </Box>
-        ) : page === 'showcase' ? (
+        </Shell>
+      } />
+
+      {/* Showcase */}
+      <Route path="/showcase" element={
+        <Shell>
           <Box sx={{ flex: 1, overflow: 'auto' }}>
             <ComponentShowcase />
           </Box>
-        ) : (
-          <Box
-            sx={(theme) => ({
-              flex: 1,
-              overflow: 'auto',
-              p: { xs: 3, md: 5 },
-              [theme.breakpoints.up('lg')]: { maxWidth: 1400, width: '100%', mx: 'auto' },
-            })}
-          >
-            {page === 'users'     && <UsersPage />}
-            {page === 'library'   && <LibraryPage />}
-            {page === 'analytics' && <AnalyticsPage />}
-          </Box>
-        )}
-      </Box>
-    </Box>
-  );
-}
+        </Shell>
+      } />
 
-export function App() {
-  return (
-    <Routes>
-      <Route path="/community" element={<CommunityPage />} />
-      <Route path="/*" element={<MainApp />} />
+      {/* Padded pages */}
+      <Route path="/users"     element={<Shell><PaddedPage><UsersPage /></PaddedPage></Shell>} />
+      <Route path="/library"   element={<Shell><PaddedPage><LibraryPage /></PaddedPage></Shell>} />
+      <Route path="/analytics" element={<Shell><PaddedPage><AnalyticsPage /></PaddedPage></Shell>} />
+      <Route path="/community" element={<Shell><PaddedPage><CommunityPage /></PaddedPage></Shell>} />
     </Routes>
   );
 }
