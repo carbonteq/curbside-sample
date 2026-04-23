@@ -427,7 +427,7 @@ function ShapeCell({
         <Typography
           variant="caption"
           noWrap
-          sx={{ color: "text.muted", maxWidth: "100%", fontSize: 8 }}
+          sx={{ color: "text.muted", maxWidth: "100%", fontSize: 9 }}
         >
           {label}
         </Typography>

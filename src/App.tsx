@@ -11,7 +11,6 @@ import { Sun, Moon, Monitor, Home } from 'lucide-react';
 import { AccountSettings }           from '@/pages/AccountSettings';
 import { ComponentShowcase }          from '@/pages/ComponentShowcase';
 import { UsersPage }                  from '@/pages/UsersPage';
-import { LibraryPage }                from '@/pages/LibraryPage';
 import { AnalyticsPage }              from '@/pages/AnalyticsPage';
 import { PathwayScreen }              from '@/pages/PathwayScreen';
 import { BrowsePage }                 from '@/pages/BrowsePage';
@@ -21,6 +20,7 @@ import { ClinicalPathwayViewerPage }  from '@/pages/ClinicalPathwayViewerPage';
 import { PathwayEditorPage }          from '@/pages/PathwayEditorPage';
 import { CommunityPage }              from '@/pages/CommunityPage';
 import { HomePage }                   from '@/pages/HomePage';
+import { LibraryPage }                from '@/pages/LibraryPage';
 
 const FULL_HEIGHT_PATHS = new Set(['/pathway', '/browse', '/protocol', '/workflow', '/clinicalpathway', '/pathwayeditor']);
 
@@ -167,6 +167,7 @@ export function App() {
       <Route path="/clinicalpathway" element={<Shell fullHeight><ClinicalPathwayViewerPage /></Shell>} />
       <Route path="/pathwayeditor"   element={<Shell fullHeight><PathwayEditorPage /></Shell>} />
       <Route path="/pathway"         element={<Shell fullHeight><PathwayScreen /></Shell>} />
+      <Route path="/library"         element={<LibraryPage />} />
 
       {/* Settings */}
       <Route path="/settings" element={
@@ -195,7 +196,6 @@ export function App() {
 
       {/* Padded pages */}
       <Route path="/users"     element={<Shell><PaddedPage><UsersPage /></PaddedPage></Shell>} />
-      <Route path="/library"   element={<Shell><PaddedPage><LibraryPage /></PaddedPage></Shell>} />
       <Route path="/analytics" element={<Shell><PaddedPage><AnalyticsPage /></PaddedPage></Shell>} />
       <Route path="/community" element={<Shell><PaddedPage><CommunityPage /></PaddedPage></Shell>} />
     </Routes>
