@@ -95,47 +95,51 @@ function TopBar() {
 
       {/* Pathway name + mode */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Button
-          variant="ghost"
-          size="small"
-          startIcon={<NotepadText size={14} />}
-          endIcon={<ChevronDown size={12} />}
-          sx={{ fontWeight: "fontWeightSemibold" }}
-        >
-          Test Pathway
-        </Button>
-        <Chip
-          size="small"
-          variant="soft"
-          color="warning"
-          label={
-            <Box
-              component="span"
-              sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}
-            >
+        <Tooltip title="Switch pathway">
+          <Button
+            variant="ghost"
+            size="medium"
+            startIcon={<NotepadText size={14} />}
+            endIcon={<ChevronDown size={12} />}
+            sx={{ fontWeight: "fontWeightSemibold" }}
+          >
+            Test Pathway
+          </Button>
+        </Tooltip>
+        <Tooltip title="Change editing mode">
+          <Chip
+            size="medium"
+            variant="soft"
+            color="warning"
+            label={
               <Box
                 component="span"
-                sx={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  bgcolor: "warning.main",
-                  display: "inline-block",
-                  flexShrink: 0,
-                }}
-              />
-              <Box component="span">Editing</Box>
-              <Box
-                component="span"
-                sx={{ color: "text.muted", fontWeight: "fontWeightRegular" }}
+                sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}
               >
-                v0.0.2
+                <Box
+                  component="span"
+                  sx={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    bgcolor: "warning.main",
+                    display: "inline-block",
+                    flexShrink: 0,
+                  }}
+                />
+                <Box component="span">Editing</Box>
+                <Box
+                  component="span"
+                  sx={{ color: "text.muted", fontWeight: "fontWeightRegular" }}
+                >
+                  v0.0.2
+                </Box>
+                <ChevronDown size={10} />
               </Box>
-              <ChevronDown size={10} />
-            </Box>
-          }
-          sx={(theme) => ({ borderRadius: `${theme.radius.pill}px`, pl: 1 })}
-        />
+            }
+            sx={(theme) => ({ borderRadius: `${theme.radius.pill}px`, pl: 1, cursor: "pointer" })}
+          />
+        </Tooltip>
       </Box>
 
       <Divider orientation="vertical" flexItem sx={{ my: 2 }} />
@@ -143,12 +147,12 @@ function TopBar() {
       {/* Undo/redo */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
         <Tooltip title="Undo">
-          <IconButton variant="ghost" size="small" aria-label="Undo">
+          <IconButton variant="ghost" size="medium" aria-label="Undo">
             <Undo2 size={16} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Redo">
-          <IconButton variant="ghost" size="small" aria-label="Redo">
+          <IconButton variant="ghost" size="medium" aria-label="Redo">
             <Redo2 size={16} />
           </IconButton>
         </Tooltip>
@@ -159,29 +163,29 @@ function TopBar() {
       {/* Meta actions */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
         <Tooltip title="Lock editing">
-          <IconButton variant="ghost" size="small" aria-label="Lock">
+          <IconButton variant="ghost" size="medium" aria-label="Lock">
             <Lock size={16} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Bookmark">
-          <IconButton variant="ghost" size="small" aria-label="Bookmark">
+          <IconButton variant="ghost" size="medium" aria-label="Bookmark">
             <Star size={16} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Language">
-          <IconButton variant="ghost" size="small" aria-label="Language">
+          <IconButton variant="ghost" size="medium" aria-label="Language">
             <Globe size={16} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Version history">
-          <IconButton variant="ghost" size="small" aria-label="History">
+          <IconButton variant="ghost" size="medium" aria-label="History">
             <History size={16} />
           </IconButton>
         </Tooltip>
         <Tooltip title="All changes saved">
           <IconButton
             variant="ghost"
-            size="small"
+            size="medium"
             aria-label="All changes saved"
             sx={{ ml: 1, color: "success.main" }}
           >
@@ -214,12 +218,12 @@ function TopBar() {
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 0 }}>
         <Tooltip title="Search">
-          <IconButton variant="ghost" size="small" aria-label="Search">
+          <IconButton variant="ghost" size="medium" aria-label="Search">
             <Search size={16} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Comments">
-          <IconButton variant="ghost" size="small" aria-label="Comments">
+          <IconButton variant="ghost" size="medium" aria-label="Comments">
             <MessageSquare size={16} />
           </IconButton>
         </Tooltip>
@@ -234,11 +238,7 @@ function TopBar() {
       >
         Share
       </Button>
-      <Button
-        variant="contained"
-        size="medium"
-        startIcon={<Send size={14} />}
-      >
+      <Button variant="contained" size="medium" startIcon={<Send size={14} />}>
         Send for Publishing
       </Button>
     </Box>
@@ -329,7 +329,7 @@ function Rail({
       })}
       <Box sx={{ flex: 1 }} />
       <Tooltip title="Settings" placement="right">
-        <IconButton variant="ghost" size="small" aria-label="Settings">
+        <IconButton variant="ghost" size="medium" aria-label="Settings">
           <Settings size={18} />
         </IconButton>
       </Tooltip>
@@ -496,6 +496,8 @@ function Glyph({ children }: { children: React.ReactNode }) {
 }
 
 function ShapesPanel() {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
   return (
     <Box
       sx={(theme) => ({
@@ -534,7 +536,24 @@ function ShapesPanel() {
           }
         />
         <Tooltip title="Shape settings">
-          <IconButton variant="ghost" size="small" aria-label="Shape settings">
+          <IconButton
+            variant="ghost"
+            size="medium"
+            aria-label="Shape settings"
+            aria-pressed={settingsOpen}
+            onClick={() => setSettingsOpen((o) => !o)}
+            sx={(theme) => ({
+              color: theme.palette.text.secondary,
+              "&:hover": {
+                color: theme.palette.primary.main,
+                bgcolor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+              },
+              "&[aria-pressed='true']": {
+                bgcolor: theme.palette.action.selected,
+                color: theme.palette.primary.main,
+              },
+            })}
+          >
             <SlidersHorizontal size={16} />
           </IconButton>
         </Tooltip>
@@ -620,12 +639,28 @@ function ShapesPanel() {
             <ShapeCell label="Header">
               <Glyph>
                 <rect x={2} y={6} width={36} height={18} rx={2} />
-                <rect x={2} y={6} width={36} height={6} rx={2} fill="currentColor" fillOpacity={0.2} />
+                <rect
+                  x={2}
+                  y={6}
+                  width={36}
+                  height={6}
+                  rx={2}
+                  fill="currentColor"
+                  fillOpacity={0.2}
+                />
               </Glyph>
             </ShapeCell>
             <ShapeCell label="Filled">
               <Glyph>
-                <rect x={2} y={6} width={36} height={18} rx={2} fill="currentColor" fillOpacity={0.12} />
+                <rect
+                  x={2}
+                  y={6}
+                  width={36}
+                  height={18}
+                  rx={2}
+                  fill="currentColor"
+                  fillOpacity={0.12}
+                />
               </Glyph>
             </ShapeCell>
             <ShapeCell label="Dashed">
@@ -674,7 +709,11 @@ function ShapesPanel() {
             <ShapeCell label="Video">
               <Glyph>
                 <rect x={2} y={5} width={28} height={20} rx={2} />
-                <polygon points="32 10 38 7 38 23 32 20" fill="currentColor" fillOpacity={0.2} />
+                <polygon
+                  points="32 10 38 7 38 23 32 20"
+                  fill="currentColor"
+                  fillOpacity={0.2}
+                />
               </Glyph>
             </ShapeCell>
             <ShapeCell label="Curbside">
@@ -815,6 +854,11 @@ function ShapesPanel() {
           sx={(theme) => ({
             borderStyle: "dashed",
             bgcolor: theme.surface.subtle,
+            "&:hover": {
+              color: theme.palette.primary.main,
+              borderColor: theme.palette.primary.main,
+              bgcolor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity * 2),
+            },
             ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[800] }),
           })}
         >
@@ -1007,7 +1051,7 @@ function CanvasArea({
       >
         <Tooltip title="Select">
           <IconButton
-            size="small"
+            size="medium"
             variant="soft"
             color="primary"
             aria-label="Select"
@@ -1019,7 +1063,7 @@ function CanvasArea({
         <Tooltip title="Connector">
           <IconButton
             variant="ghost"
-            size="small"
+            size="medium"
             aria-label="Connector"
             sx={{ borderRadius: "50%" }}
           >
@@ -1029,7 +1073,7 @@ function CanvasArea({
         <Tooltip title="Curved connector">
           <IconButton
             variant="ghost"
-            size="small"
+            size="medium"
             aria-label="Curved"
             sx={{ borderRadius: "50%" }}
           >
@@ -1041,7 +1085,7 @@ function CanvasArea({
           <IconButton
             variant="soft"
             color="primary"
-            size="small"
+            size="medium"
             aria-label="Grid"
             sx={{ borderRadius: "50%" }}
           >
@@ -1051,7 +1095,7 @@ function CanvasArea({
         <Tooltip title="Canvas settings">
           <IconButton
             variant="ghost"
-            size="small"
+            size="medium"
             aria-label="Settings"
             sx={{ borderRadius: "50%" }}
           >
@@ -1082,7 +1126,7 @@ function CanvasArea({
         sx={{
           position: "absolute",
           inset: 0,
-          pt: 10,
+          pt: 11,
           pb: 10,
           px: 8,
           overflow: "auto",
@@ -1097,6 +1141,7 @@ function CanvasArea({
             alignItems: "center",
             gap: 7,
             pb: 8,
+            mt: 2,
           }}
         >
           <Node title="Start: Patient intake" sub="Entry node · 1 outgoing" />
@@ -1153,42 +1198,42 @@ function CanvasArea({
         })}
       >
         <Tooltip title="Attach content">
-          <IconButton variant="ghost" size="small" aria-label="Attach">
+          <IconButton variant="ghost" size="medium" aria-label="Attach">
             <Paperclip size={14} />
           </IconButton>
         </Tooltip>
         <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
         <Tooltip title="Show node IDs">
-          <IconButton variant="ghost" size="small" aria-label="IDs">
+          <IconButton variant="ghost" size="medium" aria-label="IDs">
             <Hash size={14} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Zoom to start">
-          <IconButton variant="ghost" size="small" aria-label="Center">
+          <IconButton variant="ghost" size="medium" aria-label="Center">
             <Crosshair size={14} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Zoom to fit">
-          <IconButton variant="ghost" size="small" aria-label="Fit">
+          <IconButton variant="ghost" size="medium" aria-label="Fit">
             <Maximize2 size={14} />
           </IconButton>
         </Tooltip>
         <Tooltip title="Mini map">
-          <IconButton variant="ghost" size="small" aria-label="Map">
+          <IconButton variant="ghost" size="medium" aria-label="Map">
             <MapIcon size={14} />
           </IconButton>
         </Tooltip>
         <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
         <IconButton
           variant="ghost"
-          size="small"
+          size="medium"
           aria-label="Zoom out"
           onClick={() => setZoom((z) => Math.max(10, z - 10))}
         >
           <Minus size={14} />
         </IconButton>
         <Slider
-          size="small"
+          size="medium"
           value={zoom}
           onChange={(_, v) => setZoom(v as number)}
           min={10}
@@ -1198,7 +1243,7 @@ function CanvasArea({
         />
         <IconButton
           variant="ghost"
-          size="small"
+          size="medium"
           aria-label="Zoom in"
           onClick={() => setZoom((z) => Math.min(100, z + 10))}
         >
@@ -1216,13 +1261,13 @@ function CanvasArea({
           {zoom}%
         </Typography>
         <Tooltip title="Fullscreen">
-          <IconButton variant="ghost" size="small" aria-label="Fullscreen">
+          <IconButton variant="ghost" size="medium" aria-label="Fullscreen">
             <Maximize size={14} />
           </IconButton>
         </Tooltip>
         <Divider orientation="vertical" flexItem sx={{ mx: 1, my: 1 }} />
         <Button
-          size="small"
+          size="medium"
           onClick={onToggleAi}
           startIcon={<Sparkles size={14} />}
           sx={(theme) => ({
@@ -1342,7 +1387,7 @@ function AiPanel({ onClose }: { onClose: () => void }) {
               </Typography>
               <Chip
                 label="BETA"
-                size="small"
+                size="medium"
                 variant="soft"
                 color="info"
                 sx={{ height: 16, fontSize: 9, fontWeight: "fontWeightBold" }}
@@ -1352,14 +1397,14 @@ function AiPanel({ onClose }: { onClose: () => void }) {
         </Box>
         <Box sx={{ display: "flex", gap: 0 }}>
           <Tooltip title="Pin">
-            <IconButton variant="ghost" size="small" aria-label="Pin">
+            <IconButton variant="ghost" size="medium" aria-label="Pin">
               <Pin size={14} />
             </IconButton>
           </Tooltip>
           <Tooltip title="Close">
             <IconButton
               variant="ghost"
-              size="small"
+              size="medium"
               aria-label="Close"
               onClick={onClose}
             >
@@ -1416,7 +1461,7 @@ function AiPanel({ onClose }: { onClose: () => void }) {
                 key={s}
                 variant="outlined"
                 color="neutral"
-                size="small"
+                size="medium"
                 onClick={() => send(s)}
                 sx={{ justifyContent: "flex-start", textAlign: "left" }}
               >
@@ -1439,7 +1484,7 @@ function AiPanel({ onClose }: { onClose: () => void }) {
         })}
       >
         <OutlinedInput
-          size="small"
+          size="medium"
           fullWidth
           placeholder="Ask about this pathway…"
           value={input}
@@ -1451,7 +1496,7 @@ function AiPanel({ onClose }: { onClose: () => void }) {
             <InputAdornment position="end">
               <IconButton
                 variant="ghost"
-                size="small"
+                size="medium"
                 aria-label="Send"
                 onClick={() => send(input)}
               >
