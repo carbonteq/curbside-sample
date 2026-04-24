@@ -115,12 +115,14 @@ function InstLogo({ instId, size = 22 }: { instId: string; size?: number }) {
     <Box
       aria-label={inst.name}
       sx={(t) => ({
-        width: size, height: size, borderRadius: `${t.radius.sm}px`,
+        height: size, minWidth: size,
+        px: `${Math.round(size * 0.2)}px`,
+        borderRadius: `${t.radius.sm}px`,
         bgcolor: t.palette[inst.colorKey].main,
         color: t.palette[inst.colorKey].contrastText,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        flexShrink: 0, fontSize: Math.max(9, Math.round(size * 0.45)),
-        fontWeight: 'bold', lineHeight: 1,
+        flexShrink: 0, fontSize: Math.max(8, Math.round(size * 0.38)),
+        fontWeight: 'bold', lineHeight: 1, letterSpacing: '-0.02em',
       })}
     >
       {inst.short}
@@ -424,7 +426,7 @@ function ListRow({ item, onAdd }: { item: CommunityItem; onAdd: (id: number) => 
       </Box>
 
       {/* Type pill */}
-      <Box sx={{ flexShrink: 0 }}>
+      <Box sx={{ flexShrink: 0, width: 110 }}>
         <TypePill type={item.type} />
       </Box>
 
@@ -835,10 +837,10 @@ export function CommunityPage() {
 
         {/* Action buttons */}
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button variant="outlined" startIcon={<Download size={14} />} size="small">
+          <Button variant="outlined" startIcon={<Download size={14} />} size="medium">
             Export list
           </Button>
-          <Button variant="contained" startIcon={<Plus size={14} />} size="small">
+          <Button variant="contained" startIcon={<Plus size={14} />} size="medium">
             New pathway
           </Button>
         </Box>
@@ -1064,29 +1066,43 @@ export function CommunityPage() {
                 borderBottom: `1px solid ${t.border.default}`,
                 ...t.applyStyles('dark', { bgcolor: t.palette.grey[900], borderColor: t.palette.grey[700] }),
               })}>
-                {[
-                  { label: 'Name', flex: '2.4 0 0' },
-                  { label: 'Institution', flex: '1.4 0 0' },
-                  { label: 'Type', flex: '0 0 auto' },
-                  { label: 'Specialty', flex: '1 0 0' },
-                  { label: 'Updated', flex: '0 0 auto' },
-                ].map(({ label, flex }) => (
-                  <Typography
-                    key={label}
-                    variant="caption"
-                    sx={(t) => ({
-                      flex, minWidth: 0,
-                      fontWeight: t.typography.fontWeightBold,
-                      letterSpacing: '0.06em', textTransform: 'uppercase',
-                      color: 'text.secondary',
-                    })}
-                  >
+                {/* Thumb placeholder */}
+                <Box sx={(t) => ({ width: t.spacing(10), flexShrink: 0 })} />
+                {(['Name', 'Institution'] as const).map((label, i) => (
+                  <Typography key={label} variant="caption" sx={(t) => ({
+                    flex: i === 0 ? '2.4 0 0' : '1.4 0 0', minWidth: 0,
+                    fontWeight: t.typography.fontWeightBold,
+                    letterSpacing: '0.06em', textTransform: 'uppercase', color: 'text.secondary',
+                  })}>
                     {label}
                   </Typography>
                 ))}
-                {/* Offset for thumb + actions columns */}
-                <Box sx={(t) => ({ width: t.spacing(10), flexShrink: 0, order: -1 })} />
-                <Box sx={{ width: (t) => t.spacing(7), flexShrink: 0 }} />
+                {/* Type — fixed width matching widest TypePill */}
+                <Typography variant="caption" sx={(t) => ({
+                  flexShrink: 0, width: 110,
+                  fontWeight: t.typography.fontWeightBold,
+                  letterSpacing: '0.06em', textTransform: 'uppercase', color: 'text.secondary',
+                })}>
+                  Type
+                </Typography>
+                <Typography variant="caption" sx={(t) => ({
+                  flex: '1 0 0', minWidth: 0,
+                  overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+                  fontWeight: t.typography.fontWeightBold,
+                  letterSpacing: '0.06em', textTransform: 'uppercase', color: 'text.secondary',
+                })}>
+                  Specialty
+                </Typography>
+                {/* Updated — matches row width: spacing(9) */}
+                <Typography variant="caption" sx={(t) => ({
+                  flexShrink: 0, width: t.spacing(9), whiteSpace: 'nowrap',
+                  fontWeight: t.typography.fontWeightBold,
+                  letterSpacing: '0.06em', textTransform: 'uppercase', color: 'text.secondary',
+                })}>
+                  Updated
+                </Typography>
+                {/* Actions placeholder — 2× small IconButton (30px) + gap(8px) */}
+                <Box sx={{ flexShrink: 0, width: 68 }} />
               </Box>
               {results.map((item) => <ListRow key={item.id} item={item} onAdd={addToCart} />)}
             </Box>
