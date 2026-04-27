@@ -21,21 +21,25 @@ import '@mui/material/Accordion';
 declare module '@mui/material/styles' {
   interface Theme {
     vars: CssVarsTheme['vars'];
-    surface:   { canvas: string; subtle: string; raised: string; overlay: string; scrim: string };
-    fill:      { default: string; emphasis: string; selected: string };
-    border:    { subtle: string; default: string; strong: string };
-    radius:    { sm: number; md: number; lg: number; pill: number };
-    motion:    { short: string; standard: string; complex: string; enter: string; leave: string };
-    elevation: { none: 0; low: number; high: number };
+    surface:     { canvas: string; subtle: string; raised: string; overlay: string; scrim: string };
+    fill:        { default: string; emphasis: string; selected: string };
+    border:      { subtle: string; default: string; strong: string };
+    radius:      { sm: number; md: number; lg: number; pill: number };
+    motion:      { short: string; standard: string; complex: string; enter: string; leave: string };
+    elevation:   { none: 0; low: number; high: number };
+    brand:       { gradient: string; gradientStart: string; gradientEnd: string };
+    contentType: { pathway: string; workflow: string; textDocument: string };
   }
 
   interface ThemeOptions {
-    surface?:   Partial<Theme['surface']>;
-    fill?:      Partial<Theme['fill']>;
-    border?:    Partial<Theme['border']>;
-    radius?:    Partial<Theme['radius']>;
-    motion?:    Partial<Theme['motion']>;
-    elevation?: Partial<Theme['elevation']>;
+    surface?:     Partial<Theme['surface']>;
+    fill?:        Partial<Theme['fill']>;
+    border?:      Partial<Theme['border']>;
+    radius?:      Partial<Theme['radius']>;
+    motion?:      Partial<Theme['motion']>;
+    elevation?:   Partial<Theme['elevation']>;
+    brand?:       Partial<Theme['brand']>;
+    contentType?: Partial<Theme['contentType']>;
   }
 
   interface Palette        { neutral: Palette['primary'] }
@@ -43,7 +47,7 @@ declare module '@mui/material/styles' {
 
   interface Color { 850: string }
 
-  interface TypeText { muted: string }
+  interface TypeText { heading: string; muted: string }
 
   interface TypographyVariants        { fontWeightSemibold: number }
   interface TypographyVariantsOptions { fontWeightSemibold?: number }
