@@ -568,11 +568,11 @@ export function CommunityV2Page() {
                   border: `1px solid ${t.border.subtle}`,
                   display: 'grid',
                   placeItems: 'center',
-                  boxShadow: t.shadows[1],
+                  boxShadow: t.shadows[t.elevation.low],
                   transition: t.motion.short,
                   '&:hover': {
-                    boxShadow: t.shadows[t.elevation.low],
-                    transform: `translateY(-${t.spacing(1)})`,
+                    boxShadow: t.shadows[t.elevation.high],
+                    transform: 'translateY(-4px)',
                   },
                 })}
               >
@@ -795,7 +795,7 @@ function CommunityCardItem({ card, view }: { card: CommunityCard; view: ViewMode
         '&:hover': {
           borderColor: t.border.strong,
           boxShadow: t.shadows[t.elevation.low],
-          transform: `translateY(-${t.spacing(1)})`,
+          transform: 'translateY(-4px)',
         },
         ...t.applyStyles('dark', { bgcolor: t.palette.grey[800], borderColor: t.palette.grey[700] }),
       })}

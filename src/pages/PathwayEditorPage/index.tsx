@@ -902,7 +902,7 @@ function Node({ title, sub }: { title: string; sub?: string }) {
         minWidth: 180,
         borderRadius: `${theme.radius.md}px`,
         bgcolor: theme.surface.canvas,
-        boxShadow: theme.elevation.low,
+        boxShadow: theme.shadows[theme.elevation.low],
         ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[800] }),
       })}
     >
@@ -1041,7 +1041,7 @@ function CanvasArea({
           borderRadius: `${theme.radius.pill}px`,
           border: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.canvas,
-          boxShadow: theme.elevation.low,
+          boxShadow: theme.shadows[theme.elevation.low],
           zIndex: theme.zIndex.fab,
           ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
@@ -1189,7 +1189,7 @@ function CanvasArea({
           borderRadius: `${theme.radius.md}px`,
           border: `1px solid ${theme.border.default}`,
           bgcolor: theme.surface.canvas,
-          boxShadow: theme.elevation.low,
+          boxShadow: theme.shadows[theme.elevation.low],
           zIndex: theme.zIndex.fab,
           ...theme.applyStyles("dark", {
             bgcolor: theme.palette.grey[800],
@@ -1347,7 +1347,7 @@ function AiPanel({ onClose }: { onClose: () => void }) {
         borderRadius: `${theme.radius.lg}px`,
         border: `1px solid ${theme.border.default}`,
         bgcolor: theme.surface.canvas,
-        boxShadow: theme.elevation.high,
+        boxShadow: theme.shadows[theme.elevation.high],
         zIndex: theme.zIndex.modal,
         ...theme.applyStyles("dark", {
           bgcolor: theme.palette.grey[800],

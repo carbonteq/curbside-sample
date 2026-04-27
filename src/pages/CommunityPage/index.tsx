@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { alpha, useTheme } from '@mui/material/styles';
+import { focusRing } from '@/theme/recipes';
 import type { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -167,11 +168,11 @@ function InstitutionHeroBadge({ instKey, label, active, onClick }: InstitutionHe
           border: `1px solid ${border}`,
           display: 'grid', placeItems: 'center',
           cursor: 'pointer',
-          boxShadow: t.shadows[active ? t.elevation.low : 1],
+          boxShadow: t.shadows[active ? t.elevation.low : t.elevation.none],
           transition: t.motion.short,
           outline: active ? `2px solid ${t.palette.primary.main}` : 'none',
           outlineOffset: active ? 2 : 0,
-          '&:hover': { boxShadow: t.shadows[t.elevation.low], transform: `translateY(-${t.spacing(1)})` },
+          '&:hover': { boxShadow: t.shadows[t.elevation.low], transform: 'translateY(-4px)' },
           ...t.applyStyles('dark', { bgcolor: active ? alpha(t.palette.primary.main, 0.2) : t.palette.grey[800] }),
         }}
       >
@@ -437,7 +438,7 @@ function ContentCard({ card, listView }: { card: CommunityCard; listView?: boole
           borderRadius: `${t.radius.lg}px`,
           overflow: 'hidden',
           transition: t.motion.short,
-          '&:hover': { borderColor: t.border.strong, boxShadow: t.shadows[t.elevation.low], transform: `translateY(-${t.spacing(1)})` },
+          '&:hover': { borderColor: t.border.strong, boxShadow: t.shadows[t.elevation.low], transform: 'translateY(-4px)' },
           ...t.applyStyles('dark', { bgcolor: t.palette.grey[900], borderColor: t.palette.grey[700] }),
         }}
       >
@@ -474,7 +475,7 @@ function ContentCard({ card, listView }: { card: CommunityCard; listView?: boole
         borderRadius: `${theme.radius.lg}px`,
         overflow: 'hidden',
         transition: theme.motion.short,
-        '&:hover': { borderColor: theme.border.strong, boxShadow: theme.shadows[theme.elevation.low], transform: `translateY(-${theme.spacing(1)})` },
+        '&:hover': { borderColor: theme.border.strong, boxShadow: theme.shadows[theme.elevation.low], transform: 'translateY(-4px)' },
         ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[900], borderColor: theme.palette.grey[700] }),
       })}
     >
@@ -829,7 +830,7 @@ export function CommunityPage() {
               cursor: 'text',
               '&:focus-within': {
                 borderColor: 'primary.main',
-                boxShadow: (t) => `0 0 0 3px ${alpha(t.palette.primary.main, 0.15)}`,
+                ...focusRing(theme),
               },
               ...theme.applyStyles('dark', { bgcolor: theme.palette.grey[800], borderColor: theme.palette.grey[600] }),
             })}

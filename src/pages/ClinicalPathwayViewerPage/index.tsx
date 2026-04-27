@@ -186,7 +186,7 @@ function CardNode({
         bgcolor: theme.surface.canvas,
         border: `1px solid ${theme.border.default}`,
         borderRadius: `${theme.radius.lg}px`,
-        boxShadow: theme.shadows[1],
+        boxShadow: theme.shadows[theme.elevation.low],
         overflow: "hidden",
         ...theme.applyStyles("dark", {
           bgcolor: theme.palette.grey[800],
@@ -539,7 +539,7 @@ function ZoomPanel({
       bgcolor: theme.surface.canvas,
       border: `1px solid ${theme.border.default}`,
       borderRadius: `${theme.radius.pill}px`,
-      boxShadow: theme.shadows[3],
+      boxShadow: theme.shadows[theme.elevation.low],
       ...theme.applyStyles("dark", {
         bgcolor: theme.palette.grey[800],
         borderColor: theme.palette.grey[700],
@@ -582,7 +582,7 @@ function Legend() {
       border: `1px solid ${theme.border.default}`,
       borderRadius: `${theme.radius.lg}px`,
       p: 3,
-      boxShadow: theme.shadows[2],
+      boxShadow: theme.shadows[theme.elevation.low],
       display: "flex", flexDirection: "column", gap: 2,
       minWidth: 148,
       ...theme.applyStyles("dark", {
@@ -698,7 +698,7 @@ function CpToolbar({
       bgcolor: theme.surface.canvas,
       border: `1px solid ${theme.border.default}`,
       borderRadius: `${theme.radius.lg}px`,
-      boxShadow: theme.shadows[4],
+      boxShadow: theme.shadows[theme.elevation.high],
       ...theme.applyStyles("dark", {
         bgcolor: theme.palette.grey[800],
         borderColor: theme.palette.grey[700],
@@ -946,7 +946,7 @@ function FootnoteTooltip({
         bgcolor: theme.surface.subtle,
         border: `1px solid ${theme.border.default}`,
         borderRadius: `${theme.radius.lg}px`,
-        boxShadow: theme.shadows[8],
+        boxShadow: theme.shadows[theme.elevation.high],
         overflow: "hidden",
         ...theme.applyStyles("dark", {
           bgcolor: theme.palette.grey[800],
@@ -1114,7 +1114,7 @@ export function ClinicalPathwayViewerPage() {
               color: theme.palette.common.white,
               px: 3, py: 2,
               borderRadius: `${theme.radius.pill}px`,
-              fontSize: 13, boxShadow: theme.shadows[6],
+              fontSize: 13, boxShadow: theme.shadows[theme.elevation.high],
               whiteSpace: "nowrap",
               ...theme.applyStyles("dark", { bgcolor: theme.palette.grey[700] }),
             })}>
