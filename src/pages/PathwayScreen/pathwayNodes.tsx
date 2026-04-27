@@ -22,7 +22,7 @@ export function StartNode({ data }: NodeProps) {
           borderRadius: `${theme.radius.pill}px`,
           cursor: 'default',
           transition: theme.motion.short,
-          '&:hover': { boxShadow: theme.shadows[4] },
+          '&:hover': { boxShadow: theme.shadows[theme.elevation.high] },
         })}
       >
         <Typography variant="body2" sx={{ fontWeight: 'fontWeightSemibold', textAlign: 'center' }}>
@@ -46,10 +46,10 @@ export function ActionNode({ data }: NodeProps) {
           border: `1px solid ${theme.border.default}`,
           borderLeft: `3px solid ${theme.palette.primary.main}`,
           borderRadius: `${theme.radius.md}px`,
-          boxShadow: theme.shadows[1],
+          boxShadow: theme.shadows[theme.elevation.low],
           cursor: 'default',
           transition: theme.motion.short,
-          '&:hover': { boxShadow: theme.shadows[3] },
+          '&:hover': { boxShadow: theme.shadows[theme.elevation.high] },
           ...theme.applyStyles('dark', {
             bgcolor: theme.palette.grey[800],
             borderColor: theme.palette.grey[600],
@@ -84,7 +84,7 @@ export function DecisionNode({ data }: NodeProps) {
           borderRadius: `${theme.radius.md}px`,
           cursor: 'default',
           transition: theme.motion.short,
-          '&:hover': { boxShadow: theme.shadows[3] },
+          '&:hover': { boxShadow: theme.shadows[theme.elevation.high] },
         })}
       >
         <Typography variant="body2" color="warning.dark" sx={{ fontWeight: 'fontWeightSemibold', textAlign: 'center' }}>
@@ -118,7 +118,7 @@ export function EndNode({ data }: NodeProps) {
           borderRadius: `${theme.radius.pill}px`,
           cursor: 'default',
           transition: theme.motion.short,
-          '&:hover': { boxShadow: theme.shadows[4] },
+          '&:hover': { boxShadow: theme.shadows[theme.elevation.high] },
         })}
       >
         <Typography variant="body2" sx={{ fontWeight: 'fontWeightSemibold', textAlign: 'center' }}>
@@ -144,7 +144,7 @@ export function SideNode({ data }: NodeProps) {
           borderRadius: `${theme.radius.md}px`,
           cursor: 'default',
           transition: theme.motion.short,
-          '&:hover': { boxShadow: theme.shadows[2] },
+          '&:hover': { boxShadow: theme.shadows[theme.elevation.low] },
           ...theme.applyStyles('dark', {
             bgcolor: theme.palette.grey[700],
             borderColor: theme.palette.grey[600],

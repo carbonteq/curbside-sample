@@ -13,7 +13,7 @@ export const typography = {
   h1: { fontFamily: HEADING_FONT, fontSize: '2rem',    fontWeight: 700, lineHeight: 1.25 },
   h2: { fontFamily: HEADING_FONT, fontSize: '1.5rem',  fontWeight: 700, lineHeight: 1.3  },
   h3: { fontFamily: HEADING_FONT, fontSize: '1.25rem', fontWeight: 600, lineHeight: 1.35 },
-  h4: { fontFamily: HEADING_FONT, fontSize: '1.75rem', fontWeight: 600, lineHeight: 1.3  },
+  h4: { fontFamily: HEADING_FONT, fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.4  },
   h5: { fontFamily: HEADING_FONT, fontSize: '1rem',    fontWeight: 600, lineHeight: 1.4  },
   h6: { fontFamily: HEADING_FONT, fontSize: '0.875rem',fontWeight: 600, lineHeight: 1.5  },
   subtitle1: { fontSize: '1rem',     fontWeight: 500, lineHeight: 1.5 },
