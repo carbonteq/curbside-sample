@@ -18,7 +18,6 @@ import { ProtocolViewerPage }         from '@/pages/ProtocolViewerPage';
 import { WorkflowPage }               from '@/pages/WorkflowPage';
 import { ClinicalPathwayViewerPage }  from '@/pages/ClinicalPathwayViewerPage';
 import { PathwayEditorPage }          from '@/pages/PathwayEditorPage';
-import { CommunityPage }              from '@/pages/CommunityPage';
 import { HomePage }                   from '@/pages/HomePage';
 import { LibraryPage }                from '@/pages/LibraryPage';
 
@@ -197,7 +196,6 @@ export function App() {
       {/* Padded pages */}
       <Route path="/users"     element={<Shell><PaddedPage><UsersPage /></PaddedPage></Shell>} />
       <Route path="/analytics" element={<Shell><PaddedPage><AnalyticsPage /></PaddedPage></Shell>} />
-      <Route path="/community" element={<Shell><PaddedPage><CommunityPage /></PaddedPage></Shell>} />
     </Routes>
   );
 }
