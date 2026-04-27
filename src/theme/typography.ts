@@ -23,4 +23,6 @@ export const typography = {
   button:    { fontFamily: BODY_FONT, fontSize: '0.875rem', fontWeight: 600, lineHeight: 1.5, letterSpacing: '0.02em', textTransform: 'none' as const },
   caption:   { fontSize: '0.75rem',  fontWeight: 400, lineHeight: 1.5 },
   overline:  { fontSize: '0.6875rem',fontWeight: 600, lineHeight: 1.5, letterSpacing: '0.08em', textTransform: 'uppercase' as const },
+  badge:     { fontFamily: BODY_FONT, fontSize: '0.625rem',  fontWeight: 700, lineHeight: 1 },
+  kbd:       { fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '0.6875rem', fontWeight: 400, lineHeight: 1.4 },
 };

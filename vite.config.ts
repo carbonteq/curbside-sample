@@ -9,4 +9,7 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
+  server: {
+    port: process.env.PORT ? parseInt(process.env.PORT) : 5173,
+  },
 })

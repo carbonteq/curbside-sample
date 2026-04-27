@@ -2,7 +2,8 @@ import { grey } from '@mui/material/colors';
 import type { Theme } from '@mui/material/styles';
 
 export const customVariables = (theme: Theme) => ({
-  radius:    { sm: 4, md: 6, lg: 8, pill: 9999 },
+  radius:       { sm: 4, md: 6, lg: 8, xl: 10, pill: 9999 },
+  letterSpacing: { tight: '-0.02em', tighter: '-0.04em' },
   elevation: { none: 0 as const, low: 2, high: 4 },
 
   brand: {
