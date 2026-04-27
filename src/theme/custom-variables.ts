@@ -5,23 +5,35 @@ export const customVariables = (theme: Theme) => ({
   radius:    { sm: 4, md: 6, lg: 8, pill: 9999 },
   elevation: { none: 0 as const, low: 2, high: 4 },
 
+  brand: {
+    gradient:      'linear-gradient(90deg, #8D49F7, #6B53FF)',
+    gradientStart: '#8D49F7',
+    gradientEnd:   '#6B53FF',
+  },
+
+  contentType: {
+    pathway:      '#336699',
+    workflow:     '#0F9D58',
+    textDocument: '#2E7CF6',
+  },
+
   surface: {
     canvas:  '#FFFFFF',
-    subtle:  grey[50],
-    raised:  grey[100],
+    subtle:  '#F6F6F9',
+    raised:  '#FAF9F5',
     overlay: '#FFFFFF',
     scrim:   'rgba(15,23,42,0.5)',
   },
 
   fill: {
-    default:  grey[100],
+    default:  '#F6F6F9',
     emphasis: grey[200],
     selected: theme.palette.action.selected,
   },
 
   border: {
-    subtle:  grey[100],
-    default: grey[300],
+    subtle:  '#E6E9EB',
+    default: '#DDDFE5',
     strong:  grey[400],
   },
 

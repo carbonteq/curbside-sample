@@ -19,17 +19,14 @@ import {
   Library, Star, Clock, Users, Folder, Plus, ChevronDown, ChevronRight,
   Bell, UserPlus, Sparkles, LayoutGrid, List, Tag, Filter, X, Check,
   MoreVertical, Globe, Lock, Share2, Trash2, Move, Upload, Search,
-  GitBranch, FileText, Shield, BookOpen, Layers, ClipboardList,
-  Stethoscope, HelpCircle, LogOut, User, StickyNote, ListChecks,
+  GitBranch, FileText,
+  Stethoscope, HelpCircle, LogOut, User,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
-type LibraryItemType =
-  | 'pathway' | 'clinical-standard' | 'workflow' | 'bundle'
-  | 'document' | 'protocol' | 'guideline' | 'policy' | 'procedure'
-  | 'note' | 'form';
+type LibraryItemType = 'pathway' | 'workflow' | 'document';
 
 type PublishedState = 'public' | 'private' | 'unpublished';
 type ViewMode = 'list' | 'grid' | 'label';
@@ -71,19 +68,19 @@ const LIBRARY_DATA: LibraryItem[] = [
   { id: 4,  type: 'pathway',  name: 'Test Pathway 1', starred: true, reviewDate: 'in 3 months', published: '12 days ago', publishedState: 'public', draftUpdated: '7 days ago', badge: 'Updated', specialty: 'Internal Medicine', status: 'Published', people: 'Jordan Kim' },
   { id: 5,  type: 'pathway',  name: 'Neonatal Fever (0-29 days)', starred: false, reviewDate: '5 years ago', published: '5 years ago', publishedState: 'private', draftUpdated: '7 days ago', badge: null, specialty: 'Pediatrics', status: 'Published', people: 'Alex Chen', labelGroup: 'Infectious', version: 'v0.0.3', revisionDue: '08-13-2021', authors: [{ name: 'Dan Imler', credential: 'MD' }] },
   { id: 6,  type: 'pathway',  name: 'Community Acquired Pneumonia CAP Treatment - Inpatient QI', starred: false, reviewDate: 'in 10 months', published: '2 months ago', publishedState: 'public', draftUpdated: 'a month ago', badge: 'E', specialty: 'Inpatient', status: 'Published', people: 'Alex Chen', labelGroup: 'Infectious' },
-  { id: 7,  type: 'document', name: 'demo', starred: false, reviewDate: 'in a year', published: 'a month ago', publishedState: 'public', draftUpdated: 'a month ago', badge: null, specialty: null, status: 'Published', people: 'You' },
+  { id: 7,  type: 'workflow', name: 'demo', starred: false, reviewDate: 'in a year', published: 'a month ago', publishedState: 'public', draftUpdated: 'a month ago', badge: null, specialty: null, status: 'Published', people: 'You' },
   { id: 8,  type: 'pathway',  name: 'WF 13 Nov', starred: false, reviewDate: 'in 7 months', published: '5 months ago', publishedState: 'public', draftUpdated: 'a month ago', badge: null, specialty: null, status: 'Published', people: 'You' },
   { id: 9,  type: 'pathway',  name: 'BMI Test', starred: false, reviewDate: '3 years ago', published: '3 years ago', publishedState: 'public', draftUpdated: 'a month ago', badge: null, specialty: 'Internal Medicine', status: 'Published', people: 'Jordan Kim' },
   { id: 10, type: 'pathway',  name: 'TPA Demo Trial', starred: false, reviewDate: 'in 6 months', published: '6 months ago', publishedState: 'public', draftUpdated: 'a month ago', badge: null, specialty: 'Emergency', status: 'Published', people: 'Alex Chen' },
   { id: 11, type: 'pathway',  name: 'Community Acquired Pneumonia - QI project | Portsmouth Regional Hospital', starred: false, reviewDate: 'a year ago', published: '2 years ago', publishedState: 'public', draftUpdated: 'a month ago', badge: null, specialty: 'Inpatient', status: 'Published', people: 'Alex Chen', labelGroup: 'Infectious' },
-  { id: 12, type: 'note',     name: 'Hello Content', starred: false, reviewDate: 'in a year', published: 'a month ago', publishedState: 'public', draftUpdated: 'a month ago', badge: 'F', specialty: null, status: 'Published', people: 'You' },
+  { id: 12, type: 'document', name: 'Hello Content', starred: false, reviewDate: 'in a year', published: 'a month ago', publishedState: 'public', draftUpdated: 'a month ago', badge: 'F', specialty: null, status: 'Published', people: 'You' },
   { id: 13, type: 'pathway',  name: 'Screening And Management Of High Blood Pressure In Children And Adolescents', starred: true, reviewDate: 'in 10 months', published: '2 months ago', publishedState: 'public', draftUpdated: '2 months ago', badge: null, specialty: 'Pediatrics', status: 'Published', people: 'Alex Chen' },
   { id: 14, type: 'document', name: 'demo (annotated)', starred: false, reviewDate: 'in 7 months', published: '5 months ago', publishedState: 'public', draftUpdated: '2 months ago', badge: null, specialty: null, status: 'Published', people: 'You', comments: 2 },
+  { id: 18, type: 'workflow', name: 'Sepsis Bundle — Emergency', starred: true, reviewDate: 'in 4 months', published: '2 months ago', publishedState: 'public', draftUpdated: 'a week ago', badge: null, specialty: 'Emergency', status: 'Published', people: 'Alex Chen' },
+  { id: 19, type: 'document', name: 'PHQ-9 Intake Form', starred: false, reviewDate: 'in a year', published: '3 months ago', publishedState: 'public', draftUpdated: '3 weeks ago', badge: null, specialty: 'Internal Medicine', status: 'Published', people: 'Jordan Kim' },
   { id: 15, type: 'pathway',  name: 'ACLS Healthcare Provider Post-Cardiac Arrest Care Algorithm', starred: false, reviewDate: 'in 10 months', published: '2 months ago', publishedState: 'public', draftUpdated: '2 months ago', badge: null, specialty: 'Emergency', status: 'Published', people: 'Alex Chen' },
   { id: 16, type: 'pathway',  name: 'demo pathways', starred: false, reviewDate: 'in 9 months', published: '3 months ago', publishedState: 'public', draftUpdated: '3 months ago', badge: 'E', specialty: null, status: 'Published', people: 'You' },
   { id: 17, type: 'pathway',  name: '13 Nov Pathways', starred: false, reviewDate: 'in 7 months', published: '5 months ago', publishedState: 'public', draftUpdated: '4 months ago', badge: null, specialty: null, status: 'Published', people: 'You' },
-  { id: 18, type: 'bundle',   name: 'Sepsis Bundle — Emergency', starred: true, reviewDate: 'in 4 months', published: '2 months ago', publishedState: 'public', draftUpdated: 'a week ago', badge: null, specialty: 'Emergency', status: 'Published', people: 'Alex Chen' },
-  { id: 19, type: 'form',     name: 'PHQ-9 Intake Form', starred: false, reviewDate: 'in a year', published: '3 months ago', publishedState: 'public', draftUpdated: '3 weeks ago', badge: null, specialty: 'Internal Medicine', status: 'Published', people: 'Jordan Kim' },
   { id: 20, type: 'pathway',  name: 'Diabetes — New Diagnosis Workup', starred: false, reviewDate: 'in 8 months', published: 'a month ago', publishedState: 'private', draftUpdated: '5 days ago', badge: null, specialty: 'Internal Medicine', status: 'Published', people: 'Alex Chen' },
 ];
 
@@ -105,47 +102,20 @@ const FOLDERS: FolderItem[] = [
   { name: 'Trauma',                count: 9  },
 ];
 
-const CONTENT_TYPES = [
-  { id: 'pathway' as LibraryItemType,           label: 'Pathway',           colorKey: 'primary.dark'   },
-  { id: 'clinical-standard' as LibraryItemType, label: 'Clinical Standard', colorKey: 'success.main'   },
-  { id: 'workflow' as LibraryItemType,          label: 'Workflow',          colorKey: 'success.dark'   },
-  { id: 'document' as LibraryItemType,          label: 'Text Document',     colorKey: 'info.main'      },
-  { id: 'protocol' as LibraryItemType,          label: 'Protocol',          colorKey: 'error.main'     },
-  { id: 'guideline' as LibraryItemType,         label: 'Guideline',         colorKey: 'info.dark'      },
-  { id: 'policy' as LibraryItemType,            label: 'Policy',            colorKey: 'warning.main'   },
-  { id: 'procedure' as LibraryItemType,         label: 'Procedure',         colorKey: 'secondary.main' },
+const CONTENT_TYPES: { id: LibraryItemType; label: string }[] = [
+  { id: 'pathway',  label: 'Pathway'       },
+  { id: 'workflow', label: 'Workflow'      },
+  { id: 'document', label: 'Text Document' },
 ];
 
-const TYPE_COLOR: Record<LibraryItemType, string> = {
-  pathway:             'primary.dark',
-  'clinical-standard': 'success.main',
-  workflow:            'success.dark',
-  bundle:              'primary.main',
-  document:            'info.main',
-  protocol:            'error.main',
-  guideline:           'info.dark',
-  policy:              'warning.main',
-  procedure:           'secondary.main',
-  note:                'secondary.dark',
-  form:                'warning.dark',
-};
-
 const TYPE_ICON_FN: Record<LibraryItemType, (s: number) => React.ReactNode> = {
-  pathway:             (s) => <GitBranch size={s} />,
-  'clinical-standard': (s) => <LayoutGrid size={s} />,
-  workflow:            (s) => <Share2 size={s} />,
-  bundle:              (s) => <Layers size={s} />,
-  document:            (s) => <FileText size={s} />,
-  protocol:            (s) => <Shield size={s} />,
-  guideline:           (s) => <BookOpen size={s} />,
-  policy:              (s) => <Lock size={s} />,
-  procedure:           (s) => <ClipboardList size={s} />,
-  note:                (s) => <StickyNote size={s} />,
-  form:                (s) => <ListChecks size={s} />,
+  pathway:  (s) => <GitBranch size={s} />,
+  workflow: (s) => <Share2 size={s} />,
+  document: (s) => <FileText size={s} />,
 };
 
 const FILTERS = [
-  { id: 'type',      label: 'Type',      primary: true,  options: ['Pathway', 'Bundle', 'Document', 'Note', 'Form'] },
+  { id: 'type',      label: 'Type',      primary: true,  options: ['Pathway', 'Workflow', 'Text Document'] },
   { id: 'status',    label: 'Status',    primary: true,  options: ['Published', 'Draft', 'Unpublished'] },
   { id: 'people',    label: 'People',    primary: false, options: ['You', 'Alex Chen', 'Jordan Kim'] },
   { id: 'specialty', label: 'Specialty', primary: false, options: ['Pediatrics', 'Internal Medicine', 'Emergency', 'Inpatient'] },
@@ -167,6 +137,12 @@ const tableHeaderSx = (t: Theme) => ({
 
 // ── TypeIcon ───────────────────────────────────────────────────────────────────
 
+const CONTENT_TYPE_COLOR: Record<LibraryItemType, (t: ReturnType<typeof useTheme>) => string> = {
+  pathway:  (t) => t.contentType.pathway,
+  workflow: (t) => t.contentType.workflow,
+  document: (t) => t.contentType.textDocument,
+};
+
 function TypeIcon({ type, size = 28 }: { type: LibraryItemType; size?: number }) {
   const iconSize = Math.round(size * 0.55);
   const fn = TYPE_ICON_FN[type] ?? TYPE_ICON_FN.pathway;
@@ -174,7 +150,7 @@ function TypeIcon({ type, size = 28 }: { type: LibraryItemType; size?: number })
     <Box sx={(t) => ({
       width: size, height: size, flexShrink: 0,
       borderRadius: `${t.radius.sm}px`,
-      bgcolor: TYPE_COLOR[type] ?? 'primary.dark',
+      bgcolor: CONTENT_TYPE_COLOR[type]?.(t) ?? t.contentType.pathway,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       color: 'common.white',
     })}>
@@ -217,7 +193,8 @@ function WorkspaceRail() {
             color: 'common.white',
             ...t.typography.caption,
             fontWeight: t.typography.fontWeightBold,
-            bgcolor: 'primary.main',
+            background: t.brand.gradient,
+            boxShadow: `0 3px 6px rgba(0,0,0,0.10), 0 1px 3px rgba(88,110,224,0.10)`,
             transition: t.motion.short,
             '&:hover': { transform: 'scale(1.05)' },
           })}
@@ -311,7 +288,7 @@ function AccountPopover() {
       >
         <Box sx={(t) => ({
           width: 28, height: 28, borderRadius: `${t.radius.md}px`,
-          bgcolor: 'primary.main',
+          background: t.brand.gradient,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           color: 'common.white',
           ...t.typography.body2,
@@ -354,7 +331,7 @@ function AccountPopover() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, px: 2, pt: 2, pb: 3 }}>
           <Box sx={(t) => ({
             width: 36, height: 36, borderRadius: `${t.radius.md}px`,
-            bgcolor: 'primary.main',
+            background: t.brand.gradient,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             color: 'common.white',
             ...t.typography.body2,
