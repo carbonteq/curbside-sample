@@ -194,7 +194,7 @@ function WorkspaceRail() {
             ...t.typography.caption,
             fontWeight: t.typography.fontWeightBold,
             background: t.brand.gradient,
-            boxShadow: `0 3px 6px rgba(0,0,0,0.10), 0 1px 3px rgba(88,110,224,0.10)`,
+            boxShadow: t.shadows[t.elevation.low],
             transition: t.motion.short,
             '&:hover': { transform: 'scale(1.05)' },
           })}
@@ -710,7 +710,7 @@ function LibraryTopbar({
               position: 'absolute', top: 3, right: 3,
               width: 7, height: 7, borderRadius: '50%',
               bgcolor: 'error.main',
-              border: `1.5px solid ${t.surface.canvas}`,
+              border: `1px solid ${t.surface.canvas}`,
               pointerEvents: 'none',
             })} />
           </IconButton>
@@ -1572,14 +1572,14 @@ function LabelView({
     })}>
       <Box component="table" sx={{ width: '100%', minWidth: 1000, borderCollapse: 'separate', borderSpacing: 0, tableLayout: 'fixed' }}>
         <Box component="colgroup">
-          <Box component="col" sx={{ width: '44px' }} />
-          <Box component="col" sx={{ width: '36px' }} />
+          <Box component="col" sx={{ width: 44 }} />
+          <Box component="col" sx={{ width: 36 }} />
           <Box component="col" />
-          <Box component="col" sx={{ width: '120px' }} />
-          <Box component="col" sx={{ width: '140px' }} />
-          <Box component="col" sx={{ width: '140px' }} />
-          <Box component="col" sx={{ width: '140px' }} />
-          <Box component="col" sx={{ width: '44px' }} />
+          <Box component="col" sx={{ width: 120 }} />
+          <Box component="col" sx={{ width: 140 }} />
+          <Box component="col" sx={{ width: 140 }} />
+          <Box component="col" sx={{ width: 140 }} />
+          <Box component="col" sx={{ width: 44 }} />
         </Box>
         <Box component="thead">
           <Box component="tr">
@@ -1750,7 +1750,7 @@ function BulkBar({
       boxShadow: t.elevation.high,
       display: 'flex', alignItems: 'center', gap: 3,
       ...t.typography.body2,
-      transform: count > 0 ? 'translateY(0)' : 'translateY(8px)',
+      transform: count > 0 ? 'translateY(0)' : `translateY(${t.spacing(2)})`,
       opacity: count > 0 ? 1 : 0,
       pointerEvents: count > 0 ? 'auto' : 'none',
       transition: t.motion.standard,

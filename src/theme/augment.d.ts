@@ -24,7 +24,8 @@ declare module '@mui/material/styles' {
     surface:     { canvas: string; subtle: string; raised: string; overlay: string; scrim: string };
     fill:        { default: string; emphasis: string; selected: string };
     border:      { subtle: string; default: string; strong: string };
-    radius:      { sm: number; md: number; lg: number; pill: number };
+    radius:        { sm: number; md: number; lg: number; xl: number; pill: number };
+    letterSpacing: { tight: string; tighter: string };
     motion:      { short: string; standard: string; complex: string; enter: string; leave: string };
     elevation:   { none: 0; low: number; high: number };
     brand:       { gradient: string; gradientStart: string; gradientEnd: string };
@@ -35,7 +36,8 @@ declare module '@mui/material/styles' {
     surface?:     Partial<Theme['surface']>;
     fill?:        Partial<Theme['fill']>;
     border?:      Partial<Theme['border']>;
-    radius?:      Partial<Theme['radius']>;
+    radius?:        Partial<Theme['radius']>;
+    letterSpacing?: Partial<Theme['letterSpacing']>;
     motion?:      Partial<Theme['motion']>;
     elevation?:   Partial<Theme['elevation']>;
     brand?:       Partial<Theme['brand']>;
@@ -49,8 +51,8 @@ declare module '@mui/material/styles' {
 
   interface TypeText { heading: string; muted: string }
 
-  interface TypographyVariants        { fontWeightSemibold: number }
-  interface TypographyVariantsOptions { fontWeightSemibold?: number }
+  interface TypographyVariants        { fontWeightSemibold: number; badge: React.CSSProperties; kbd: React.CSSProperties }
+  interface TypographyVariantsOptions { fontWeightSemibold?: number; badge?: React.CSSProperties; kbd?: React.CSSProperties }
 
   // ── Custom component class keys ────────────────────────────────────────────
 
