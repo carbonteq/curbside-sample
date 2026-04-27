@@ -21,6 +21,7 @@ import { PathwayEditorPage }          from '@/pages/PathwayEditorPage';
 import { HomePage }                   from '@/pages/HomePage';
 import { LibraryPage }                from '@/pages/LibraryPage';
 import { CommunityPage }              from '@/pages/CommunityPage';
+import { CommunityV2Page }            from '@/pages/CommunityV2Page';
 
 const FULL_HEIGHT_PATHS = new Set(['/pathway', '/browse', '/protocol', '/workflow', '/clinicalpathway', '/pathwayeditor']);
 
@@ -169,6 +170,7 @@ export function App() {
       <Route path="/pathway"         element={<Shell fullHeight><PathwayScreen /></Shell>} />
       <Route path="/library"         element={<LibraryPage />} />
       <Route path="/community"       element={<CommunityPage />} />
+      <Route path="/community-v2"    element={<CommunityV2Page />} />
 
       {/* Settings */}
       <Route path="/settings" element={
