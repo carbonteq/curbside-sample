@@ -14,6 +14,8 @@ import { MuiIconButton }      from './MuiIconButton';
 import { MuiLinearProgress }  from './MuiLinearProgress';
 import { MuiTabs }            from './MuiTabs';
 import { MuiAccordion, MuiAccordionSummary, MuiAccordionDetails } from './MuiAccordion';
+import { MuiCheckbox }       from './MuiCheckbox';
+import { MuiMenuItem }       from './MuiMenuItem';
 // custom components
 import { MuiCsStatCard }      from './MuiCsStatCard';
 import { MuiCsStatusDot }     from './MuiCsStatusDot';
@@ -51,6 +53,8 @@ export const components: Components<Theme> = {
   MuiAccordion,
   MuiAccordionSummary,
   MuiAccordionDetails,
+  MuiCheckbox,
+  MuiMenuItem,
   // ── Custom themed components ───────────────────────────────────────────────
   MuiCsStatCard,
   MuiCsStatusDot,

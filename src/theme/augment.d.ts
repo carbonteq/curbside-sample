@@ -155,7 +155,11 @@ declare module '@mui/material/Alert' {
 }
 
 declare module '@mui/material/Card' {
-  interface CardPropsVariantOverrides { subtle: true; raised: true }
+  interface CardPropsVariantOverrides { subtle: true; raised: true; interactive: true }
+}
+
+declare module '@mui/material/MenuItem' {
+  interface MenuItemOwnProps { variant?: 'filter' }
 }
 
 declare module '@mui/material/Paper' {

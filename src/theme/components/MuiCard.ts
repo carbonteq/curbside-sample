@@ -39,6 +39,24 @@ export const MuiCard: Components<Theme>['MuiCard'] = {
             }),
           },
         },
+        {
+          // interactive — clickable card with border, lift-on-hover, and clipped thumbnail
+          // Explicit border needed: custom variant bypasses MUI Paper's outlined border
+          props: { variant: 'interactive' },
+          style: {
+            border: `1px solid ${theme.border.default}`,
+            overflow: 'hidden',
+            transition: theme.transitions.create(
+              ['box-shadow', 'border-color', 'transform'],
+              { duration: theme.transitions.duration.short, easing: theme.transitions.easing.easeInOut },
+            ),
+            '&:hover': {
+              borderColor: theme.border.strong,
+              boxShadow: theme.shadows[theme.elevation.low],
+              transform: 'translateY(-1px)',
+            },
+          },
+        },
       ],
     }),
   },
