@@ -76,7 +76,7 @@ export function HomePage() {
                   <CardContent sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
                     <Box
                       sx={(theme) => ({
-                        mt: 0.25,
+                        mt: 0,
                         p: 1,
                         borderRadius: 1.5,
                         bgcolor: theme.vars.palette.primary.light,

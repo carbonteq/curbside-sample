@@ -22,6 +22,7 @@ import { HomePage }                   from '@/pages/HomePage';
 import { LibraryPage }                from '@/pages/LibraryPage';
 import { CommunityPage }              from '@/pages/CommunityPage';
 import { CommunityV2Page }            from '@/pages/CommunityV2Page';
+import { OpenLibraryPage }           from '@/pages/OpenLibraryPage';
 
 const FULL_HEIGHT_PATHS = new Set(['/pathway', '/browse', '/protocol', '/workflow', '/clinicalpathway', '/pathwayeditor']);
 
@@ -93,7 +94,7 @@ function Shell({ children, fullHeight }: { children: React.ReactNode; fullHeight
               size="small"
               sx={(theme) => ({
                 color: isHome ? theme.palette.primary.main : theme.palette.text.secondary,
-                mr: 0.5,
+                mr: 1,
               })}
             >
               <Home size={20} />
@@ -171,6 +172,7 @@ export function App() {
       <Route path="/library"         element={<LibraryPage />} />
       <Route path="/community"       element={<CommunityPage />} />
       <Route path="/community-v2"    element={<CommunityV2Page />} />
+      <Route path="/open-library"   element={<OpenLibraryPage />} />
 
       {/* Settings */}
       <Route path="/settings" element={
