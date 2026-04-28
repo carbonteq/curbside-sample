@@ -559,8 +559,8 @@ export function CommunityV2Page() {
                   boxShadow: t.shadows[t.elevation.low],
                   transition: t.motion.short,
                   '&:hover': {
-                    boxShadow: t.shadows[t.elevation.high],
-                    transform: 'translateY(-4px)',
+                    boxShadow: t.shadows[t.elevation.low],
+                    transform: 'translateY(-1px)',
                   },
                 })}
               >
