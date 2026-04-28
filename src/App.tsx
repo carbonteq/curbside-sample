@@ -170,7 +170,7 @@ export function App() {
       <Route path="/pathwayeditor"   element={<Shell fullHeight><PathwayEditorPage /></Shell>} />
       <Route path="/pathway"         element={<Shell fullHeight><PathwayScreen /></Shell>} />
       <Route path="/library"         element={<LibraryPage />} />
-      <Route path="/community"       element={<CommunityPage />} />
+      <Route path="/community"       element={<CommunityV2Page />} />
       <Route path="/community-v2"    element={<CommunityV2Page />} />
       <Route path="/open-library"   element={<OpenLibraryPage />} />
 

@@ -251,17 +251,11 @@ function MultiCheckMenu({
               return (
                 <MenuItem
                   key={opt}
+                  variant="filter"
                   onClick={() => setSelected(isSel ? selected.filter((o) => o !== opt) : [...selected, opt])}
                   selected={isSel}
-                  sx={(t) => ({
-                    borderRadius: `${t.radius.md}px`,
-                    mx: 1,
-                    fontSize: t.typography.body2.fontSize,
-                    fontWeight: isSel ? 'fontWeightSemibold' : 'medium',
-                    color: isSel ? t.palette.primary.main : t.palette.text.secondary,
-                  })}
                 >
-                  <Checkbox checked={isSel} size="small" disableRipple sx={{ mr: 1, p: 0 }} />
+                  <Checkbox checked={isSel} size="small" disableRipple sx={{ p: 0, flexShrink: 0 }} />
                   <ListItemText primary={opt} />
                 </MenuItem>
               );
@@ -296,17 +290,11 @@ function SingleRadioMenu({
               return (
                 <MenuItem
                   key={opt}
+                  variant="filter"
                   onClick={() => { onChange(opt); close(); }}
                   selected={isSel}
-                  sx={(t) => ({
-                    borderRadius: `${t.radius.md}px`,
-                    mx: 1,
-                    fontSize: t.typography.body2.fontSize,
-                    fontWeight: isSel ? 'fontWeightSemibold' : 'medium',
-                    color: isSel ? t.palette.primary.main : t.palette.text.secondary,
-                  })}
                 >
-                  <Radio checked={isSel} size="small" disableRipple sx={{ mr: 1, p: 0 }} />
+                  <Radio checked={isSel} size="small" disableRipple sx={{ p: 0, flexShrink: 0 }} />
                   <ListItemText primary={opt} />
                 </MenuItem>
               );
@@ -571,8 +559,8 @@ export function CommunityV2Page() {
                   boxShadow: t.shadows[t.elevation.low],
                   transition: t.motion.short,
                   '&:hover': {
-                    boxShadow: t.shadows[t.elevation.high],
-                    transform: 'translateY(-4px)',
+                    boxShadow: t.shadows[t.elevation.low],
+                    transform: 'translateY(-1px)',
                   },
                 })}
               >
@@ -616,20 +604,23 @@ export function CommunityV2Page() {
                   return (
                     <MenuItem
                       key={value}
+                      variant="filter"
                       onClick={() => { setCategory(value); close(); }}
                       selected={isSel}
-                      sx={(t) => ({
-                        borderRadius: `${t.radius.md}px`,
-                        mx: 1,
-                        fontSize: t.typography.body2.fontSize,
-                        fontWeight: isSel ? 'fontWeightSemibold' : 'medium',
-                        color: isSel ? t.palette.primary.main : t.palette.text.secondary,
-                        ...(isSel && { bgcolor: alpha(t.palette.primary.main, t.palette.action.hoverOpacity * 2) }),
-                      })}
                     >
-                      <ListItemIcon sx={(t) => ({ color: isSel ? t.palette.primary.main : t.palette.text.muted, minWidth: t.spacing(7) })}>
+                      <Box
+                        component="span"
+                        sx={(t) => ({
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: 18,
+                          flexShrink: 0,
+                          color: isSel ? t.palette.primary.main : t.palette.text.muted,
+                        })}
+                      >
                         <Icon size={15} />
-                      </ListItemIcon>
+                      </Box>
                       <ListItemText primary={value} />
                     </MenuItem>
                   );
@@ -786,19 +777,7 @@ function CommunityCardItem({ card, view }: { card: CommunityCard; view: ViewMode
   return (
     <Card
       role="listitem"
-      sx={(t) => ({
-        border: `1px solid ${t.border.default}`,
-        borderRadius: `${t.radius.lg}px`,
-        bgcolor: t.surface.canvas,
-        transition: t.motion.short,
-        overflow: 'hidden',
-        '&:hover': {
-          borderColor: t.border.strong,
-          boxShadow: t.shadows[t.elevation.low],
-          transform: 'translateY(-4px)',
-        },
-        ...t.applyStyles('dark', { bgcolor: t.palette.grey[800], borderColor: t.palette.grey[700] }),
-      })}
+      variant="interactive"
     >
       <CardActionArea
         sx={(t) => ({
@@ -806,6 +785,7 @@ function CommunityCardItem({ card, view }: { card: CommunityCard; view: ViewMode
           flexDirection: isList ? 'row' : 'column',
           alignItems: 'stretch',
           height: isList ? 92 : 'auto',
+          '&:hover .MuiCardActionArea-focusHighlight': { opacity: 0 },
         })}
         aria-label={`${card.title}, ${card.institution}`}
       >
