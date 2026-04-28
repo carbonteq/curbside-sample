@@ -23,6 +23,7 @@ import { LibraryPage }                from '@/pages/LibraryPage';
 import { CommunityPage }              from '@/pages/CommunityPage';
 import { CommunityV2Page }            from '@/pages/CommunityV2Page';
 import { OpenLibraryPage }           from '@/pages/OpenLibraryPage';
+import { AccountSettingsV2 }         from '@/pages/AccountSettingsV2';
 
 const FULL_HEIGHT_PATHS = new Set(['/pathway', '/browse', '/protocol', '/workflow', '/clinicalpathway', '/pathwayeditor']);
 
@@ -173,6 +174,22 @@ export function App() {
       <Route path="/community"       element={<CommunityV2Page />} />
       <Route path="/community-v2"    element={<CommunityV2Page />} />
       <Route path="/open-library"   element={<OpenLibraryPage />} />
+
+      {/* Settings V2 */}
+      <Route path="/settings-v2" element={
+        <Shell>
+          <Box
+            sx={(theme) => ({
+              flex: 1,
+              display: 'flex',
+              overflow: 'auto',
+              [theme.breakpoints.up('md')]: { maxWidth: 1200, width: '100%', mx: 'auto' },
+            })}
+          >
+            <AccountSettingsV2 />
+          </Box>
+        </Shell>
+      } />
 
       {/* Settings */}
       <Route path="/settings" element={
